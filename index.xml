@@ -6,29 +6,10 @@
     <description>Recent content on Jordon&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 09 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leezhuang96.github.io/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Test blog</title>
-      <link>https://leezhuang96.github.io/2019/12/09/istio01/</link>
-      <pubDate>Mon, 09 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://leezhuang96.github.io/2019/12/09/istio01/</guid>
-      <description>#Test blog</description>
-    </item>
-    
-    <item>
-      <title>Welcome to Jordon&#39;s Blog</title>
-      <link>https://leezhuang96.github.io/2019/12/03/hello-world/</link>
-      <pubDate>Tue, 03 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://leezhuang96.github.io/2019/12/03/hello-world/</guid>
-      <description> “Yeah It&#39;s on. ”
- Hello World! </description>
-    </item>
     
     <item>
       <title>Clean White Theme for Hugo</title>
@@ -39,15 +20,6 @@
       <description>Clean White Theme for Hugo CleanWhite is a clean, elegant, but fully functional blog theme for Hugo. Here is a live demo site using this theme.
 It is based on huxblog Jekyll Theme and Clean Blog Jekyll Theme.
 These two upstream projects have done awesome jobs to create a blog theme, what I&#39;m doing here is porting it to Hugo, of which I like the simplicity and the much faster compiling speed.</description>
-    </item>
-    
-    <item>
-      <title>An Example Post</title>
-      <link>https://leezhuang96.github.io/post/first-blog/</link>
-      <pubDate>Mon, 04 Jun 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://leezhuang96.github.io/post/first-blog/</guid>
-      <description></description>
     </item>
     
     <item>
@@ -205,16 +177,6 @@ export HTTPS_PROXY=&amp;quot;http://127.0.0.1:3128/&amp;quot;
       
       <guid>https://leezhuang96.github.io/2018/02/09/docker-without-sudo/</guid>
       <description>Add the docker group if it doesn&#39;t already exist: sudo groupadd docker Add the connected user &amp;ldquo;$USER&amp;rdquo; to the docker group. Change the user name to match your preferred user if you do not want to use your current user: sudo gpasswd -a $USER docker Either do a newgrp docker or log out/in to activate the changes to groups.</description>
-    </item>
-    
-    <item>
-      <title>如何构建安全的微服务应用？</title>
-      <link>https://leezhuang96.github.io/2018/05/22/user_authentication_authorization/</link>
-      <pubDate>Sat, 03 Feb 2018 12:00:00 +0000</pubDate>
-      
-      <guid>https://leezhuang96.github.io/2018/05/22/user_authentication_authorization/</guid>
-      <description>&lt;h2 id=&#34;heading&#34;&gt;前言&lt;/h2&gt;
-&lt;p&gt;微服务架构的引入为软件应用带来了诸多好处：包括小开发团队，缩短开发周期，语言选择灵活性，增强服务伸缩能力等。与此同时，也引入了分布式系统的诸多复杂问题。其中一个挑战就是如何在微服务架构中实现一个灵活，安全，高效的认证和鉴权方案。本文将尝试就此问题进行一次比较完整的探讨。&lt;/p&gt;</description>
     </item>
     
     <item>

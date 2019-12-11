@@ -6,28 +6,10 @@
     <description>Recent content in Tech on Jordon&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 Jun 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leezhuang96.github.io/categories/tech/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Test blog</title>
-      <link>https://leezhuang96.github.io/2019/12/09/istio01/</link>
-      <pubDate>Mon, 09 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://leezhuang96.github.io/2019/12/09/istio01/</guid>
-      <description>#Test blog</description>
-    </item>
-    
-    <item>
-      <title>An Example Post</title>
-      <link>https://leezhuang96.github.io/post/first-blog/</link>
-      <pubDate>Mon, 04 Jun 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://leezhuang96.github.io/post/first-blog/</guid>
-      <description></description>
-    </item>
     
     <item>
       <title>Istio v1aplha3 routing API介绍(译文）</title>
@@ -124,16 +106,6 @@
       <description>&lt;h2 id=&#34;heading&#34;&gt;微服务架构的演进&lt;/h2&gt;
 &lt;p&gt;作为一种架构模式，微服务将复杂系统切分为数十乃至上百个小服务，每个服务负责实现一个独立的业务逻辑。这些小服务易于被小型的软件工程师团队所理解和修改，并带来了语言和框架选择灵活性，缩短应用开发上线时间，可根据不同的工作负载和资源要求对服务进行独立缩扩容等优势。&lt;/p&gt;
 &lt;p&gt;另一方面，当应用被拆分为多个微服务进程后，进程内的方法调用变成了了进程间的远程调用。引入了对大量服务的连接、管理和监控的复杂性。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>如何构建安全的微服务应用？</title>
-      <link>https://leezhuang96.github.io/2018/05/22/user_authentication_authorization/</link>
-      <pubDate>Sat, 03 Feb 2018 12:00:00 +0000</pubDate>
-      
-      <guid>https://leezhuang96.github.io/2018/05/22/user_authentication_authorization/</guid>
-      <description>&lt;h2 id=&#34;heading&#34;&gt;前言&lt;/h2&gt;
-&lt;p&gt;微服务架构的引入为软件应用带来了诸多好处：包括小开发团队，缩短开发周期，语言选择灵活性，增强服务伸缩能力等。与此同时，也引入了分布式系统的诸多复杂问题。其中一个挑战就是如何在微服务架构中实现一个灵活，安全，高效的认证和鉴权方案。本文将尝试就此问题进行一次比较完整的探讨。&lt;/p&gt;</description>
     </item>
     
     <item>
