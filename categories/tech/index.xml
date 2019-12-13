@@ -6,10 +6,20 @@
     <description>Recent content in Tech on Jordon&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 04 Jun 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leezhuang96.github.io/categories/tech/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ECMAScript 6（一）</title>
+      <link>https://leezhuang96.github.io/2019/12/13/es6-1part/</link>
+      <pubDate>Fri, 13 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://leezhuang96.github.io/2019/12/13/es6-1part/</guid>
+      <description>&lt;h2 id=&#34;ecmascript-6-&#34;&gt;ECMAScript 6 简介&lt;/h2&gt;
+&lt;p&gt;ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准，已经在 2015 年 6 月正式发布了。它的目标，是使得 JavaScript 语言可以用来编写复杂的大型应用程序，成为企业级开发语言。&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Istio v1aplha3 routing API介绍(译文）</title>
