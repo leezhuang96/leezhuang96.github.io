@@ -23,17 +23,17 @@
   </url>
   
   <url>
-    <loc>https://leezhuang96.github.io/categories/movie/</loc>
-    <lastmod>2019-12-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://leezhuang96.github.io/post/</loc>
     <lastmod>2019-12-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://leezhuang96.github.io/tags/</loc>
+    <lastmod>2019-12-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://leezhuang96.github.io/categories/tech/</loc>
     <lastmod>2019-12-13T00:00:00+00:00</lastmod>
   </url>
   
@@ -49,11 +49,6 @@
   
   <url>
     <loc>https://leezhuang96.github.io/2018/06/04/introducing-the-istio-v1alpha3-routing-api/</loc>
-    <lastmod>2018-06-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://leezhuang96.github.io/categories/tech/</loc>
     <lastmod>2018-06-04T00:00:00+00:00</lastmod>
   </url>
   
