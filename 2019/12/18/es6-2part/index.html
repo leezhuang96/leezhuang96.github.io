@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Jordon&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://leezhuang96.github.io/img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://leezhuang96.github.io/img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="ECMAScript 6（二）" />
+    <meta property="og:title" content="ECMAScript 6（二）" />
+    <meta property="twitter:title" content="ECMAScript 6（二）" />
+    
+
+    
+    <meta name="description" content="ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准，已经在 2015 年 6 月正式发布了。它的目标，是使得 JavaScript 语言可以用来编写复杂的大型应用程序，成为企业级开发语言。">
+    <meta property="og:description" content="ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准，已经在 2015 年 6 月正式发布了。它的目标，是使得 JavaScript 语言可以用来编写复杂的大型应用程序，成为企业级开发语言。" />
+    <meta property="twitter:description" content="ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准，已经在 2015 年 6 月正式发布了。它的目标，是使得 JavaScript 语言可以用来编写复杂的大型应用程序，成为企业级开发语言。" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="李状, Jordon, lizhuang, , 李状的网络日志, 李状的博客, Jordon&#39;s Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/Blog.png">
+
+    <title>ECMAScript 6（二）-李状的博客 | Jordon&#39;s Blog</title>
+
+    <link rel="canonical" href="/2019/12/18/es6-2part/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/syntax.css">
+    
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/docco.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jordon&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/life">life</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/tech">tech</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/tips">tips</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/web">web</a>
+                    </li>
+                    
+                    
+		    
+                        <li><a href="/top/books/">BOOKS</a></li>
+                    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search">SEARCH <img src="/img/search.png" height="15" style="cursor: pointer;" alt="Search"></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('https://img.zhaohuabing.com/in-post/2018-06-04-introducing-the-istio-v1alpha3-routing-api/background.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/es6" title="ES6">
+                            ES6
+                        </a>
+                        
+                    </div>
+                    <h1>ECMAScript 6（二）</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                                &#34;Jordon Li&#34;
+                         
+                        on 
+                        Wednesday, December 18, 2019
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ecmascript-6-">ECMAScript 6 简介</a></li>
+    <li><a href="#heading">字符串的扩展</a>
+      <ul>
+        <li><a href="#-unicode-">字符的 Unicode 表示法</a></li>
+        <li><a href="#heading1">字符串的遍历器接口</a></li>
+        <li><a href="#-u2028--u2029">直接输入 U+2028 和 U+2029</a></li>
+        <li><a href="#jsonstringify-">JSON.stringify() 的改造</a></li>
+        <li><a href="#heading2">模板字符串</a></li>
+        <li><a href="#heading3">标签模板</a></li>
+      </ul>
+    </li>
+    <li><a href="#heading4">字符串的新增方法</a>
+      <ul>
+        <li><a href="#stringfromcodepoint">String.fromCodePoint()</a></li>
+        <li><a href="#stringraw">String.raw()</a></li>
+        <li><a href="#heading5">实例方法</a></li>
+      </ul>
+    </li>
+    <li><a href="#heading6">参考</a></li>
+  </ul>
+</nav>
+                
+                <h2 id="ecmascript-6-">ECMAScript 6 简介</h2>
+<p>ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准，已经在 2015 年 6 月正式发布了。它的目标，是使得 JavaScript 语言可以用来编写复杂的大型应用程序，成为企业级开发语言。</p>
+<h2 id="heading">字符串的扩展</h2>
+<h3 id="-unicode-">字符的 Unicode 表示法</h3>
+<ul>
+<li>基本用法：
+ES6 加强了对 Unicode 的支持，允许采用<code>\uxxxx</code>形式表示一个字符，其中<code>xxxx</code>表示字符的 Unicode 码点。但是，这种表示法只限于码点在<code>\u0000`~</code>\uFFFF`之间的字符。超出这个范围的字符，必须用两个双字节的形式表示。
+ES6 对这一点做出了改进，只要将码点放入大括号，就能正确解读该字符。有了这种表示法之后，JavaScript 共有 6 种方法可以表示一个字符:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#e6db74">&#39;\z&#39;</span> === <span style="color:#e6db74">&#39;z&#39;</span>  // <span style="color:#66d9ef">true</span>
+<span style="color:#e6db74">&#39;\172&#39;</span> === <span style="color:#e6db74">&#39;z&#39;</span> // <span style="color:#66d9ef">true</span>
+<span style="color:#e6db74">&#39;\x7A&#39;</span> === <span style="color:#e6db74">&#39;z&#39;</span> // <span style="color:#66d9ef">true</span>
+<span style="color:#e6db74">&#39;\u007A&#39;</span> === <span style="color:#e6db74">&#39;z&#39;</span> // <span style="color:#66d9ef">true</span>
+<span style="color:#e6db74">&#39;\u{7A}&#39;</span> === <span style="color:#e6db74">&#39;z&#39;</span> // <span style="color:#66d9ef">true</span>
+</code></pre></div></li>
+</ul>
+<h3 id="heading1">字符串的遍历器接口</h3>
+<ul>
+<li>基本用法：
+ES6 为字符串添加了遍历器接口<code>Iterator</code>，使得字符串可以被<code>for...of</code>循环遍历。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">for(let codePoint of <span style="color:#e6db74">&#39;foo&#39;</span>)
+{
+  console.log(codePoint)
+}
+// <span style="color:#e6db74">&#34;f&#34;</span>
+// <span style="color:#e6db74">&#34;o&#34;</span>
+// <span style="color:#e6db74">&#34;o&#34;</span>
+</code></pre></div><p>除了遍历字符串，这个遍历器最大的优点是可以识别大于0xFFFF的码点，传统的for循环无法识别这样的码点。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">for (let i of text) {
+  console.log(i);
+}
+// <span style="color:#e6db74">&#34;𠮷&#34;</span>
+</code></pre></div></li>
+</ul>
+<h3 id="-u2028--u2029">直接输入 U+2028 和 U+2029</h3>
+<ul>
+<li>基本用法：
+JavaScript 字符串允许直接输入字符，以及输入字符的转义形式。但是，JavaScript 规定有5个字符，不能在字符串里面直接使用，只能使用转义形式。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">U+005C：反斜杠（reverse solidus)
+U+000D：回车（carriage return）
+U<span style="color:#ae81ff">+2028</span>：行分隔符（line separator）
+U<span style="color:#ae81ff">+2029</span>：段分隔符（paragraph separator）
+U+000A：换行符（line feed）
+</code></pre></div><p>这个规定本身没有问题，麻烦在于 JSON 格式允许字符串里面直接使用 U+2028（行分隔符）和 U+2029（段分隔符）。这样一来，服务器输出的 JSON 被<code>JSON.parse</code>解析，就有可能直接报错。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">const json = <span style="color:#e6db74">&#39;&#34;\u2028&#34;&#39;</span>;
+JSON.parse(json); // 可能报错
+</code></pre></div><p>JSON 格式已经冻结（RFC 7159），没法修改了。为了消除这个报错，ES2019 允许 JavaScript 字符串直接输入 U+2028（行分隔符）和 U+2029（段分隔符）。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">const PS = eval(<span style="color:#e6db74">&#34;&#39;\u2029&#39;&#34;</span>);
+</code></pre></div><p>注意，模板字符串现在就允许直接输入这两个字符。另外，正则表达式依然不允许直接输入这两个字符，这是没有问题的，因为 JSON 本来就不允许直接包含正则表达式。</p>
+</li>
+</ul>
+<h3 id="jsonstringify-">JSON.stringify() 的改造</h3>
+<ul>
+<li>基本用法：
+根据标准，JSON 数据必须是 UTF-8 编码。但是，现在的JSON.stringify()方法有可能返回不符合 UTF-8 标准的字符串。具体来说，UTF-8 标准规定，0xD800到0xDFFF之间的码点，不能单独使用，必须配对使用。
+JSON.stringify()的问题在于，它可能返回0xD800到0xDFFF之间的单个码点。为了确保返回的是合法的 UTF-8 字符，ES2019 改变了JSON.stringify()的行为。如果遇到0xD800到0xDFFF之间的单个码点，或者不存在的配对形式，它会返回转义字符串，留给应用自己决定下一步的处理。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">JSON.stringify(<span style="color:#e6db74">&#39;\u{D834}&#39;</span>) // <span style="color:#e6db74">&#34;&#34;</span>\\uD834<span style="color:#e6db74">&#34;&#34;</span>
+JSON.stringify(<span style="color:#e6db74">&#39;\uDF06\uD834&#39;</span>) // <span style="color:#e6db74">&#34;&#34;</span>\\udf06\\ud834<span style="color:#e6db74">&#34;&#34;</span>
+</code></pre></div></li>
+</ul>
+<h3 id="heading2">模板字符串</h3>
+<ul>
+<li>基本用法：
+模板字符串（template string）是增强版的字符串，用反引号（`）标识。它可以当作普通字符串使用，也可以用来定义多行字符串，或者在字符串中嵌入变量。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">// 普通字符串
+`In JavaScript <span style="color:#e6db74">&#39;\n&#39;</span> is a line-feed.`
+
+// 多行字符串
+`In JavaScript this is
+not legal.`
+
+console.log(`string text line <span style="color:#ae81ff">1</span>
+string text line <span style="color:#ae81ff">2</span>`);
+
+// 字符串中嵌入变量
+let name = <span style="color:#e6db74">&#34;Bob&#34;</span>, time = <span style="color:#e6db74">&#34;today&#34;</span>;
+`Hello ${name}, how are you ${time}?`
+</code></pre></div></li>
+</ul>
+<h3 id="heading3">标签模板</h3>
+<ul>
+<li>基本用法：
+模板字符串的功能，不仅仅是上面这些。它可以紧跟在一个函数名后面，该函数将被调用来处理这个模板字符串。这被称为“标签模板”功能（tagged template）。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">alert`<span style="color:#ae81ff">123</span>`
+// 等同于
+alert(<span style="color:#ae81ff">123</span>)
+
+let a = <span style="color:#ae81ff">5</span>;
+let b = <span style="color:#ae81ff">10</span>;
+tag`Hello ${ a + b } world ${ a * b }`;
+// 等同于
+tag([<span style="color:#e6db74">&#39;Hello &#39;</span>, <span style="color:#e6db74">&#39; world &#39;</span>, <span style="color:#e6db74">&#39;&#39;</span>], <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">50</span>);
+</code></pre></div></li>
+</ul>
+<h2 id="heading4">字符串的新增方法</h2>
+<h3 id="stringfromcodepoint">String.fromCodePoint()</h3>
+<ul>
+<li>
+<p>基本用法：
+ES5 提供<code>String.fromCharCode()</code>方法，用于从 Unicode 码点返回对应字符，但是这个方法不能识别码点大于<code>0xFFFF</code>的字符。
+ES6 提供了<code>String.fromCodePoint()</code>方法，可以识别大于<code>0xFFFF</code>的字符，弥补了<code>String.fromCharCode()</code>方法的不足。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">ES5:
+String.fromCharCode(0x20BB7)
+// <span style="color:#e6db74">&#34;ஷ&#34;</span> 0x20BB7就发生了溢出，最高位2被舍弃了
+
+ES6:
+String.fromCodePoint(0x20BB7)
+// <span style="color:#e6db74">&#34;𠮷&#34;</span>
+String.fromCodePoint(<span style="color:#ae81ff">0x78</span>, <span style="color:#ae81ff">0x1f680</span>, <span style="color:#ae81ff">0x79</span>) === <span style="color:#e6db74">&#39;x\uD83D\uDE80y&#39;</span>
+// <span style="color:#66d9ef">true</span>
+</code></pre></div></li>
+</ul>
+<h3 id="stringraw">String.raw()</h3>
+<ul>
+<li>基本用法：
+ES6 还为原生的 String 对象，提供了一个raw()方法。该方法返回一个斜杠都被转义（即斜杠前面再加一个斜杠）的字符串，往往用于模板字符串的处理方法。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">String.raw`Hi\n${<span style="color:#ae81ff">2</span><span style="color:#ae81ff">+3</span>}!`
+// 实际返回 <span style="color:#e6db74">&#34;Hi\\n5!&#34;</span>，显示的是转义后的结果 <span style="color:#e6db74">&#34;Hi\n5!&#34;</span>
+
+String.raw`Hi\u000A!`;
+// 实际返回 <span style="color:#e6db74">&#34;Hi\\u000A!&#34;</span>，显示的是转义后的结果 <span style="color:#e6db74">&#34;Hi\u000A!&#34;</span>
+</code></pre></div><p>String.raw()方法可以作为处理模板字符串的基本方法，它会将所有变量替换，而且对斜杠进行转义，方便下一步作为字符串来使用。</p>
+</li>
+</ul>
+<h3 id="heading5">实例方法</h3>
+<h4 id="codepointat">codePointAt()</h4>
+<ul>
+<li>基本用法：
+JavaScript 内部，字符以 <code>UTF-16</code> 的格式储存，每个字符固定为2个字节。对于那些需要4个字节储存的字符（Unicode 码点大于<code>0xFFFF</code>的字符），JavaScript 会认为它们是两个字符。对于这种4个字节的字符，JavaScript 不能正确处理，字符串长度会误判为2，而且<code>charAt()</code>方法无法读取整个字符，<code>charCodeAt()</code>方法只能分别返回前两个字节和后两个字节的值。
+ES6 提供了<code>codePointAt()</code>方法，能够正确处理 4 个字节储存的字符，返回一个字符的码点。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">var s = <span style="color:#e6db74">&#34;𠮷&#34;</span>;
+
+s.length // <span style="color:#ae81ff">2</span>
+s.charAt(<span style="color:#ae81ff">0</span>) // <span style="color:#e6db74">&#39;&#39;</span>
+s.charAt(<span style="color:#ae81ff">1</span>) // <span style="color:#e6db74">&#39;&#39;</span>
+
+s.charCodeAt(<span style="color:#ae81ff">0</span>) // <span style="color:#ae81ff">55362</span>
+s.charCodeAt(<span style="color:#ae81ff">1</span>) // <span style="color:#ae81ff">57271</span>
+</code></pre></div></li>
+</ul>
+<h4 id="normalize">normalize()</h4>
+<ul>
+<li>基本用法：
+许多欧洲语言有语调符号和重音符号。为了表示它们，Unicode 提供了两种方法：
+<ul>
+<li>一种是直接提供带重音符号的字符，比如Ǒ（\u01D1）。</li>
+<li>另一种是提供合成符号（combining character），即原字符与重音符号的合成，两个字符合成一个字符，比如O（\u004F）和ˇ（\u030C）合成Ǒ（\u004F\u030C）。
+这两种表示方法，在视觉和语义上都等价，但是 JavaScript 不能识别。ES6 提供字符串实例的<code>normalize()</code>方法，用来将字符的不同表示方法统一为同样的形式，这称为 <code>Unicode 正规化</code>。</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">ES5:
+<span style="color:#e6db74">&#39;\u01D1&#39;</span>===<span style="color:#e6db74">&#39;\u004F\u030C&#39;</span> //<span style="color:#66d9ef">false</span>
+
+<span style="color:#e6db74">&#39;\u01D1&#39;</span>.length // <span style="color:#ae81ff">1</span>
+<span style="color:#e6db74">&#39;\u004F\u030C&#39;</span>.length // <span style="color:#ae81ff">2</span>
+
+ES6:
+<span style="color:#e6db74">&#39;\u01D1&#39;</span>.normalize() === <span style="color:#e6db74">&#39;\u004F\u030C&#39;</span>.normalize()
+// <span style="color:#66d9ef">true</span>
+</code></pre></div></li>
+</ul>
+<h4 id="includes-startswith-endswith">includes(), startsWith(), endsWith()</h4>
+<ul>
+<li>基本用法：
+传统上，JavaScript 只有<code>indexOf</code>方法，可以用来确定一个字符串是否包含在另一个字符串中。ES6 又提供了三种新方法。
+<ul>
+<li><code>includes()</code>：返回布尔值，表示是否找到了参数字符串。</li>
+<li><code>startsWith()</code>：返回布尔值，表示参数字符串是否在原字符串的头部。</li>
+<li><code>endsWith()</code>：返回布尔值，表示参数字符串是否在原字符串的尾部。</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">let s = <span style="color:#e6db74">&#39;Hello world!&#39;</span>;
+
+s.startsWith(<span style="color:#e6db74">&#39;Hello&#39;</span>) // <span style="color:#66d9ef">true</span>
+s.endsWith(<span style="color:#e6db74">&#39;!&#39;</span>) // <span style="color:#66d9ef">true</span>
+s.includes(<span style="color:#e6db74">&#39;o&#39;</span>) // <span style="color:#66d9ef">true</span>
+
+//这三个方法都支持第二个参数，表示开始搜索的位置。
+let s = <span style="color:#e6db74">&#39;Hello world!&#39;</span>;
+
+s.startsWith(<span style="color:#e6db74">&#39;world&#39;</span>, <span style="color:#ae81ff">6</span>) // <span style="color:#66d9ef">true</span> 从第n个位置直到字符串结束。
+s.endsWith(<span style="color:#e6db74">&#39;Hello&#39;</span>, <span style="color:#ae81ff">5</span>) // <span style="color:#66d9ef">true</span> 前n个字符
+s.includes(<span style="color:#e6db74">&#39;Hello&#39;</span>, <span style="color:#ae81ff">6</span>) // <span style="color:#66d9ef">false</span> 从第n个位置直到字符串结束。
+//使用第二个参数n时，endsWith的行为与其他两个方法有所不同。它针对前n个字符，而其他两个方法针对从第n个位置直到字符串结束。
+</code></pre></div></li>
+</ul>
+<h4 id="repeat">repeat()</h4>
+<ul>
+<li>基本用法：
+<code>repeat(n)</code>方法返回一个新字符串，表示将原字符串重复n次。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#e6db74">&#39;x&#39;</span>.repeat(<span style="color:#ae81ff">3</span>) // <span style="color:#e6db74">&#34;xxx&#34;</span>
+<span style="color:#e6db74">&#39;hello&#39;</span>.repeat(<span style="color:#ae81ff">2</span>) // <span style="color:#e6db74">&#34;hellohello&#34;</span>
+<span style="color:#e6db74">&#39;na&#39;</span>.repeat(<span style="color:#ae81ff">0</span>) // <span style="color:#e6db74">&#34;&#34;</span>
+  
+//参数如果是小数，会被取整。
+<span style="color:#e6db74">&#39;na&#39;</span>.repeat(<span style="color:#ae81ff">2.9</span>) // <span style="color:#e6db74">&#34;nana&#34;</span>
+
+//参数是负数或者Infinity，会报错。
+<span style="color:#e6db74">&#39;na&#39;</span>.repeat(Infinity) // RangeError
+<span style="color:#e6db74">&#39;na&#39;</span>.repeat(-<span style="color:#ae81ff">1</span>) // RangeError
+
+//如果参数是 <span style="color:#ae81ff">0</span> 到<span style="color:#ae81ff">-1</span> 之间的小数，则等同于 <span style="color:#ae81ff">0</span>,参数`NaN`等同于 <span style="color:#ae81ff">0</span>。
+<span style="color:#e6db74">&#39;na&#39;</span>.repeat(-<span style="color:#ae81ff">0.9</span>) // <span style="color:#e6db74">&#34;&#34;</span>
+<span style="color:#e6db74">&#39;na&#39;</span>.repeat(NaN) // <span style="color:#e6db74">&#34;&#34;</span>
+
+//参数是字符串，则会先转换成数字。
+<span style="color:#e6db74">&#39;na&#39;</span>.repeat(<span style="color:#e6db74">&#39;na&#39;</span>) // <span style="color:#e6db74">&#34;&#34;</span>
+<span style="color:#e6db74">&#39;na&#39;</span>.repeat(<span style="color:#e6db74">&#39;3&#39;</span>) // <span style="color:#e6db74">&#34;nanana&#34;</span>
+</code></pre></div></li>
+</ul>
+<h4 id="padstartpadend">padStart()，padEnd()</h4>
+<ul>
+<li>基本用法：
+ES2017 引入了字符串补全长度的功能。如果某个字符串不够指定长度，会在头部或尾部补全。<code>padStart()</code>用于头部补全，<code>padEnd()</code>用于尾部补全。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">//第一个参数是字符串补全生效的最大长度，第二个参数是用来补全的字符串。
+<span style="color:#e6db74">&#39;x&#39;</span>.padStart(<span style="color:#ae81ff">5</span>, <span style="color:#e6db74">&#39;ab&#39;</span>) // <span style="color:#e6db74">&#39;ababx&#39;</span>
+<span style="color:#e6db74">&#39;x&#39;</span>.padStart(<span style="color:#ae81ff">4</span>, <span style="color:#e6db74">&#39;ab&#39;</span>) // <span style="color:#e6db74">&#39;abax&#39;</span>
+
+<span style="color:#e6db74">&#39;x&#39;</span>.padEnd(<span style="color:#ae81ff">5</span>, <span style="color:#e6db74">&#39;ab&#39;</span>) // <span style="color:#e6db74">&#39;xabab&#39;</span>
+<span style="color:#e6db74">&#39;x&#39;</span>.padEnd(<span style="color:#ae81ff">4</span>, <span style="color:#e6db74">&#39;ab&#39;</span>) // <span style="color:#e6db74">&#39;xaba&#39;</span>
+
+//如果省略第二个参数，默认使用空格补全长度。
+<span style="color:#e6db74">&#39;x&#39;</span>.padStart(<span style="color:#ae81ff">4</span>) // <span style="color:#e6db74">&#39;   x&#39;</span>
+<span style="color:#e6db74">&#39;x&#39;</span>.padEnd(<span style="color:#ae81ff">4</span>) // <span style="color:#e6db74">&#39;x   &#39;</span>
+
+//如果原字符串的长度，等于或大于最大长度，则字符串补全不生效，返回原字符串。
+<span style="color:#e6db74">&#39;xxx&#39;</span>.padStart(<span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#39;ab&#39;</span>) // <span style="color:#e6db74">&#39;xxx&#39;</span>
+<span style="color:#e6db74">&#39;xxx&#39;</span>.padEnd(<span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#39;ab&#39;</span>) // <span style="color:#e6db74">&#39;xxx&#39;</span>
+</code></pre></div></li>
+<li>用途：
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">//padStart()的常见用途是为数值补全指定位数。
+<span style="color:#e6db74">&#39;1&#39;</span>.padStart(<span style="color:#ae81ff">10</span>, <span style="color:#e6db74">&#39;0&#39;</span>) // <span style="color:#e6db74">&#34;0000000001&#34;</span>
+<span style="color:#e6db74">&#39;12&#39;</span>.padStart(<span style="color:#ae81ff">10</span>, <span style="color:#e6db74">&#39;0&#39;</span>) // <span style="color:#e6db74">&#34;0000000012&#34;</span>
+<span style="color:#e6db74">&#39;123456&#39;</span>.padStart(<span style="color:#ae81ff">10</span>, <span style="color:#e6db74">&#39;0&#39;</span>) // <span style="color:#e6db74">&#34;0000123456&#34;</span>
+
+//另一个用途是提示字符串格式。
+<span style="color:#e6db74">&#39;12&#39;</span>.padStart(<span style="color:#ae81ff">10</span>, <span style="color:#e6db74">&#39;YYYY-MM-DD&#39;</span>) // <span style="color:#e6db74">&#34;YYYY-MM-12&#34;</span>
+<span style="color:#e6db74">&#39;09-12&#39;</span>.padStart(<span style="color:#ae81ff">10</span>, <span style="color:#e6db74">&#39;YYYY-MM-DD&#39;</span>) // <span style="color:#e6db74">&#34;YYYY-09-12&#34;</span>
+</code></pre></div></li>
+</ul>
+<h4 id="trimstarttrimend">trimStart()，trimEnd()</h4>
+<ul>
+<li>基本用法：
+ES2019 对字符串实例新增了<code>trimStart()</code>和<code>trimEnd()</code>这两个方法。它们的行为与<code>trim()</code>一致，<code>trimStart()</code>消除字符串头部的空格，<code>trimEnd()</code>消除尾部的空格。它们返回的都是新字符串，不会修改原始字符串。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">const s = <span style="color:#e6db74">&#39;  abc  &#39;</span>;
+
+s.trim() // <span style="color:#e6db74">&#34;abc&#34;</span>
+s.trimStart() // <span style="color:#e6db74">&#34;abc  &#34;</span>
+s.trimEnd() // <span style="color:#e6db74">&#34;  abc&#34;</span>
+</code></pre></div><p>除了空格键，这两个方法对字符串头部（或尾部）的 <code>tab 键</code>、<code>换行符</code>等不可见的空白符号也有效。
+浏览器还部署了额外的两个方法，<code>trimLeft()</code>是<code>trimStart()</code>的别名，<code>trimRight()</code>是<code>trimEnd()</code>的别名。</p>
+</li>
+</ul>
+<h4 id="matchall">matchAll()</h4>
+<ul>
+<li>基本用法：
+<code>matchAll()</code>方法返回一个正则表达式在当前字符串的所有匹配。</li>
+</ul>
+<h2 id="heading6">参考</h2>
+<ul>
+<li><a href="https://es6.ruanyifeng.com/">ECMAScript 6 入门</a></li>
+</ul>
+
+                
+                
+<div class="entry-shang text-center">
+    
+	    <p>「真诚赞赏，手留余香」</p>
+	
+	<button class="zs show-zs btn btn-bred">赞赏支持</button>
+</div>
+<div class="zs-modal-bg"></div>
+<div class="zs-modal-box">
+	<div class="zs-modal-head">
+		<button type="button" class="close">×</button>
+		<span class="author">
+			
+				<img src="/img/favicon.png" />
+				
+			
+		</span>
+        
+	        <p class="tip"><i></i><span>真诚赞赏，手留余香</span></p>
+		
+ 
+	</div>
+	<div class="zs-modal-body">
+		<div class="zs-modal-btns">
+			<button class="btn btn-blink" data-num="2">2元</button>
+			<button class="btn btn-blink" data-num="5">5元</button>
+			<button class="btn btn-blink" data-num="10">10元</button>
+			<button class="btn btn-blink" data-num="50">50元</button>
+			<button class="btn btn-blink" data-num="100">100元</button>
+			<button class="btn btn-blink" data-num="1">任意金额</button>
+		</div>
+		<div class="zs-modal-pay">
+			<button class="btn btn-bred" id="pay-text">任意金额</button>
+			<p>使用<span id="pay-type">微信</span>扫描二维码完成支付</p>
+			<img src="/img/reward/wechat.png"  id="pay-image"/>
+		</div>
+	</div>
+	<div class="zs-modal-footer">
+		<label>
+			<input type="radio" name="zs-type" value="wechat" class="zs-type" checked="checked">
+			<img src="/img/reward/wechat-btn.png"/>
+		</label>
+		<label>
+			<input type="radio" name="zs-type" value="alipay" class="zs-type" class="zs-alipay">
+			<img src="/img/reward/alipay-btn.png"/>
+		</label>
+	</div>
+</div>
+<script type="text/javascript" src="/js/reward.js"></script>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2019/12/13/es6-1part/" data-toggle="tooltip" data-placement="top" title="ECMAScript 6（一）">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/es6" title="es6">
+                            es6
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/istio" title="istio">
+                            istio
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/microservice" title="microservice">
+                            microservice
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/security" title="security">
+                            security
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/service-mesh" title="service-mesh">
+                            service-mesh
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/tips" title="tips">
+                            tips
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                    
+                    <li>
+                        <a href="mailto:leezhuang96@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="/img/wechat_qrcode.jpg">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/leezhuang96">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Jordon&#39;s Blog 2019
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>
