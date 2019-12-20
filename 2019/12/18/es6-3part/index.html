@@ -189,7 +189,7 @@
                         
                     </div>
                     <h1>ECMAScript 6（三）</h1>
-                    <h2 class="subheading">数值的扩展</h2>
+                    <h2 class="subheading">数值的扩展 &amp; 函数的扩展</h2>
                     <span class="meta">
                         Posted by 
                         
@@ -230,16 +230,27 @@
     <li><a href="#heading">数值的扩展</a>
       <ul>
         <li><a href="#heading1">二进制和八进制表示法</a></li>
-        <li><a href="#numberisfinite-numberisnan">Number.isFinite(), Number.isNaN()</a></li>
-        <li><a href="#numberparseint-numberparsefloat">Number.parseInt(), Number.parseFloat()</a></li>
-        <li><a href="#numberisinteger">Number.isInteger()</a></li>
-        <li><a href="#numberepsilon">Number.EPSILON</a></li>
-        <li><a href="#-numberissafeinteger">安全整数和 Number.isSafeInteger()</a></li>
+        <li><a href="#number-">Number 对象的扩展</a></li>
         <li><a href="#math-">Math 对象的扩展</a></li>
+        <li><a href="#heading2">指数运算符</a></li>
       </ul>
     </li>
-    <li><a href="#heading3"></a></li>
-    <li><a href="#heading4">参考</a></li>
+    <li><a href="#heading3">函数的扩展</a>
+      <ul>
+        <li><a href="#heading4">函数参数的默认值</a></li>
+        <li><a href="#-length-">函数的 length 属性</a></li>
+        <li><a href="#rest-">rest 参数</a></li>
+        <li><a href="#name-">name 属性</a></li>
+        <li><a href="#heading6">箭头函数</a></li>
+        <li><a href="#heading7">严格模式</a></li>
+        <li><a href="#heading8">尾调用优化</a></li>
+        <li><a href="#heading9">尾递归</a></li>
+        <li><a href="#heading10">函数参数的尾逗号</a></li>
+        <li><a href="#functionprototypetostring">Function.prototype.toString()</a></li>
+        <li><a href="#catch-">catch 命令的参数省略</a></li>
+      </ul>
+    </li>
+    <li><a href="#heading11">参考</a></li>
   </ul>
 </nav>
                 
@@ -258,7 +269,8 @@ Number(<span style="color:#e6db74">&#39;0b111&#39;</span>)  // <span style="colo
 Number(<span style="color:#e6db74">&#39;0o10&#39;</span>)  // <span style="color:#ae81ff">8</span>
 </code></pre></div></li>
 </ul>
-<h3 id="numberisfinite-numberisnan">Number.isFinite(), Number.isNaN()</h3>
+<h3 id="number-">Number 对象的扩展</h3>
+<h4 id="numberisfinite-numberisnan">Number.isFinite(), Number.isNaN()</h4>
 <ul>
 <li>
 <p>基本用法：</p>
@@ -266,7 +278,14 @@ Number(<span style="color:#e6db74">&#39;0o10&#39;</span>)  // <span style="color
 <li><code>Number.isFinite()</code>: 用来检查一个数值是否为有限的（finite），即不是<code>Infinity</code>。如果参数类型不是数值，<code>Number.isFinite</code>一律返回<code>false</code>。</li>
 <li><code>Number.isNaN()</code>:用来检查一个值是否为NaN。如果参数类型不是<code>NaN</code>，<code>Number.isNaN</code>一律返回<code>false</code>。</li>
 </ul>
-<p>它们与传统的全局方法<code>isFinite()</code>和<code>isNaN()</code>的区别在于，传统方法先调用<code>Number()</code>将非数值的值转为数值，再进行判断，而这两个新方法只对数值有效，<code>Number.isFinite()</code>对于非数值一律返回false, <code>Number.isNaN()</code>只有对于NaN才返回true，非NaN一律返回false。</p>
+</li>
+<li>
+<p>区别：</p>
+<ul>
+<li>全局方法<code>isFinite()</code>和<code>isNaN()</code>: 先调用<code>Number()</code>将非数值的值转为数值，再进行判断。</li>
+<li><code>Number.isFinite()</code>: 只对数值有效, 对于非数值一律返回<code>false</code>。</li>
+<li><code>Number.isNaN()</code>：只对数值有效, 只有对于<code>NaN</code>才返回<code>true</code>，非<code>NaN</code>一律返回<code>false</code>。</li>
+</ul>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">isFinite(<span style="color:#ae81ff">25</span>) // <span style="color:#66d9ef">true</span>
 isFinite(<span style="color:#e6db74">&#34;25&#34;</span>) // <span style="color:#66d9ef">true</span>
 Number.isFinite(<span style="color:#ae81ff">25</span>) // <span style="color:#66d9ef">true</span>
@@ -279,10 +298,11 @@ Number.isNaN(<span style="color:#e6db74">&#34;NaN&#34;</span>) // <span style="c
 Number.isNaN(<span style="color:#ae81ff">1</span>) // <span style="color:#66d9ef">false</span>
 </code></pre></div></li>
 </ul>
-<h3 id="numberparseint-numberparsefloat">Number.parseInt(), Number.parseFloat()</h3>
+<h4 id="numberparseint-numberparsefloat">Number.parseInt(), Number.parseFloat()</h4>
 <ul>
 <li>基本用法：
-ES6 将全局方法<code>parseInt()</code>和<code>parseFloat()</code>，移植到<code>Number</code>对象上面，行为完全保持不变。这样做的目的，是逐步减少全局性方法，使得语言逐步模块化。
+ES6 将全局方法<code>parseInt()</code>和<code>parseFloat()</code>，移植到<code>Number</code>对象上面，行为完全保持不变。
+这样做的目的，是逐步减少全局性方法，使得语言逐步模块化。
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">// ES5的写法
 parseInt(<span style="color:#e6db74">&#39;12.34&#39;</span>) // <span style="color:#ae81ff">12</span>
 parseFloat(<span style="color:#e6db74">&#39;123.45#&#39;</span>) // <span style="color:#ae81ff">123.45</span>
@@ -292,12 +312,12 @@ Number.parseInt(<span style="color:#e6db74">&#39;12.34&#39;</span>) // <span sty
 Number.parseFloat(<span style="color:#e6db74">&#39;123.45#&#39;</span>) // <span style="color:#ae81ff">123.45</span>
 </code></pre></div></li>
 </ul>
-<h3 id="numberisinteger">Number.isInteger()</h3>
+<h4 id="numberisinteger">Number.isInteger()</h4>
 <ul>
 <li>基本用法：
 <code>Number.isInteger()</code>用来判断一个数值是否为整数。</li>
 </ul>
-<h3 id="numberepsilon">Number.EPSILON</h3>
+<h4 id="numberepsilon">Number.EPSILON</h4>
 <ul>
 <li>
 <p>基本用法：
@@ -306,7 +326,7 @@ ES6 在<code>Number</code>对象上面，新增一个极小的常量<code>Number
 <p>引入一个这么小的量的目的，在于为浮点数计算，设置一个误差范围。我们知道浮点数计算是不精确的。</p>
 </li>
 </ul>
-<h3 id="-numberissafeinteger">安全整数和 Number.isSafeInteger()</h3>
+<h4 id="--numberissafeinteger">安全整数 和 Number.isSafeInteger()</h4>
 <ul>
 <li>基本用法：
 JavaScript 能够准确表示的整数范围在<code>-2^53</code>到<code>2^53</code>之间（不含两个端点），超过这个范围，无法精确表示这个值。ES6 引入了<code>Number.MAX_SAFE_INTEGER</code>和<code>Number.MIN_SAFE_INTEGER</code>这两个常量，用来表示这个范围的上下限。
@@ -360,7 +380,7 @@ JavaScript 能够准确表示的整数范围在<code>-2^53</code>到<code>2^53</
 <ul>
 <li>基本用法：
 <ul>
-<li>Math.expm1(x)<code>返回 </code>ex - 1<code>，即</code>Math.exp(x) - 1`。</li>
+<li><code>Math.expm1(x)</code>返回 <code>ex - 1</code>，即<code>Math.exp(x) - 1</code>。</li>
 <li><code>Math.log1p(x)</code>方法返回<code>1 + x</code>的自然对数，即<code>Math.log(1 + x)</code>。如果x小于-1，返回<code>NaN</code>。</li>
 <li><code>Math.log10(x)</code>返回以 10 为底的x的对数。如果x小于 0，则返回 <code>NaN</code>。</li>
 <li><code>Math.log2(x)</code>返回以 2 为底的x的对数。如果x小于 0<code>，则返回 </code>NaN`。</li>
@@ -380,13 +400,251 @@ JavaScript 能够准确表示的整数范围在<code>-2^53</code>到<code>2^53</
 </ul>
 </li>
 </ul>
-<h4 id="heading2">指数运算符</h4>
+<h3 id="heading2">指数运算符</h3>
 <ul>
 <li>基本用法：
-ES2016 新增了一个指数运算符（<code>**</code>）。</li>
+ES2016 新增了一个指数运算符（<code>**</code>）。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">  <span style="color:#ae81ff">2</span> <span style="color:#75715e">**</span> <span style="color:#ae81ff">2</span> // <span style="color:#ae81ff">4</span>
+  <span style="color:#ae81ff">2</span> <span style="color:#75715e">**</span> <span style="color:#ae81ff">3</span> // <span style="color:#ae81ff">8</span>
+</code></pre></div></li>
 </ul>
-<h2 id="heading3"></h2>
-<h2 id="heading4">参考</h2>
+<h2 id="heading3">函数的扩展</h2>
+<h3 id="heading4">函数参数的默认值</h3>
+<ul>
+<li>基本用法：
+ES6 允许为函数的参数设置默认值，即直接写在参数定义的后面。
+参数变量是默认声明的，所以不能用<code>let</code>或<code>const</code>再次声明。
+参数默认值不是传值的，而是每次都重新计算默认值表达式的值。也就是说，参数默认值是<code>惰性求值</code>的。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">  function log(x, y = <span style="color:#e6db74">&#39;World&#39;</span>) {
+    console.log(x, y);
+  }
+
+  log(<span style="color:#e6db74">&#39;Hello&#39;</span>) // Hello World
+  log(<span style="color:#e6db74">&#39;Hello&#39;</span>, <span style="color:#e6db74">&#39;China&#39;</span>) // Hello China
+  log(<span style="color:#e6db74">&#39;Hello&#39;</span>, <span style="color:#e6db74">&#39;&#39;</span>) // Hello
+
+  //与解构赋值默认值结合使用
+  function foo({x, y = <span style="color:#ae81ff">5</span>} = {}) {
+    console.log(x, y);
+  }
+
+  foo() // undefined <span style="color:#ae81ff">5</span>
+</code></pre></div></li>
+</ul>
+<h4 id="heading5">作用域</h4>
+<ul>
+<li>基本用法：
+一旦设置了参数的默认值，函数进行声明初始化时，参数会形成一个单独的作用域（context）。等到初始化结束，这个作用域就会消失。这种语法行为，在不设置参数默认值时，是不会出现的。</li>
+</ul>
+<h3 id="-length-">函数的 length 属性</h3>
+<ul>
+<li>基本用法：
+指定了默认值以后，函数的<code>length</code>属性，将返回没有指定默认值的参数个数。也就是说，指定了默认值后，<code>length</code>属性将失真。
+这是因为<code>length</code>属性的含义是，该函数预期传入的参数个数。某个参数指定默认值以后，预期传入的参数个数就不包括这个参数了。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">  (function (a) {}).length // <span style="color:#ae81ff">1</span>
+  (function (a = <span style="color:#ae81ff">5</span>) {}).length // <span style="color:#ae81ff">0</span>
+  (function (a, b, c = <span style="color:#ae81ff">5</span>) {}).length // <span style="color:#ae81ff">2</span>
+
+  //函数的length属性，不包括 rest 参数。
+  (function(...args) {}).length // <span style="color:#ae81ff">0</span>
+
+  //如果设置了默认值的参数不是尾参数，那么length属性也不再计入后面的参数了。
+  (function (a = <span style="color:#ae81ff">0</span>, b, c) {}).length // <span style="color:#ae81ff">0</span>
+  (function (a, b = <span style="color:#ae81ff">1</span>, c) {}).length // <span style="color:#ae81ff">1</span>
+</code></pre></div></li>
+</ul>
+<h3 id="rest-">rest 参数</h3>
+<ul>
+<li>基本用法：
+ES6 引入 <code>rest</code> 参数（形式为<code>...变量名</code>：rest参数）（<code>...</code>：扩展运算符），用于获取函数的多余参数，这样就不需要使用<code>arguments</code>对象了。<code>rest</code> 参数搭配的变量是一个数组，该变量将多余的参数放入数组中。
+注意，<code>rest</code> 参数之后不能再有其他参数（即只能是最后一个参数），否则会报错。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">  function add(...values) {
+    let sum = <span style="color:#ae81ff">0</span>;
+
+    for (var val of values) {
+      sum += val;
+    }
+
+    return sum;
+  }
+
+  add(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>) // <span style="color:#ae81ff">10</span>
+</code></pre></div></li>
+</ul>
+<h3 id="name-">name 属性</h3>
+<ul>
+<li>基本用法：
+函数的<code>name</code>属性，返回该函数的函数名。这个属性早就被浏览器广泛支持，但是直到 ES6，才将其写入了标准。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">  function foo() {}
+  foo.name // <span style="color:#e6db74">&#34;foo&#34;</span>
+
+  //将一个匿名函数赋值给一个变量
+  var f = function () {};
+  // ES5
+  f.name // <span style="color:#e6db74">&#34;&#34;</span>
+  // ES6
+  f.name // <span style="color:#e6db74">&#34;f&#34;</span>
+
+  //将一个具名函数赋值给一个变量
+  const bar = function baz() {};
+  // ES5
+  bar.name // <span style="color:#e6db74">&#34;baz&#34;</span>
+  // ES6
+  bar.name // <span style="color:#e6db74">&#34;baz&#34;</span>
+
+  //Function构造函数返回的函数实例，name属性的值为anonymous。
+  (new Function).name // <span style="color:#e6db74">&#34;anonymous&#34;</span>
+
+  //bind返回的函数，name属性值会加上bound前缀。
+  function foo() {};
+  foo.bind({}).name // <span style="color:#e6db74">&#34;bound foo&#34;</span>
+  (function(){}).bind({}).name // <span style="color:#e6db74">&#34;bound &#34;</span>
+</code></pre></div></li>
+</ul>
+<h3 id="heading6">箭头函数</h3>
+<ul>
+<li>基本用法：
+ES6 允许使用“箭头”（<code>=&gt;</code>）定义函数。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">  var f = v =&gt; v;
+  // 等同于
+  var f = function (v) {
+    return v;
+  };
+
+  //如果箭头函数不需要参数或需要多个参数，就使用一个圆括号代表参数部分。
+  var f = () =&gt; <span style="color:#ae81ff">5</span>;
+  // 等同于
+  var f = function () { return <span style="color:#ae81ff">5</span> };
+
+  var sum = (num1, num2) =&gt; num1 + num2;
+  // 等同于
+  var sum = function(num1, num2) {
+    return num1 + num2;
+  };
+
+  //如果箭头函数的代码块部分多于一条语句，就要使用大括号将它们括起来，并且使用return语句返回。
+  var sum = (num1, num2) =&gt; { 
+    //...
+    return num1 + num2; 
+  };
+
+  //由于大括号被解释为代码块，所以如果箭头函数直接返回一个对象，必须在对象外面加上括号，否则会报错。
+  let getTempItem = id =&gt; { id: id, name: <span style="color:#e6db74">&#34;Temp&#34;</span> }; // 报错
+  let getTempItem = id =&gt; ({ id: id, name: <span style="color:#e6db74">&#34;Temp&#34;</span> }); // 不报错
+</code></pre></div><ul>
+<li>使用注意点
+<ul>
+<li>函数体内的<code>this</code>对象，就是定义时所在的对象，而不是使用时所在的对象。箭头函数让<code>this</code>指向固定化。</li>
+<li>不可以当作构造函数，也就是说，不可以使用<code>new</code>命令，否则会抛出一个错误。</li>
+<li>不可以使用<code>arguments</code>对象，该对象在函数体内不存在。如果要用，可以用 <code>rest 参数</code>代替。</li>
+<li>不可以使用<code>yield</code>命令，因此箭头函数不能用作<code>Generator</code>函数。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="heading7">严格模式</h3>
+<ul>
+<li>
+<p>基本用法：
+从 ES5 开始，函数内部可以设定为严格模式。
+ES2016 做了一点修改，规定只要函数参数使用了默认值、解构赋值、或者扩展运算符，那么函数内部就不能显式设定为严格模式，否则会报错。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">  function doSomething(a, b) {
+    <span style="color:#e6db74">&#39;use strict&#39;</span>;
+    // code
+  }
+
+  // 报错
+  function doSomething(a, b = a) {
+    <span style="color:#e6db74">&#39;use strict&#39;</span>;
+    // code
+  }
+
+  // 报错
+  const doSomething = function ({a, b}) {
+    <span style="color:#e6db74">&#39;use strict&#39;</span>;
+    // code
+  };
+
+  // 报错
+  const doSomething = (...a) =&gt; {
+    <span style="color:#e6db74">&#39;use strict&#39;</span>;
+    // code
+  };
+</code></pre></div><p>这样规定的原因是，函数内部的严格模式，同时适用于函数体和函数参数。但是，函数执行的时候，先执行函数参数，然后再执行函数体。这样就有一个不合理的地方，只有从函数体之中，才能知道参数是否应该以严格模式执行，但是参数却应该先于函数体执行。</p>
+<p>两种方法可以规避这种限制:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">  //第一种是设定全局性的严格模式
+  <span style="color:#e6db74">&#39;use strict&#39;</span>;
+
+  function doSomething(a, b = a) {
+    // code
+  }
+
+  //第二种是把函数包在一个无参数的立即执行函数里面。
+  const doSomething = (function () {
+    <span style="color:#e6db74">&#39;use strict&#39;</span>;
+    return function(value = <span style="color:#ae81ff">42</span>) {
+      return value;
+    };
+  }());
+</code></pre></div></li>
+</ul>
+<h3 id="heading8">尾调用优化</h3>
+<ul>
+<li>基本用法：
+<code>尾调用（Tail Call）</code>是函数式编程的一个重要概念，指某个函数的最后一步是调用另一个函数。函数调用会在内存形成一个<code>调用记录</code>，又称<code>调用帧（call frame）</code>。<code>尾调用优化（Tail call optimization）</code>，即只保留内层函数的调用帧。
+如果所有函数都是尾调用，那么完全可以做到每次执行时，调用帧只有一项，这将大大节省内存。这就是<code>尾调用优化</code>的意义。
+ES6 的<code>尾调用优化</code>只在严格模式下开启，正常模式是无效的。这是因为在正常模式下，函数内部有两个变量，可以跟踪函数的调用栈。
+<ul>
+<li><code>func.arguments</code>：返回调用时函数的参数。</li>
+<li><code>func.caller</code>：返回调用当前函数的那个函数。
+尾调用优化发生时，函数的调用栈会改写，因此上面两个变量就会失真。严格模式禁用这两个变量，所以尾调用模式仅在严格模式下生效。
+注意，目前只有 Safari 浏览器支持尾调用优化，Chrome 和 Firefox 都不支持。</li>
+</ul>
+</li>
+</ul>
+<h3 id="heading9">尾递归</h3>
+<ul>
+<li>基本用法：
+函数调用自身，称为递归。如果尾调用自身，就称为尾递归。尾递归的实现，往往需要改写递归函数，确保最后一步只调用自身。做到这一点的方法，就是把所有用到的内部变量改写成函数的参数。</li>
+</ul>
+<h3 id="heading10">函数参数的尾逗号</h3>
+<ul>
+<li>基本用法：
+ES2017 允许函数的最后一个参数有尾逗号（trailing comma）。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">  function clownsEverywhere(
+    param1,
+    param2,
+  ) { /* ... <span style="color:#75715e">*/</span> }
+</code></pre></div></li>
+</ul>
+<h3 id="functionprototypetostring">Function.prototype.toString()</h3>
+<ul>
+<li>基本用法：
+ES2019 对函数实例的<code>toString()</code>方法做出了修改。<code>toString()</code>方法返回函数代码本身，以前会省略注释和空格。修改后的<code>toString()</code>方法，明确要求返回一模一样的原始代码。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">  function /* foo comment <span style="color:#75715e">*/</span> foo () {}
+
+  //ES5:
+  foo.toString()
+  // function foo() {}
+
+  //ES6:
+  foo.toString()
+  // <span style="color:#e6db74">&#34;function /* foo comment */ foo () {}&#34;</span>
+</code></pre></div></li>
+</ul>
+<h3 id="catch-">catch 命令的参数省略</h3>
+<ul>
+<li>基本用法：
+JavaScript 语言的<code>try...catch</code>结构，以前明确要求<code>catch</code>命令后面必须跟参数，接受<code>try</code>代码块抛出的错误对象。ES2019 做出了改变，允许<code>catch</code>语句省略参数。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">  try {
+    // ...
+  } catch {
+    // ...
+  }
+</code></pre></div></li>
+</ul>
+<h2 id="heading11">参考</h2>
 <ul>
 <li><a href="https://es6.ruanyifeng.com/">ECMAScript 6 入门</a></li>
 </ul>
