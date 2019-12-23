@@ -253,7 +253,8 @@
 <h3 id="-unicode-">字符的 Unicode 表示法</h3>
 <ul>
 <li>基本用法：
-ES6 加强了对 Unicode 的支持，允许采用<code>\uxxxx</code>形式表示一个字符，其中<code>xxxx</code>表示字符的 Unicode 码点。但是，这种表示法只限于码点在<code>\u0000`~</code>\uFFFF`之间的字符。超出这个范围的字符，必须用两个双字节的形式表示。
+ES6 加强了对<code>Unicode</code>的支持，允许采用<code>\uxxxx</code>形式表示一个字符，其中<code>xxxx</code>表示字符的<code>Unicode</code>码点。
+但是，这种表示法只限于码点在<code>\u0000`~</code>\uFFFF`之间的字符。超出这个范围的字符，必须用两个双字节的形式表示。
 ES6 对这一点做出了改进，只要将码点放入大括号，就能正确解读该字符。有了这种表示法之后，JavaScript 共有 6 种方法可以表示一个字符:
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#e6db74">&#39;\z&#39;</span> === <span style="color:#e6db74">&#39;z&#39;</span>  // <span style="color:#66d9ef">true</span>
 <span style="color:#e6db74">&#39;\172&#39;</span> === <span style="color:#e6db74">&#39;z&#39;</span> // <span style="color:#66d9ef">true</span>
@@ -273,8 +274,10 @@ ES6 为字符串添加了遍历器接口<code>Iterator</code>，使得字符串�
 // <span style="color:#e6db74">&#34;f&#34;</span>
 // <span style="color:#e6db74">&#34;o&#34;</span>
 // <span style="color:#e6db74">&#34;o&#34;</span>
-</code></pre></div><p>除了遍历字符串，这个遍历器最大的优点是可以识别大于0xFFFF的码点，传统的for循环无法识别这样的码点。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">for (let i of text) {
+
+//除了遍历字符串，这个遍历器最大的优点是可以识别大于0xFFFF的码点，传统的for循环无法识别这样的码点。
+let text = String.fromCodePoint(0x20BB7);
+for (let i of text) {
   console.log(i);
 }
 // <span style="color:#e6db74">&#34;𠮷&#34;</span>
@@ -289,10 +292,10 @@ U+000D：回车（carriage return）
 U<span style="color:#ae81ff">+2028</span>：行分隔符（line separator）
 U<span style="color:#ae81ff">+2029</span>：段分隔符（paragraph separator）
 U+000A：换行符（line feed）
-</code></pre></div><p>这个规定本身没有问题，麻烦在于 JSON 格式允许字符串里面直接使用 U+2028（行分隔符）和 U+2029（段分隔符）。这样一来，服务器输出的 JSON 被<code>JSON.parse</code>解析，就有可能直接报错。</p>
+</code></pre></div><p>这个规定本身没有问题，麻烦在于 JSON 格式允许字符串里面直接使用<code>U+2028</code>（行分隔符）和<code>U+2029</code>（段分隔符）。这样一来，服务器输出的 JSON 被<code>JSON.parse</code>解析，就有可能直接报错。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">const json = <span style="color:#e6db74">&#39;&#34;\u2028&#34;&#39;</span>;
 JSON.parse(json); // 可能报错
-</code></pre></div><p>JSON 格式已经冻结（RFC 7159），没法修改了。为了消除这个报错，ES2019 允许 JavaScript 字符串直接输入 U+2028（行分隔符）和 U+2029（段分隔符）。</p>
+</code></pre></div><p>JSON 格式已经冻结（RFC 7159），没法修改了。为了消除这个报错，ES2019 允许 JavaScript 字符串直接输入 <code>U+2028</code>（行分隔符）和 <code>U+2029</code>（段分隔符）。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">const PS = eval(<span style="color:#e6db74">&#34;&#39;\u2029&#39;&#34;</span>);
 </code></pre></div><p>注意，模板字符串现在就允许直接输入这两个字符。另外，正则表达式依然不允许直接输入这两个字符，这是没有问题的，因为 JSON 本来就不允许直接包含正则表达式。</p>
 </li>
@@ -300,8 +303,9 @@ JSON.parse(json); // 可能报错
 <h3 id="jsonstringify-">JSON.stringify() 的改造</h3>
 <ul>
 <li>基本用法：
-根据标准，JSON 数据必须是 UTF-8 编码。但是，现在的JSON.stringify()方法有可能返回不符合 UTF-8 标准的字符串。具体来说，UTF-8 标准规定，0xD800到0xDFFF之间的码点，不能单独使用，必须配对使用。
-JSON.stringify()的问题在于，它可能返回0xD800到0xDFFF之间的单个码点。为了确保返回的是合法的 UTF-8 字符，ES2019 改变了JSON.stringify()的行为。如果遇到0xD800到0xDFFF之间的单个码点，或者不存在的配对形式，它会返回转义字符串，留给应用自己决定下一步的处理。
+根据标准，JSON 数据必须是 UTF-8 编码。但是，现在的<code>JSON.stringify()</code>方法有可能返回不符合 UTF-8 标准的字符串。
+具体来说，UTF-8 标准规定，<code>0xD800</code>到<code>0xDFFF</code>之间的码点，不能单独使用，必须配对使用。<code>JSON.stringify()</code>的问题在于，它可能返回<code>0xD800</code>到<code>0xDFFF之间</code>的单个码点。
+为了确保返回的是合法的 UTF-8 字符，ES2019 改变了<code>JSON.stringify()</code>的行为。如果遇到<code>0xD800</code>到<code>0xDFFF</code>之间的单个码点，或者不存在的配对形式，它会返回转义字符串，留给应用自己决定下一步的处理。
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">JSON.stringify(<span style="color:#e6db74">&#39;\u{D834}&#39;</span>) // <span style="color:#e6db74">&#34;&#34;</span>\\uD834<span style="color:#e6db74">&#34;&#34;</span>
 JSON.stringify(<span style="color:#e6db74">&#39;\uDF06\uD834&#39;</span>) // <span style="color:#e6db74">&#34;&#34;</span>\\udf06\\ud834<span style="color:#e6db74">&#34;&#34;</span>
 </code></pre></div></li>
@@ -328,7 +332,7 @@ let name = <span style="color:#e6db74">&#34;Bob&#34;</span>, time = <span style=
 <h3 id="heading3">标签模板</h3>
 <ul>
 <li>基本用法：
-模板字符串的功能，不仅仅是上面这些。它可以紧跟在一个函数名后面，该函数将被调用来处理这个模板字符串。这被称为“标签模板”功能（tagged template）。
+模板字符串的功能不仅仅是上面这些，它可以紧跟在一个函数名后面，该函数将被调用来处理这个模板字符串。这被称为<code>标签模板</code>功能（tagged template）。
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">alert`<span style="color:#ae81ff">123</span>`
 // 等同于
 alert(<span style="color:#ae81ff">123</span>)
@@ -361,14 +365,14 @@ String.fromCodePoint(<span style="color:#ae81ff">0x78</span>, <span style="color
 <h3 id="stringraw">String.raw()</h3>
 <ul>
 <li>基本用法：
-ES6 还为原生的 String 对象，提供了一个raw()方法。该方法返回一个斜杠都被转义（即斜杠前面再加一个斜杠）的字符串，往往用于模板字符串的处理方法。
+ES6 还为原生的<code>String</code>对象，提供了一个<code>raw()</code>方法。该方法返回一个斜杠都被转义的字符串，往往用于模板字符串的处理方法。
+<code>String.raw()</code>方法可以作为处理模板字符串的基本方法，它会将所有变量替换，而且对斜杠进行转义，方便下一步作为字符串来使用。
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">String.raw`Hi\n${<span style="color:#ae81ff">2</span><span style="color:#ae81ff">+3</span>}!`
 // 实际返回 <span style="color:#e6db74">&#34;Hi\\n5!&#34;</span>，显示的是转义后的结果 <span style="color:#e6db74">&#34;Hi\n5!&#34;</span>
 
 String.raw`Hi\u000A!`;
 // 实际返回 <span style="color:#e6db74">&#34;Hi\\u000A!&#34;</span>，显示的是转义后的结果 <span style="color:#e6db74">&#34;Hi\u000A!&#34;</span>
-</code></pre></div><p>String.raw()方法可以作为处理模板字符串的基本方法，它会将所有变量替换，而且对斜杠进行转义，方便下一步作为字符串来使用。</p>
-</li>
+</code></pre></div></li>
 </ul>
 <h3 id="heading5">实例方法</h3>
 <h4 id="codepointat">codePointAt()</h4>
@@ -391,8 +395,8 @@ s.charCodeAt(<span style="color:#ae81ff">1</span>) // <span style="color:#ae81ff
 <li>基本用法：
 许多欧洲语言有语调符号和重音符号。为了表示它们，Unicode 提供了两种方法：
 <ul>
-<li>一种是直接提供带重音符号的字符，比如Ǒ（\u01D1）。</li>
-<li>另一种是提供合成符号（combining character），即原字符与重音符号的合成，两个字符合成一个字符，比如O（\u004F）和ˇ（\u030C）合成Ǒ（\u004F\u030C）。
+<li>一种是直接提供带重音符号的字符，比如Ǒ（<code>\u01D1</code>）。</li>
+<li>另一种是提供合成符号（combining character），即原字符与重音符号的合成，两个字符合成一个字符，比如O（<code>\u004F</code>）和ˇ（<code>\u030C</code>）合成Ǒ（<code>\u004F\u030C</code>）。
 这两种表示方法，在视觉和语义上都等价，但是 JavaScript 不能识别。ES6 提供字符串实例的<code>normalize()</code>方法，用来将字符的不同表示方法统一为同样的形式，这称为 <code>Unicode 正规化</code>。</li>
 </ul>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">ES5:
@@ -409,7 +413,7 @@ ES6:
 <h4 id="includes-startswith-endswith">includes(), startsWith(), endsWith()</h4>
 <ul>
 <li>基本用法：
-传统上，JavaScript 只有<code>indexOf</code>方法，可以用来确定一个字符串是否包含在另一个字符串中。ES6 又提供了三种新方法。
+传统上，JavaScript 只有<code>indexOf</code>方法，可以用来确定一个字符串是否包含在另一个字符串中。ES6 又提供了三种新方法:
 <ul>
 <li><code>includes()</code>：返回布尔值，表示是否找到了参数字符串。</li>
 <li><code>startsWith()</code>：返回布尔值，表示参数字符串是否在原字符串的头部。</li>
@@ -424,10 +428,11 @@ s.includes(<span style="color:#e6db74">&#39;o&#39;</span>) // <span style="color
 //这三个方法都支持第二个参数，表示开始搜索的位置。
 let s = <span style="color:#e6db74">&#39;Hello world!&#39;</span>;
 
+//使用第二个参数n时，endsWith的行为与其他两个方法有所不同。
+//它针对前n个字符，而其他两个方法针对从第n个位置直到字符串结束。
 s.startsWith(<span style="color:#e6db74">&#39;world&#39;</span>, <span style="color:#ae81ff">6</span>) // <span style="color:#66d9ef">true</span> 从第n个位置直到字符串结束。
 s.endsWith(<span style="color:#e6db74">&#39;Hello&#39;</span>, <span style="color:#ae81ff">5</span>) // <span style="color:#66d9ef">true</span> 前n个字符
 s.includes(<span style="color:#e6db74">&#39;Hello&#39;</span>, <span style="color:#ae81ff">6</span>) // <span style="color:#66d9ef">false</span> 从第n个位置直到字符串结束。
-//使用第二个参数n时，endsWith的行为与其他两个方法有所不同。它针对前n个字符，而其他两个方法针对从第n个位置直到字符串结束。
 </code></pre></div></li>
 </ul>
 <h4 id="repeat">repeat()</h4>

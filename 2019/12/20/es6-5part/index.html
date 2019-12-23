@@ -251,7 +251,6 @@
         <li><a href="#objectfromentries---">Object.fromEntries() 键值对数组 -> 对象</a></li>
       </ul>
     </li>
-    <li><a href="#heading8">参考</a></li>
   </ul>
 </nav>
                 
@@ -323,10 +322,13 @@ ES6 一共有 5 种方法可以遍历对象的属性。
 <li><code>Object.getOwnPropertyNames(obj)</code>:返回一个数组，包含对象自身的（不含继承的）所有属性（不含 <code>Symbol</code> 属性，但是包括不可枚举属性）的键名</li>
 <li><code>Object.getOwnPropertySymbols(obj)</code>:返回一个数组，包含对象自身的（不含继承的）所有 <code>Symbol</code> 属性的键名</li>
 <li><code>Reflect.ownKeys(obj)</code>:回一个数组，包含对象自身的（不含继承的）所有键名，不管键名是 <code>Symbol</code> 或字符串，也不管是否可枚举。
-以上的 5 种方法遍历对象的键名，都遵守同样的属性遍历的次序规则:</li>
+以上的 5 种方法遍历对象的键名，都遵守同样的属性遍历的次序规则:
+<ul>
 <li>首先遍历所有数值键，按照数值升序排列。</li>
 <li>其次遍历所有字符串键，按照加入时间升序排列。</li>
-<li>最后遍历所有 Symbol 键，按照加入时间升序排列。</li>
+<li>最后遍历所有 <code>Symbol</code> 键，按照加入时间升序排列。</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -388,8 +390,10 @@ a == <span style="color:#66d9ef">null</span> ? undefined : a()
 <h3 id="null-">Null 判断运算符（??）</h3>
 <ul>
 <li>基本用法：
-<code>||</code>: 运算符左侧的值为<code>null`,</code>undefined<code>,</code>空字符串<code>,</code>false<code>或`0</code>时，会返回右侧的值。
-<code>??</code>: 只有运算符左侧的值为<code>null</code>或<code>undefined</code>时，才会返回右侧的值。
+<ul>
+<li><code>||</code>: 运算符左侧的值为<code>null`,</code>undefined<code>,</code>空字符串<code>,</code>false<code>或`0</code>时，会返回右侧的值。</li>
+<li><code>??</code>: 只有运算符左侧的值为<code>null</code>或<code>undefined</code>时，才会返回右侧的值。</li>
+</ul>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">const animationDuration = response.settings?.animationDuration ?? <span style="color:#ae81ff">300</span>;
 </code></pre></div></li>
 </ul>
@@ -506,10 +510,7 @@ ES2017 引入了跟<code>Object.keys</code>配套的<code>Object.values</code>�
 
   Object.fromEntries(new URLSearchParams(<span style="color:#e6db74">&#39;foo=bar&amp;baz=qux&#39;</span>))
   // { foo: <span style="color:#e6db74">&#34;bar&#34;</span>, baz: <span style="color:#e6db74">&#34;qux&#34;</span> }
-</code></pre></div><h2 id="heading8">参考</h2>
-<ul>
-<li><a href="https://es6.ruanyifeng.com/">ECMAScript 6 入门</a></li>
-</ul>
+</code></pre></div>
 
                 
                 

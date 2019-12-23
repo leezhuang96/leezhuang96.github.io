@@ -241,16 +241,15 @@
         <li><a href="#-length-">函数的 length 属性</a></li>
         <li><a href="#rest-">rest 参数</a></li>
         <li><a href="#name-">name 属性</a></li>
-        <li><a href="#heading6">箭头函数</a></li>
-        <li><a href="#heading7">严格模式</a></li>
-        <li><a href="#heading8">尾调用优化</a></li>
-        <li><a href="#heading9">尾递归</a></li>
-        <li><a href="#heading10">函数参数的尾逗号</a></li>
+        <li><a href="#heading5">箭头函数</a></li>
+        <li><a href="#heading6">严格模式</a></li>
+        <li><a href="#heading7">尾调用优化</a></li>
+        <li><a href="#heading8">尾递归</a></li>
+        <li><a href="#heading9">函数参数的尾逗号</a></li>
         <li><a href="#functionprototypetostring">Function.prototype.toString()</a></li>
         <li><a href="#catch-">catch 命令的参数省略</a></li>
       </ul>
     </li>
-    <li><a href="#heading11">参考</a></li>
   </ul>
 </nav>
                 
@@ -261,7 +260,7 @@
 <ul>
 <li>基本用法：
 ES6 提供了二进制和八进制数值的新的写法，分别用前缀<code>0b（或0B）</code>和<code>0o（或0O）</code>表示。
-如果要将0b和0o前缀的字符串数值转为十进制，要使用<code>Number</code>方法。
+如果要将<code>0b</code>和<code>0o</code>前缀的字符串数值转为十进制，要使用<code>Number</code>方法。
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">0b111110111 === <span style="color:#ae81ff">503</span> // <span style="color:#66d9ef">true</span>
 <span style="color:#ae81ff">0o767</span> === <span style="color:#ae81ff">503</span> // <span style="color:#66d9ef">true</span>
 
@@ -280,9 +279,9 @@ Number(<span style="color:#e6db74">&#39;0o10&#39;</span>)  // <span style="color
 </ul>
 </li>
 <li>
-<p>区别：</p>
+<p>和全局方法<code>isFinite()</code>和<code>isNaN()</code>的区别：</p>
 <ul>
-<li>全局方法<code>isFinite()</code>和<code>isNaN()</code>: 先调用<code>Number()</code>将非数值的值转为数值，再进行判断。</li>
+<li><code>isFinite()</code>和<code>isNaN()</code>: 先调用<code>Number()</code>将非数值的值转为数值，再进行判断。</li>
 <li><code>Number.isFinite()</code>: 只对数值有效, 对于非数值一律返回<code>false</code>。</li>
 <li><code>Number.isNaN()</code>：只对数值有效, 只有对于<code>NaN</code>才返回<code>true</code>，非<code>NaN</code>一律返回<code>false</code>。</li>
 </ul>
@@ -319,12 +318,10 @@ Number.parseFloat(<span style="color:#e6db74">&#39;123.45#&#39;</span>) // <span
 </ul>
 <h4 id="numberepsilon">Number.EPSILON</h4>
 <ul>
-<li>
-<p>基本用法：
+<li>基本用法：
 ES6 在<code>Number</code>对象上面，新增一个极小的常量<code>Number.EPSILON</code>。根据规格，它表示 1 与大于 1 的最小浮点数之间的差。
-<code>Number.EPSILON</code>实际上是 JavaScript 能够表示的最小精度。误差如果小于这个值，就可以认为已经没有意义了，即不存在误差了。</p>
-<p>引入一个这么小的量的目的，在于为浮点数计算，设置一个误差范围。我们知道浮点数计算是不精确的。</p>
-</li>
+<code>Number.EPSILON</code>实际上是 JavaScript 能够表示的最小精度。误差如果小于这个值，就可以认为已经没有意义了，即不存在误差了。
+引入一个这么小的量的目的在于为浮点数计算设置一个误差范围。我们知道浮点数计算是不精确的。</li>
 </ul>
 <h4 id="--numberissafeinteger">安全整数 和 Number.isSafeInteger()</h4>
 <ul>
@@ -351,10 +348,11 @@ JavaScript 能够准确表示的整数范围在<code>-2^53</code>到<code>2^53</
 </ul>
 </li>
 </ul>
-<h4 id="mathcbrt">Math.cbrt()</h4>
+<h4 id="mathcbrtmathhypot">Math.cbrt()，Math.hypot()</h4>
 <ul>
 <li>基本用法：
-<code>Math.cbrt</code>方法用于计算一个数的立方根。</li>
+<code>Math.cbrt</code>方法用于计算一个数的立方根。
+<code>Math.hypot</code>方法返回所有参数的平方和的平方根。</li>
 </ul>
 <h4 id="mathclz32">Math.clz32()</h4>
 <ul>
@@ -370,11 +368,6 @@ JavaScript 能够准确表示的整数范围在<code>-2^53</code>到<code>2^53</
 <ul>
 <li>基本用法：
 <code>Math.fround</code>方法返回一个数的32位单精度浮点数形式。</li>
-</ul>
-<h4 id="mathhypot">Math.hypot()</h4>
-<ul>
-<li>基本用法：
-<code>Math.hypot</code>方法返回所有参数的平方和的平方根。</li>
 </ul>
 <h4 id="-mathexpm1-mathlog1p-mathlog10-mathlog2">对数方法: Math.expm1(), Math.log1p(), Math.log10(), Math.log2()</h4>
 <ul>
@@ -412,8 +405,7 @@ ES2016 新增了一个指数运算符（<code>**</code>）。
 <h3 id="heading4">函数参数的默认值</h3>
 <ul>
 <li>基本用法：
-ES6 允许为函数的参数设置默认值，即直接写在参数定义的后面。
-参数变量是默认声明的，所以不能用<code>let</code>或<code>const</code>再次声明。
+ES6 允许为函数的参数设置默认值，即直接写在参数定义的后面。参数变量是默认声明的，所以不能用<code>let</code>或<code>const</code>再次声明。
 参数默认值不是传值的，而是每次都重新计算默认值表达式的值。也就是说，参数默认值是<code>惰性求值</code>的。
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">  function log(x, y = <span style="color:#e6db74">&#39;World&#39;</span>) {
     console.log(x, y);
@@ -430,10 +422,7 @@ ES6 允许为函数的参数设置默认值，即直接写在参数定义的后�
 
   foo() // undefined <span style="color:#ae81ff">5</span>
 </code></pre></div></li>
-</ul>
-<h4 id="heading5">作用域</h4>
-<ul>
-<li>基本用法：
+<li>作用域：
 一旦设置了参数的默认值，函数进行声明初始化时，参数会形成一个单独的作用域（context）。等到初始化结束，这个作用域就会消失。这种语法行为，在不设置参数默认值时，是不会出现的。</li>
 </ul>
 <h3 id="-length-">函数的 length 属性</h3>
@@ -501,7 +490,7 @@ ES6 引入 <code>rest</code> 参数（形式为<code>...变量名</code>：rest�
   (function(){}).bind({}).name // <span style="color:#e6db74">&#34;bound &#34;</span>
 </code></pre></div></li>
 </ul>
-<h3 id="heading6">箭头函数</h3>
+<h3 id="heading5">箭头函数</h3>
 <ul>
 <li>基本用法：
 ES6 允许使用“箭头”（<code>=&gt;</code>）定义函数。
@@ -531,8 +520,8 @@ ES6 允许使用“箭头”（<code>=&gt;</code>）定义函数。
   //由于大括号被解释为代码块，所以如果箭头函数直接返回一个对象，必须在对象外面加上括号，否则会报错。
   let getTempItem = id =&gt; { id: id, name: <span style="color:#e6db74">&#34;Temp&#34;</span> }; // 报错
   let getTempItem = id =&gt; ({ id: id, name: <span style="color:#e6db74">&#34;Temp&#34;</span> }); // 不报错
-</code></pre></div><ul>
-<li>使用注意点
+</code></pre></div></li>
+<li>使用注意点：
 <ul>
 <li>函数体内的<code>this</code>对象，就是定义时所在的对象，而不是使用时所在的对象。箭头函数让<code>this</code>指向固定化。</li>
 <li>不可以当作构造函数，也就是说，不可以使用<code>new</code>命令，否则会抛出一个错误。</li>
@@ -541,14 +530,13 @@ ES6 允许使用“箭头”（<code>=&gt;</code>）定义函数。
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-<h3 id="heading7">严格模式</h3>
+<h3 id="heading6">严格模式</h3>
 <ul>
 <li>
 <p>基本用法：
-从 ES5 开始，函数内部可以设定为严格模式。
-ES2016 做了一点修改，规定只要函数参数使用了默认值、解构赋值、或者扩展运算符，那么函数内部就不能显式设定为严格模式，否则会报错。</p>
+从 ES5 开始，函数内部可以设定为严格模式(<code>'use strict'</code>)。
+ES2016 做了一点修改，规定只要函数参数使用了<code>默认值</code>、<code>解构赋值</code>、或者<code>扩展运算符</code>，那么函数内部就不能显式设定为严格模式，否则会报错。
+这样规定的原因是，函数内部的严格模式同时适用于函数体和函数参数。但是，函数执行的时候，先执行函数参数，然后再执行函数体。这样就有一个不合理的地方，只有从函数体之中，才能知道参数是否应该以严格模式执行，但是参数却应该先于函数体执行。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">  function doSomething(a, b) {
     <span style="color:#e6db74">&#39;use strict&#39;</span>;
     // code
@@ -571,10 +559,9 @@ ES2016 做了一点修改，规定只要函数参数使用了默认值、解构�
     <span style="color:#e6db74">&#39;use strict&#39;</span>;
     // code
   };
-</code></pre></div><p>这样规定的原因是，函数内部的严格模式，同时适用于函数体和函数参数。但是，函数执行的时候，先执行函数参数，然后再执行函数体。这样就有一个不合理的地方，只有从函数体之中，才能知道参数是否应该以严格模式执行，但是参数却应该先于函数体执行。</p>
-<p>两种方法可以规避这种限制:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">  //第一种是设定全局性的严格模式
-  <span style="color:#e6db74">&#39;use strict&#39;</span>;
+</code></pre></div><p>两种方法可以规避这种限制:</p>
+<pre><code>  //第一种是设定全局性的严格模式
+  'use strict';
 
   function doSomething(a, b = a) {
     // code
@@ -582,14 +569,14 @@ ES2016 做了一点修改，规定只要函数参数使用了默认值、解构�
 
   //第二种是把函数包在一个无参数的立即执行函数里面。
   const doSomething = (function () {
-    <span style="color:#e6db74">&#39;use strict&#39;</span>;
-    return function(value = <span style="color:#ae81ff">42</span>) {
+    'use strict';
+    return function(value = 42) {
       return value;
     };
   }());
-</code></pre></div></li>
+</code></pre></li>
 </ul>
-<h3 id="heading8">尾调用优化</h3>
+<h3 id="heading7">尾调用优化</h3>
 <ul>
 <li>基本用法：
 <code>尾调用（Tail Call）</code>是函数式编程的一个重要概念，指某个函数的最后一步是调用另一个函数。函数调用会在内存形成一个<code>调用记录</code>，又称<code>调用帧（call frame）</code>。<code>尾调用优化（Tail call optimization）</code>，即只保留内层函数的调用帧。
@@ -603,12 +590,12 @@ ES6 的<code>尾调用优化</code>只在严格模式下开启，正常模式是
 </ul>
 </li>
 </ul>
-<h3 id="heading9">尾递归</h3>
+<h3 id="heading8">尾递归</h3>
 <ul>
 <li>基本用法：
 函数调用自身，称为递归。如果尾调用自身，就称为尾递归。尾递归的实现，往往需要改写递归函数，确保最后一步只调用自身。做到这一点的方法，就是把所有用到的内部变量改写成函数的参数。</li>
 </ul>
-<h3 id="heading10">函数参数的尾逗号</h3>
+<h3 id="heading9">函数参数的尾逗号</h3>
 <ul>
 <li>基本用法：
 ES2017 允许函数的最后一个参数有尾逗号（trailing comma）。
@@ -643,10 +630,6 @@ JavaScript 语言的<code>try...catch</code>结构，以前明确要求<code>cat
     // ...
   }
 </code></pre></div></li>
-</ul>
-<h2 id="heading11">参考</h2>
-<ul>
-<li><a href="https://es6.ruanyifeng.com/">ECMAScript 6 入门</a></li>
 </ul>
 
                 
