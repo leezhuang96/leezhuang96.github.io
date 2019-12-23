@@ -230,9 +230,15 @@
     <li><a href="#proxy">Proxy</a>
       <ul>
         <li><a href="#proxy-1">Proxy</a></li>
-        <li><a href="#proxy-handler">Proxy 实例的方法(支持的拦截handler)</a></li>
         <li><a href="#proxyrevocable">Proxy.revocable()</a></li>
+        <li><a href="#handler">实例方法(支持的拦截handler)</a></li>
         <li><a href="#this-">this 问题</a></li>
+      </ul>
+    </li>
+    <li><a href="#reflect">Reflect</a>
+      <ul>
+        <li><a href="#reflect-1">Reflect</a></li>
+        <li><a href="#heading">静态方法</a></li>
       </ul>
     </li>
   </ul>
@@ -262,7 +268,25 @@ var obj = new Proxy({}, {
     return Reflect.set(target, propKey, value, receiver);
   }
 });
-</code></pre><h3 id="proxy-handler">Proxy 实例的方法(支持的拦截handler)</h3>
+</code></pre><h3 id="proxyrevocable">Proxy.revocable()</h3>
+<ul>
+<li>基本用法：
+<code>Proxy.revocable</code>方法返回一个可取消的 <code>Proxy</code> 实例。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">let target = {};
+let handler = {};
+
+let {proxy, revoke} = Proxy.revocable(target, handler);
+
+proxy.foo = <span style="color:#ae81ff">123</span>;
+proxy.foo 
+// <span style="color:#ae81ff">123</span>
+
+revoke(); //取消Proxy实例
+proxy.foo 
+// TypeError: Revoked
+</code></pre></div></li>
+</ul>
+<h3 id="handler">实例方法(支持的拦截handler)</h3>
 <h4 id="gettarget-propkey-receiver">get(target, propKey, receiver)</h4>
 <ul>
 <li>基本用法：
@@ -518,24 +542,6 @@ Object.setPrototypeOf(proxy, proto);
 // Error: Changing the prototype is forbidden
 </code></pre></div></li>
 </ul>
-<h3 id="proxyrevocable">Proxy.revocable()</h3>
-<ul>
-<li>基本用法：
-<code>Proxy.revocable</code>方法返回一个可取消的 <code>Proxy</code> 实例。
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">let target = {};
-let handler = {};
-
-let {proxy, revoke} = Proxy.revocable(target, handler);
-
-proxy.foo = <span style="color:#ae81ff">123</span>;
-proxy.foo 
-// <span style="color:#ae81ff">123</span>
-
-revoke(); //取消Proxy实例
-proxy.foo 
-// TypeError: Revoked
-</code></pre></div></li>
-</ul>
 <h3 id="this-">this 问题</h3>
 <ul>
 <li>基本用法：
@@ -552,6 +558,73 @@ const proxy = new Proxy(target, handler);
 target.m() // <span style="color:#66d9ef">false</span>
 proxy.m()  // <span style="color:#66d9ef">true</span>
 </code></pre></div></li>
+</ul>
+<h2 id="reflect">Reflect</h2>
+<h3 id="reflect-1">Reflect</h3>
+<ul>
+<li>基本用法：
+<code>Reflect</code>对象与<code>Proxy</code>对象一样，也是 ES6 为了操作对象而提供的新<code>API</code>。<code>Reflect</code>对象的设计目的有这样几个:
+<ul>
+<li>将<code>Object</code>对象的一些明显属于语言内部的方法（比如<code>Object.defineProperty</code>），放到<code>Reflect</code>对象上。现阶段，某些方法同时在<code>Object</code>和<code>Reflect</code>对象上部署，未来的新方法将只部署在<code>Reflect</code>对象上。也就是说，从<code>Reflect</code>对象上可以拿到语言内部的方法。</li>
+<li>修改某些<code>Object</code>方法的返回结果，让其变得更合理。</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">//比如，Object.defineProperty(obj, name, desc)在无法定义属性时，会抛出一个错误，
+//而Reflect.defineProperty(obj, name, desc)则会返回false。
+// 老写法
+try {
+  Object.defineProperty(target, property, attributes);
+  // success
+} catch (e) {
+  // failure
+}
+
+// 新写法
+if (Reflect.defineProperty(target, property, attributes)) {
+  // success
+} else {
+  // failure
+}
+</code></pre></div><ul>
+<li>让<code>Object</code>操作都变成函数行为。</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">//某些Object操作是命令式，比如name in obj和delete obj[name]，
+//而Reflect.has(obj, name)和Reflect.deleteProperty(obj, name)让它们变成了函数行为。
+// 老写法
+<span style="color:#e6db74">&#39;assign&#39;</span> in Object // <span style="color:#66d9ef">true</span>
+
+// 新写法
+Reflect.has(Object, <span style="color:#e6db74">&#39;assign&#39;</span>) // <span style="color:#66d9ef">true</span>
+</code></pre></div><ul>
+<li><code>Reflect</code>对象的方法与<code>Proxy</code>对象的方法一一对应，只要是<code>Proxy</code>对象的方法，就能在<code>Reflect</code>对象上找到对应的方法。这就让<code>Proxy</code>对象可以方便地调用对应的<code>Reflect</code>方法，完成默认行为，作为修改行为的基础。也就是说，不管<code>Proxy</code>怎么修改默认行为，你总可以在<code>Reflect</code>上获取默认行为。</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">Proxy(target, {
+  set: function(target, name, value, receiver) {
+    var success = Reflect.set(target, name, value, receiver); //完成默认行为
+    //制定拦截行为
+    if (success) {
+      console.log(<span style="color:#e6db74">&#39;property &#39;</span> + name + <span style="color:#e6db74">&#39; on &#39;</span> + target + <span style="color:#e6db74">&#39; set to &#39;</span> + value);
+    }
+    return success;
+  }
+});
+</code></pre></div></li>
+</ul>
+<h3 id="heading">静态方法</h3>
+<p><code>Reflect</code>对象一共有 13 个静态方法,大部分与<code>Object</code>对象的同名方法的作用都是相同的，而且它与<code>Proxy</code>对象的方法是一一对应的:</p>
+<ul>
+<li>Reflect.apply(target, thisArg, args)</li>
+<li>Reflect.construct(target, args)</li>
+<li>Reflect.get(target, name, receiver)</li>
+<li>Reflect.set(target, name, value, receiver)</li>
+<li>Reflect.defineProperty(target, name, desc)</li>
+<li>Reflect.deleteProperty(target, name)</li>
+<li>Reflect.has(target, name)</li>
+<li>Reflect.ownKeys(target)</li>
+<li>Reflect.isExtensible(target)</li>
+<li>Reflect.preventExtensions(target)</li>
+<li>Reflect.getOwnPropertyDescriptor(target, name)</li>
+<li>Reflect.getPrototypeOf(target)</li>
+<li>Reflect.setPrototypeOf(target, prototype)</li>
 </ul>
 
                 
@@ -611,7 +684,7 @@ proxy.m()  // <span style="color:#66d9ef">true</span>
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2019/12/23/es6-6part/" data-toggle="tooltip" data-placement="top" title="ECMAScript 6（六）">&larr;
+                        <a href="/2019/12/23/es6-8part/" data-toggle="tooltip" data-placement="top" title="ECMAScript 6（八）">&larr;
                             Previous Post</a>
                     </li>
                     
