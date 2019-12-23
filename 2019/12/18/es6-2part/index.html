@@ -230,18 +230,18 @@
     <li><a href="#heading">字符串的扩展</a>
       <ul>
         <li><a href="#-unicode-">字符的 Unicode 表示法</a></li>
-        <li><a href="#heading1">字符串的遍历器接口</a></li>
+        <li><a href="#heading-1">字符串的遍历器接口</a></li>
         <li><a href="#-u2028--u2029">直接输入 U+2028 和 U+2029</a></li>
         <li><a href="#jsonstringify-">JSON.stringify() 的改造</a></li>
-        <li><a href="#heading2">模板字符串</a></li>
-        <li><a href="#heading3">标签模板</a></li>
+        <li><a href="#heading-2">模板字符串</a></li>
+        <li><a href="#heading-3">标签模板</a></li>
       </ul>
     </li>
-    <li><a href="#heading4">字符串的新增方法</a>
+    <li><a href="#heading-4">字符串的新增方法</a>
       <ul>
         <li><a href="#stringfromcodepoint">String.fromCodePoint()</a></li>
         <li><a href="#stringraw">String.raw()</a></li>
-        <li><a href="#heading5">实例方法</a></li>
+        <li><a href="#heading-5">实例方法</a></li>
       </ul>
     </li>
   </ul>
@@ -254,7 +254,7 @@
 <ul>
 <li>基本用法：
 ES6 加强了对<code>Unicode</code>的支持，允许采用<code>\uxxxx</code>形式表示一个字符，其中<code>xxxx</code>表示字符的<code>Unicode</code>码点。
-但是，这种表示法只限于码点在<code>\u0000`~</code>\uFFFF`之间的字符。超出这个范围的字符，必须用两个双字节的形式表示。
+但是，这种表示法只限于码点在<code>\u0000</code>~<code>\uFFFF</code>之间的字符。超出这个范围的字符，必须用两个双字节的形式表示。
 ES6 对这一点做出了改进，只要将码点放入大括号，就能正确解读该字符。有了这种表示法之后，JavaScript 共有 6 种方法可以表示一个字符:
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#e6db74">&#39;\z&#39;</span> === <span style="color:#e6db74">&#39;z&#39;</span>  // <span style="color:#66d9ef">true</span>
 <span style="color:#e6db74">&#39;\172&#39;</span> === <span style="color:#e6db74">&#39;z&#39;</span> // <span style="color:#66d9ef">true</span>
@@ -263,7 +263,7 @@ ES6 对这一点做出了改进，只要将码点放入大括号，就能正确�
 <span style="color:#e6db74">&#39;\u{7A}&#39;</span> === <span style="color:#e6db74">&#39;z&#39;</span> // <span style="color:#66d9ef">true</span>
 </code></pre></div></li>
 </ul>
-<h3 id="heading1">字符串的遍历器接口</h3>
+<h3 id="heading-1">字符串的遍历器接口</h3>
 <ul>
 <li>基本用法：
 ES6 为字符串添加了遍历器接口<code>Iterator</code>，使得字符串可以被<code>for...of</code>循环遍历。
@@ -310,7 +310,7 @@ JSON.parse(json); // 可能报错
 JSON.stringify(<span style="color:#e6db74">&#39;\uDF06\uD834&#39;</span>) // <span style="color:#e6db74">&#34;&#34;</span>\\udf06\\ud834<span style="color:#e6db74">&#34;&#34;</span>
 </code></pre></div></li>
 </ul>
-<h3 id="heading2">模板字符串</h3>
+<h3 id="heading-2">模板字符串</h3>
 <ul>
 <li>基本用法：
 模板字符串（template string）是增强版的字符串，用反引号（`）标识。它可以当作普通字符串使用，也可以用来定义多行字符串，或者在字符串中嵌入变量。
@@ -329,7 +329,7 @@ let name = <span style="color:#e6db74">&#34;Bob&#34;</span>, time = <span style=
 `Hello ${name}, how are you ${time}?`
 </code></pre></div></li>
 </ul>
-<h3 id="heading3">标签模板</h3>
+<h3 id="heading-3">标签模板</h3>
 <ul>
 <li>基本用法：
 模板字符串的功能不仅仅是上面这些，它可以紧跟在一个函数名后面，该函数将被调用来处理这个模板字符串。这被称为<code>标签模板</code>功能（tagged template）。
@@ -344,7 +344,7 @@ tag`Hello ${ a + b } world ${ a * b }`;
 tag([<span style="color:#e6db74">&#39;Hello &#39;</span>, <span style="color:#e6db74">&#39; world &#39;</span>, <span style="color:#e6db74">&#39;&#39;</span>], <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">50</span>);
 </code></pre></div></li>
 </ul>
-<h2 id="heading4">字符串的新增方法</h2>
+<h2 id="heading-4">字符串的新增方法</h2>
 <h3 id="stringfromcodepoint">String.fromCodePoint()</h3>
 <ul>
 <li>
@@ -374,7 +374,7 @@ String.raw`Hi\u000A!`;
 // 实际返回 <span style="color:#e6db74">&#34;Hi\\u000A!&#34;</span>，显示的是转义后的结果 <span style="color:#e6db74">&#34;Hi\u000A!&#34;</span>
 </code></pre></div></li>
 </ul>
-<h3 id="heading5">实例方法</h3>
+<h3 id="heading-5">实例方法</h3>
 <h4 id="codepointat">codePointAt()</h4>
 <ul>
 <li>基本用法：

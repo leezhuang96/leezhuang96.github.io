@@ -229,23 +229,23 @@
     <li><a href="#ecmascript-6-">ECMAScript 6 简介</a></li>
     <li><a href="#heading">数值的扩展</a>
       <ul>
-        <li><a href="#heading1">二进制和八进制表示法</a></li>
+        <li><a href="#heading-1">二进制和八进制表示法</a></li>
         <li><a href="#number-">Number 对象的扩展</a></li>
         <li><a href="#math-">Math 对象的扩展</a></li>
-        <li><a href="#heading2">指数运算符</a></li>
+        <li><a href="#heading-2">指数运算符</a></li>
       </ul>
     </li>
-    <li><a href="#heading3">函数的扩展</a>
+    <li><a href="#heading-3">函数的扩展</a>
       <ul>
-        <li><a href="#heading4">函数参数的默认值</a></li>
+        <li><a href="#heading-4">函数参数的默认值</a></li>
         <li><a href="#-length-">函数的 length 属性</a></li>
         <li><a href="#rest-">rest 参数</a></li>
         <li><a href="#name-">name 属性</a></li>
-        <li><a href="#heading5">箭头函数</a></li>
-        <li><a href="#heading6">严格模式</a></li>
-        <li><a href="#heading7">尾调用优化</a></li>
-        <li><a href="#heading8">尾递归</a></li>
-        <li><a href="#heading9">函数参数的尾逗号</a></li>
+        <li><a href="#heading-5">箭头函数</a></li>
+        <li><a href="#heading-6">严格模式</a></li>
+        <li><a href="#heading-7">尾调用优化</a></li>
+        <li><a href="#heading-8">尾递归</a></li>
+        <li><a href="#heading-9">函数参数的尾逗号</a></li>
         <li><a href="#functionprototypetostring">Function.prototype.toString()</a></li>
         <li><a href="#catch-">catch 命令的参数省略</a></li>
       </ul>
@@ -256,7 +256,7 @@
                 <h2 id="ecmascript-6-">ECMAScript 6 简介</h2>
 <p>ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准，已经在 2015 年 6 月正式发布了。它的目标，是使得 JavaScript 语言可以用来编写复杂的大型应用程序，成为企业级开发语言。</p>
 <h2 id="heading">数值的扩展</h2>
-<h3 id="heading1">二进制和八进制表示法</h3>
+<h3 id="heading-1">二进制和八进制表示法</h3>
 <ul>
 <li>基本用法：
 ES6 提供了二进制和八进制数值的新的写法，分别用前缀<code>0b（或0B）</code>和<code>0o（或0O）</code>表示。
@@ -393,7 +393,7 @@ JavaScript 能够准确表示的整数范围在<code>-2^53</code>到<code>2^53</
 </ul>
 </li>
 </ul>
-<h3 id="heading2">指数运算符</h3>
+<h3 id="heading-2">指数运算符</h3>
 <ul>
 <li>基本用法：
 ES2016 新增了一个指数运算符（<code>**</code>）。
@@ -401,8 +401,8 @@ ES2016 新增了一个指数运算符（<code>**</code>）。
   <span style="color:#ae81ff">2</span> <span style="color:#75715e">**</span> <span style="color:#ae81ff">3</span> // <span style="color:#ae81ff">8</span>
 </code></pre></div></li>
 </ul>
-<h2 id="heading3">函数的扩展</h2>
-<h3 id="heading4">函数参数的默认值</h3>
+<h2 id="heading-3">函数的扩展</h2>
+<h3 id="heading-4">函数参数的默认值</h3>
 <ul>
 <li>基本用法：
 ES6 允许为函数的参数设置默认值，即直接写在参数定义的后面。参数变量是默认声明的，所以不能用<code>let</code>或<code>const</code>再次声明。
@@ -490,7 +490,7 @@ ES6 引入 <code>rest</code> 参数（形式为<code>...变量名</code>：rest�
   (function(){}).bind({}).name // <span style="color:#e6db74">&#34;bound &#34;</span>
 </code></pre></div></li>
 </ul>
-<h3 id="heading5">箭头函数</h3>
+<h3 id="heading-5">箭头函数</h3>
 <ul>
 <li>基本用法：
 ES6 允许使用“箭头”（<code>=&gt;</code>）定义函数。
@@ -530,7 +530,7 @@ ES6 允许使用“箭头”（<code>=&gt;</code>）定义函数。
 </ul>
 </li>
 </ul>
-<h3 id="heading6">严格模式</h3>
+<h3 id="heading-6">严格模式</h3>
 <ul>
 <li>
 <p>基本用法：
@@ -576,7 +576,7 @@ ES2016 做了一点修改，规定只要函数参数使用了<code>默认值</co
   }());
 </code></pre></li>
 </ul>
-<h3 id="heading7">尾调用优化</h3>
+<h3 id="heading-7">尾调用优化</h3>
 <ul>
 <li>基本用法：
 <code>尾调用（Tail Call）</code>是函数式编程的一个重要概念，指某个函数的最后一步是调用另一个函数。函数调用会在内存形成一个<code>调用记录</code>，又称<code>调用帧（call frame）</code>。<code>尾调用优化（Tail call optimization）</code>，即只保留内层函数的调用帧。
@@ -590,12 +590,12 @@ ES6 的<code>尾调用优化</code>只在严格模式下开启，正常模式是
 </ul>
 </li>
 </ul>
-<h3 id="heading8">尾递归</h3>
+<h3 id="heading-8">尾递归</h3>
 <ul>
 <li>基本用法：
 函数调用自身，称为递归。如果尾调用自身，就称为尾递归。尾递归的实现，往往需要改写递归函数，确保最后一步只调用自身。做到这一点的方法，就是把所有用到的内部变量改写成函数的参数。</li>
 </ul>
-<h3 id="heading9">函数参数的尾逗号</h3>
+<h3 id="heading-9">函数参数的尾逗号</h3>
 <ul>
 <li>基本用法：
 ES2017 允许函数的最后一个参数有尾逗号（trailing comma）。

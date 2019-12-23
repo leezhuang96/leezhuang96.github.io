@@ -239,7 +239,7 @@
     <li><a href="#service-mesh">Service Mesh：微服务的网络通信基础设施</a></li>
     <li><a href="#api-gatewayservice-mesh">API Gateway和Service Mesh实践</a></li>
     <li><a href="#heading">译者按</a></li>
-    <li><a href="#heading1">原文</a></li>
+    <li><a href="#heading-1">原文</a></li>
   </ul>
 </nav>
                 
@@ -271,7 +271,7 @@
 <p>我对此未进行测试，但从理论上来说，服务发现，重试，断路等逻辑无论放到API Gateway还是Service Mesh中耗时应该是差不多的，部署Sidecar只是增加了创建一个本地链接的消耗，如下图所示:
 <img src="https://img.zhaohuabing.com/in-post/2018-04-11-service-mesh-vs-api-gateway/api-gateway-with-service-mesh.png" alt=""></p>
 <p>将API Gateway和Service Mesh的功能进行清晰划分，API Gateway负责应用逻辑，Service Mesh负责服务通讯，Metrics收集等微服务基础设施，这样划分后在架构上更为清晰。对于效率问题，我们可以考虑对API Gateway进行水平扩展来解决。</p>
-<h2 id="heading1">原文</h2>
+<h2 id="heading-1">原文</h2>
 <p>本译文发表已征得原作者同意，原文参见 <a href="https://medium.com/microservices-in-practice/service-mesh-vs-api-gateway-a6d814b9bf56">Service Mesh vs API Gateway</a></p>
 
 
