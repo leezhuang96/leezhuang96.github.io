@@ -109,6 +109,10 @@
                     </li>
                     
                     <li>
+                        <a href="/categories/note">note</a>
+                    </li>
+                    
+                    <li>
                         <a href="/categories/tech">tech</a>
                     </li>
                     
@@ -229,10 +233,10 @@
     <li><a href="#ecmascript-6-">ECMAScript 6 简介</a></li>
     <li><a href="#heading">数组的扩展</a>
       <ul>
-        <li><a href="#heading-1">扩展运算符</a></li>
+        <li><a href="#heading1">扩展运算符</a></li>
         <li><a href="#arrayfrom">Array.from()</a></li>
         <li><a href="#arrayof">Array.of()</a></li>
-        <li><a href="#heading-2">实例方法</a></li>
+        <li><a href="#heading2">实例方法</a></li>
       </ul>
     </li>
   </ul>
@@ -241,7 +245,7 @@
                 <h2 id="ecmascript-6-">ECMAScript 6 简介</h2>
 <p>ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准，已经在 2015 年 6 月正式发布了。它的目标，是使得 JavaScript 语言可以用来编写复杂的大型应用程序，成为企业级开发语言。</p>
 <h2 id="heading">数组的扩展</h2>
-<h3 id="heading-1">扩展运算符</h3>
+<h3 id="heading1">扩展运算符</h3>
 <ul>
 <li>基本用法：
 扩展运算符（spread）是三个点（<code>...</code>）。它好比 <code>rest</code> 参数的逆运算，将一个数组转为用逗号分隔的参数序列。
@@ -307,7 +311,7 @@ Array(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">11</span
 Array.of(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">8</span>) // [<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">11</span>,<span style="color:#ae81ff">8</span>]
 Array.of(<span style="color:#ae81ff">3</span>) // [<span style="color:#ae81ff">3</span>]
 Array.of(<span style="color:#ae81ff">3</span>).length // <span style="color:#ae81ff">1</span>
-</code></pre></div><h3 id="heading-2">实例方法</h3>
+</code></pre></div><h3 id="heading2">实例方法</h3>
 <h4 id="copywithin">copyWithin()</h4>
 <ul>
 <li>基本用法：
@@ -450,7 +454,7 @@ console.log(entries.next().value); // [<span style="color:#ae81ff">2</span>, <sp
 //flatMap()只能展开一层数组。
 [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>].flatMap(x =&gt; [[x * <span style="color:#ae81ff">2</span>]]) // 相当于 [[[<span style="color:#ae81ff">2</span>]], [[<span style="color:#ae81ff">4</span>]], [[<span style="color:#ae81ff">6</span>]], [[<span style="color:#ae81ff">8</span>]]].flat()
 // [[<span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">4</span>], [<span style="color:#ae81ff">6</span>], [<span style="color:#ae81ff">8</span>]]
-</code></pre></div><h4 id="heading-3">数组的空位</h4>
+</code></pre></div><h4 id="heading3">数组的空位</h4>
 <ul>
 <li>基本用法：
 数组的空位指，数组的某一个位置没有任何值。注意，空位不是<code>undefined</code>，一个位置的值等于<code>undefined</code>，依然是有值的。空位是没有任何值，<code>in</code>运算符可以说明这一点。ES6 明确将空位转为<code>undefined</code>。</li>
@@ -558,6 +562,8 @@ ES2019 明确规定，<code>Array.prototype.sort()</code>的默认排序算法�
                         
                         
                         
+                        
+                        
                         <a href="/tags/docker" title="docker">
                             docker
                         </a>
@@ -575,6 +581,8 @@ ES2019 明确规定，<code>Array.prototype.sort()</code>的默认排序算法�
                         <a href="/tags/istio" title="istio">
                             istio
                         </a>
+                        
+                        
                         
                         
                         

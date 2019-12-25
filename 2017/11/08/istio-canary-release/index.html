@@ -109,6 +109,10 @@
                     </li>
                     
                     <li>
+                        <a href="/categories/note">note</a>
+                    </li>
+                    
+                    <li>
                         <a href="/categories/tech">tech</a>
                     </li>
                     
@@ -228,18 +232,18 @@
   <ul>
     <li><a href="#heading">灰度发布（又名金丝雀发布）介绍</a></li>
     <li><a href="#istio">Istio实现灰度发布(金丝雀发布)的原理</a></li>
-    <li><a href="#heading-1">操作步骤</a>
+    <li><a href="#heading1">操作步骤</a>
       <ul>
-        <li><a href="#heading-2">测试环境安装</a></li>
+        <li><a href="#heading2">测试环境安装</a></li>
         <li><a href="#v1">部署V1版本的服务</a></li>
         <li><a href="#v2reviews">部署V2版本的reviews服务</a></li>
-        <li><a href="#v2reviews-1">将测试流量导入到V2版本的reviews服务</a></li>
-        <li><a href="#v2reviews-2">将部分生产流量导入到V2版本的reviews服务</a></li>
-        <li><a href="#v2reviews-3">将所有生产流量导入到到V2版本的reviews服务</a></li>
+        <li><a href="#v2reviews1">将测试流量导入到V2版本的reviews服务</a></li>
+        <li><a href="#v2reviews2">将部分生产流量导入到V2版本的reviews服务</a></li>
+        <li><a href="#v2reviews3">将所有生产流量导入到到V2版本的reviews服务</a></li>
         <li><a href="#v1reviews">删除V1版本的reviews服务</a></li>
       </ul>
     </li>
-    <li><a href="#heading-3">参考</a></li>
+    <li><a href="#heading3">参考</a></li>
   </ul>
 </nav>
                 
@@ -267,9 +271,9 @@
 <p>备注：采用kubernetes的<a href="https://kubernetes.io/docs/tasks/run-application/rolling-update-replication-controller/">滚动升级(rolling update)</a>功能也可以实现不中断业务的应用升级,但滚动升级是通过逐渐使用新版本的服务来替换老版本服务的方式对应用进行升级，在滚动升级不能对应用的流量分发进行控制，因此无法采用受控地把生产流量逐渐导流到新版本服务中，也就无法控制服务升级对用户造成的影响。</p>
 <p>采用Istio后，可以通过定制路由规则将特定的流量（如指定特征的用户）导入新版本服务中，在生产环境下进行测试，同时通过渐进受控地导入生产流量，可以最小化升级中出现的故障对用户的影响。并且在同时存在新老版本服务时，还可根据应用压力对不同版本的服务进行独立的缩扩容，非常灵活。采用Istio进行灰度发布的流程如下图所示：
 <img src="https://img.zhaohuabing.com/in-post/istio-canary-release/canary-deployments.gif" alt="Istio灰度发布示意图"></p>
-<h2 id="heading-1">操作步骤</h2>
+<h2 id="heading1">操作步骤</h2>
 <p>下面采用Istion自带的BookinfoInfo示例程序来试验灰度发布的流程。</p>
-<h3 id="heading-2">测试环境安装</h3>
+<h3 id="heading2">测试环境安装</h3>
 <p>首先参考<a href="http://zhaohuabing.com/2017/11/04/istio-install_and_example/">手把手教你从零搭建Istio及Bookinfo示例程序</a>安装Kubernetes及Istio控制面。</p>
 <p>因为本试验并不需要安装全部3个版本的reviews服务，因此如果已经安装了该应用，先采用下面的命令卸载。</p>
 <pre><code>istio-0.2.10/samples/bookinfo/kube/cleanup.sh
@@ -367,7 +371,7 @@ spec:
 <pre><code>kubectl apply -f &lt;(istioctl kube-inject -f  bookinfo-reviews-v2.yaml)
 </code></pre><p>此时系统中部署了V1和V2两个版本的reviews服务，但所有的业务流量都被规则reviews-default导向了V1，如下图所示：
 <img src="https://img.zhaohuabing.com/in-post/istio-canary-release/canary-example-deploy-v2.PNG" alt=""></p>
-<h3 id="v2reviews-1">将测试流量导入到V2版本的reviews服务</h3>
+<h3 id="v2reviews1">将测试流量导入到V2版本的reviews服务</h3>
 <p>在进行模拟测试时，由于测试环境和生产环境的网络，服务器，操作系统等环境存在差异，很难完全模拟生产环境进行测试。为了减少环境因素的对测试结果的影响，我们希望能在生产环境中进行上线前的测试，但如果没有很好的隔离措施，可能会导致测试影响已上线的业务，对企业造成损失。</p>
 <p>通过采用Istio的路由规则，可以在类生产环境中进行测试，又完全隔离了线上用户的生产流量和测试流量，最小化模拟测试对已上线业务的影响。如下图所示：
 <img src="https://img.zhaohuabing.com/in-post/istio-canary-release/canary-example-route-test.PNG" alt=""></p>
@@ -395,7 +399,7 @@ spec:
 <img src="https://img.zhaohuabing.com/in-post/istio-canary-release/product-page-test-user.PNG" alt=""></p>
 <p>注销test-user，只能看到V1版本不带星级的评价页面。如下图所示：
 <img src="https://img.zhaohuabing.com/in-post/istio-canary-release/product-page-default.PNG" alt=""></p>
-<h3 id="v2reviews-2">将部分生产流量导入到V2版本的reviews服务</h3>
+<h3 id="v2reviews2">将部分生产流量导入到V2版本的reviews服务</h3>
 <p>在线上模拟测试完成后，如果系统测试情况良好，可以通过规则将一部分用户流量导入到V2版本的服务中，进行小规模的“金丝雀”测试。</p>
 <p>修改规则route-rule-default-reviews.yaml，将50%的流量导入V2版本。</p>
 <blockquote>
@@ -419,7 +423,7 @@ spec:
 </code></pre><pre><code>istioctl replace -f route-rule-default-reviews.yaml -n default
 </code></pre><p>此时系统部署如下图所示：
 <img src="https://img.zhaohuabing.com/in-post/istio-canary-release/canary-example-route-production-50.PNG" alt=""></p>
-<h3 id="v2reviews-3">将所有生产流量导入到到V2版本的reviews服务</h3>
+<h3 id="v2reviews3">将所有生产流量导入到到V2版本的reviews服务</h3>
 <p>如果新版本的服务运行正常，则可以将所有流量导入到V2版本。</p>
 <pre><code>apiVersion: config.istio.io/v1alpha2
 kind: RouteRule
@@ -446,7 +450,7 @@ spec:
 <pre><code>kubectl delete pod reviews-v1-1360980140-0zs9z
 
 istioctl delete -f route-rule-test-reviews-v2.yaml -n default
-</code></pre><h2 id="heading-3">参考</h2>
+</code></pre><h2 id="heading3">参考</h2>
 <ul>
 <li><a href="https://istio.io/docs/">Istio官方文档</a></li>
 </ul>
@@ -544,6 +548,8 @@ istioctl delete -f route-rule-test-reviews-v2.yaml -n default
                         
                         
                         
+                        
+                        
                         <a href="/tags/docker" title="docker">
                             docker
                         </a>
@@ -561,6 +567,8 @@ istioctl delete -f route-rule-test-reviews-v2.yaml -n default
                         <a href="/tags/istio" title="istio">
                             istio
                         </a>
+                        
+                        
                         
                         
                         

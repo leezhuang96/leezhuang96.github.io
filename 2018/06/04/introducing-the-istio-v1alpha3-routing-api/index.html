@@ -109,6 +109,10 @@
                     </li>
                     
                     <li>
+                        <a href="/categories/note">note</a>
+                    </li>
+                    
+                    <li>
                         <a href="/categories/tech">tech</a>
                     </li>
                     
@@ -235,10 +239,10 @@
         <li><a href="#serviceentry">ServiceEntry</a></li>
       </ul>
     </li>
-    <li><a href="#v1alpha3-1">创建和删除v1alpha3路由规则</a></li>
-    <li><a href="#heading-1">总结</a></li>
-    <li><a href="#heading-2">致谢</a></li>
-    <li><a href="#heading-3">原文</a></li>
+    <li><a href="#v1alpha31">创建和删除v1alpha3路由规则</a></li>
+    <li><a href="#heading1">总结</a></li>
+    <li><a href="#heading2">致谢</a></li>
+    <li><a href="#heading3">原文</a></li>
   </ul>
 </nav>
                 
@@ -462,7 +466,7 @@ spec:
 <li>现在可以配置服务端点的解析模式（<code>NONE</code>，<code>STATIC</code>或<code>DNS</code>）。</li>
 <li>此外，我们正在努力解决另一个难题：目前需要通过纯文本端口访问安全的外部服务（例如<code>http://google.com:443</code>）。该问题将会在未来几周内得到解决，届时将允许从应用程序直接访问<code>https://google.com</code>。请继续关注解决此限制的Istio补丁版本（0.8.x）。</li>
 </ol>
-<h2 id="v1alpha3-1">创建和删除v1alpha3路由规则</h2>
+<h2 id="v1alpha31">创建和删除v1alpha3路由规则</h2>
 <p>由于一个特定目的地的所有路由规则现在都存储在单个<code>VirtualService</code>资源的一个有序列表中，因此为该目的地添加新的规则不需要再创建新的<code>RouteRule</code>，而是通过更新该目的地的<code>VirtualService</code>资源来实现。</p>
 <p>旧的路由规则：</p>
 <pre><code class="language-command" data-lang="command">$ istioctl create -f my-second-rule-for-destination-abc.yaml
@@ -470,9 +474,9 @@ spec:
 <pre><code class="language-command" data-lang="command">$ istioctl replace -f my-updated-rules-for-destination-abc.yaml
 </code></pre><p>删除路由规则也使用istioctl replace完成，当然删除最后一个路由规则除外（删除最后一个路由规则需要删除<code>VirtualService</code>）。</p>
 <p>在添加或删除引用服务版本的路由时，需要在该服务相应的<code>DestinationRule</code>更新subsets 。 正如你可能猜到的，这也是使用<code>istioctl replace</code>完成的。</p>
-<h2 id="heading-1">总结</h2>
+<h2 id="heading1">总结</h2>
 <p>Istio <code>v1alpha3</code>路由API具有比其前身更多的功能，但不幸的是新的API并不向后兼容，旧的模型升级需要一次手动转换。 Istio 0.9以后将不再支持<code>RouteRule</code>，<code>DesintationPolicy</code>和<code>EgressRule</code>这些以前的配置资源 。Kubernetes用户可以继续使用<code>Ingress</code>配置边缘负载均衡器来实现基本的路由。 但是，高级路由功能（例如，跨两个版本的流量分割）则需要使<code>用Gateway</code> ，这是一种功能更强大，Istio推荐的<code>Ingress</code>替代品。</p>
-<h2 id="heading-2">致谢</h2>
+<h2 id="heading2">致谢</h2>
 <p>感谢以下人员为新版本的路由模型重构和实现工作做出的贡献（按字母顺序）</p>
 <ul>
 <li>Frank Budinsky (IBM)</li>
@@ -485,7 +489,7 @@ spec:
 <li>Isaiah Snell-Feikema (IBM)</li>
 <li>Kuat Yessenov (Google)</li>
 </ul>
-<h2 id="heading-3">原文</h2>
+<h2 id="heading3">原文</h2>
 <ul>
 <li><a href="https://kubernetes.io/blog/2018/01/extensible-admission-is-beta">Introducing the Istio v1alpha3 routing API</a></li>
 </ul>
@@ -582,6 +586,8 @@ spec:
                         
                         
                         
+                        
+                        
                         <a href="/tags/docker" title="docker">
                             docker
                         </a>
@@ -599,6 +605,8 @@ spec:
                         <a href="/tags/istio" title="istio">
                             istio
                         </a>
+                        
+                        
                         
                         
                         

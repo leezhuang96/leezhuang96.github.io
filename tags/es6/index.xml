@@ -6,10 +6,20 @@
     <description>Recent content in ES6 on Jordon&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leezhuang96.github.io/tags/es6/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ECMAScript 6（九）</title>
+      <link>https://leezhuang96.github.io/2019/12/25/es6-9part/</link>
+      <pubDate>Wed, 25 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://leezhuang96.github.io/2019/12/25/es6-9part/</guid>
+      <description>&lt;h2 id=&#34;ecmascript-6-&#34;&gt;ECMAScript 6 简介&lt;/h2&gt;
+&lt;p&gt;ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准，已经在 2015 年 6 月正式发布了。它的目标，是使得 JavaScript 语言可以用来编写复杂的大型应用程序，成为企业级开发语言。&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>ECMAScript 6（七）</title>

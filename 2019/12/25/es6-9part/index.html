@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Jordon&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://leezhuang96.github.io/img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://leezhuang96.github.io/img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="ECMAScript 6（九）" />
+    <meta property="og:title" content="ECMAScript 6（九）" />
+    <meta property="twitter:title" content="ECMAScript 6（九）" />
+    
+
+    
+    <meta name="description" content="ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准，已经在 2015 年 6 月正式发布了。它的目标，是使得 JavaScript 语言可以用来编写复杂的大型应用程序，成为企业级开发语言。">
+    <meta property="og:description" content="ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准，已经在 2015 年 6 月正式发布了。它的目标，是使得 JavaScript 语言可以用来编写复杂的大型应用程序，成为企业级开发语言。" />
+    <meta property="twitter:description" content="ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准，已经在 2015 年 6 月正式发布了。它的目标，是使得 JavaScript 语言可以用来编写复杂的大型应用程序，成为企业级开发语言。" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="李状, Jordon, lizhuang, , 李状的网络日志, 李状的博客, Jordon&#39;s Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/Blog.png">
+
+    <title>ECMAScript 6（九）-李状的博客 | Jordon&#39;s Blog</title>
+
+    <link rel="canonical" href="/2019/12/25/es6-9part/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/syntax.css">
+    
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/docco.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jordon&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/life">life</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/note">note</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/tech">tech</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/tips">tips</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/web">web</a>
+                    </li>
+                    
+                    
+		    
+                        <li><a href="/top/books/">BOOKS</a></li>
+                    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search">SEARCH <img src="/img/search.png" height="15" style="cursor: pointer;" alt="Search"></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('https://img.zhaohuabing.com/in-post/2018-06-04-introducing-the-istio-v1alpha3-routing-api/background.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/es6" title="ES6">
+                            ES6
+                        </a>
+                        
+                    </div>
+                    <h1>ECMAScript 6（九）</h1>
+                    <h2 class="subheading">Iterator &amp; Generator</h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                                &#34;Jordon Li&#34;
+                         
+                        on 
+                        Wednesday, December 25, 2019
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ecmascript-6-">ECMAScript 6 简介</a></li>
+    <li><a href="#iterator">Iterator</a>
+      <ul>
+        <li><a href="#iterator1">Iterator（遍历器）的概念</a></li>
+        <li><a href="#-iterator-">默认 Iterator 接口</a></li>
+        <li><a href="#forof-">forof 循环</a></li>
+      </ul>
+    </li>
+    <li><a href="#generator">Generator</a>
+      <ul>
+        <li><a href="#generator1">Generator的概念</a></li>
+        <li><a href="#yield">yield表达式</a></li>
+        <li><a href="#next-">next 方法的参数</a></li>
+        <li><a href="#generatorprototypethrow">Generator.prototype.throw()</a></li>
+        <li><a href="#generatorprototypereturn">Generator.prototype.return()</a></li>
+        <li><a href="#yield-">yield* 表达式</a></li>
+        <li><a href="#-generator-">作为对象属性的 Generator 函数</a></li>
+        <li><a href="#generator-this">Generator 函数的this</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                
+                <h2 id="ecmascript-6-">ECMAScript 6 简介</h2>
+<p>ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准，已经在 2015 年 6 月正式发布了。它的目标，是使得 JavaScript 语言可以用来编写复杂的大型应用程序，成为企业级开发语言。</p>
+<h2 id="iterator">Iterator</h2>
+<h3 id="iterator1">Iterator（遍历器）的概念</h3>
+<ul>
+<li>
+<p>基本用法：
+遍历器（<code>Iterator</code>）是一种接口，为各种不同的数据结构提供统一的访问机制。任何数据结构只要部署 <code>Iterator</code> 接口，就可以完成遍历操作（即依次处理该数据结构的所有成员）。</p>
+</li>
+<li>
+<p>作用：</p>
+<ul>
+<li>为各种数据结构，提供一个统一的、简便的访问接口</li>
+<li>使得数据结构的成员能够按某种次序排列</li>
+<li>ES6 创造了一种新的遍历命令<code>for...of</code>循环，<code>Iterator</code> 接口主要供<code>for...of</code>消费。</li>
+</ul>
+</li>
+<li>
+<p>遍历过程:</p>
+<ol>
+<li>创建一个指针对象，指向当前数据结构的起始位置。也就是说，遍历器对象本质上，就是一个指针对象。</li>
+<li>调用指针对象的<code>next</code>方法，可以将指针指向数据结构的下一个成员。返回一个包含<code>value</code>和<code>done</code>两个属性的对象 。其中，<code>value</code>属性是当前成员的值，<code>done</code>属性是一个布尔值，表示遍历是否结束。</li>
+<li>不断调用指针对象的<code>next</code>方法，直到它指向数据结构的结束位置。</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">var it = makeIterator([<span style="color:#e6db74">&#39;a&#39;</span>, <span style="color:#e6db74">&#39;b&#39;</span>]);
+it.next() // { value: <span style="color:#e6db74">&#34;a&#34;</span>, done: <span style="color:#66d9ef">false</span> }
+it.next() // { value: <span style="color:#e6db74">&#34;b&#34;</span>, done: <span style="color:#66d9ef">false</span> }
+it.next() // { value: undefined, done: <span style="color:#66d9ef">true</span> }
+
+function makeIterator(array) {
+  var nextIndex = <span style="color:#ae81ff">0</span>;
+  return {
+    next: function() {
+      return nextIndex &lt; array.length ?
+        {value: array[nextIndex++], done: <span style="color:#66d9ef">false</span>} :
+        {value: undefined, done: <span style="color:#66d9ef">true</span>};
+    }
+  };
+}
+
+========================
+
+interface Iterable {
+  [Symbol.iterator]() : Iterator,
+}
+
+interface Iterator {
+  next(value?: any) : IterationResult,
+}
+
+interface IterationResult {
+  value: any,
+  done: boolean,
+}
+</code></pre></div></li>
+</ul>
+<h3 id="-iterator-">默认 Iterator 接口</h3>
+<ul>
+<li>
+<p>基本用法：
+<code>Iterator</code> 接口的目的，就是为所有数据结构，提供了一种统一的访问机制，即<code>for...of</code>循环。当使用for&hellip;of循环遍历某种数据结构时，该循环会自动去寻找 <code>Iterator</code> 接口。</p>
+<p>ES6 规定，默认的 <code>Iterator</code> 接口部署在数据结构的<code>Symbol.iterator</code>属性，或者说，一个数据结构只要具有<code>Symbol.iterator</code>属性，就可以认为是<code>可遍历的</code>（<code>iterable</code>）。<code>Symbol.iterator</code>属性本身是一个函数，就是当前数据结构默认的遍历器生成函数。执行这个函数，就会返回一个遍历器。至于属性名<code>Symbol.iterator</code>，它是一个表达式，返回<code>Symbol</code>对象的<code>iterator</code>属性，这是一个预定义好的、类型为 <code>Symbol</code> 的特殊值，所以要放在方括号内。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">const obj = {
+  [Symbol.iterator] : function () {
+    return {
+      next: function () {
+        return {
+          value: <span style="color:#ae81ff">1</span>,
+          done: <span style="color:#66d9ef">true</span>
+        };
+      }
+    };
+  }
+};
+</code></pre></div></li>
+<li>
+<p>原生具备 <code>Iterator</code> 接口的数据结构：</p>
+<ul>
+<li>Array</li>
+<li>Map</li>
+<li>Set</li>
+<li>String</li>
+<li>TypedArray</li>
+<li>函数的 arguments 对象</li>
+<li>NodeList 对象</li>
+</ul>
+</li>
+</ul>
+<h3 id="forof-">for&hellip;of 循环</h3>
+<ul>
+<li>基本用法：
+<ul>
+<li><code>for...in</code>：遍历数组的键名</li>
+<li><code>forEach</code>: <code>break</code>或<code>return</code>命令无法中途跳出循环</li>
+<li><code>for...of</code>: 提供了遍历所有数据结构的统一操作接口</li>
+</ul>
+</li>
+</ul>
+<h2 id="generator">Generator</h2>
+<h3 id="generator1">Generator的概念</h3>
+<ul>
+<li>基本用法：
+<ul>
+<li>语法上: <code>Generator</code> 函数是一个状态机，封装了多个内部状态。执行 <code>Generator</code> 函数会返回一个遍历器对象。</li>
+<li>形式上: <code>Generator</code> 函数是一个普通函数，但是有两个特征:
+<ol>
+<li><code>function</code>关键字与函数名之间有一个星号(<code>*</code>)</li>
+<li>函数体内部使用<code>yield</code>表达式，定义不同的内部状态（<code>yield</code>在英语里的意思就是“产出”）</li>
+</ol>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">function* helloWorldGenerator() {
+  yield <span style="color:#e6db74">&#39;hello&#39;</span>;
+  yield <span style="color:#e6db74">&#39;world&#39;</span>;
+  return <span style="color:#e6db74">&#39;ending&#39;</span>;
+}
+
+var hw = helloWorldGenerator();
+</code></pre></div></li>
+</ul>
+<h3 id="yield">yield表达式</h3>
+<ul>
+<li>
+<p>基本用法：
+由于 <code>Generator</code> 函数返回的遍历器对象，只有调用<code>next</code>方法才会遍历下一个内部状态，所以其实提供了一种可以暂停执行的函数。<code>yield</code>表达式就是暂停标志，<code>yield</code>表达式只能用在 <code>Generator</code> 函数里面。</p>
+</li>
+<li>
+<p>遍历器对象的<code>next</code>方法的运行逻辑:</p>
+<ol>
+<li>遇到<code>yield</code>表达式，就暂停执行后面的操作，并将紧跟在<code>yield</code>后面的那个表达式的值，作为返回的对象的<code>value</code>属性值。(<code>yield</code>表达式本身没有返回值，或者说总是返回<code>undefined</code>)</li>
+<li>下一次调用<code>next</code>方法时，再继续往下执行，直到遇到下一个<code>yield</code>表达式。</li>
+<li>如果没有再遇到新的<code>yield</code>表达式，就一直运行到函数结束，直到<code>return</code>语句为止，并将<code>return</code>语句后面的表达式的值，作为返回的对象的<code>value</code>属性值。</li>
+<li>如果该函数没有<code>return</code>语句，则返回的对象的<code>value</code>属性值为<code>undefined</code>。</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">function* helloWorldGenerator() {
+  yield <span style="color:#e6db74">&#39;hello&#39;</span>;
+  yield <span style="color:#e6db74">&#39;world&#39;</span>;
+  return <span style="color:#e6db74">&#39;ending&#39;</span>;
+}
+
+var hw = helloWorldGenerator();
+</code></pre></div></li>
+</ul>
+<h3 id="next-">next 方法的参数</h3>
+<ul>
+<li>基本用法：
+<code>yield</code>表达式本身没有返回值，或者说总是返回<code>undefined</code>。<code>next</code>方法可以带一个参数，该参数就会被当作上一个<code>yield</code>表达式的返回值。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">function* helloWorldGenerator() {
+  yield <span style="color:#e6db74">&#39;hello&#39;</span>;
+  yield <span style="color:#e6db74">&#39;world&#39;</span>;
+  return <span style="color:#e6db74">&#39;ending&#39;</span>;
+}
+
+var hw = helloWorldGenerator();
+</code></pre></div></li>
+</ul>
+<h3 id="generatorprototypethrow">Generator.prototype.throw()</h3>
+<ul>
+<li>基本用法：
+<code>Generator</code> 函数返回的遍历器对象，都有一个<code>throw</code>方法，可以在函数体外抛出错误，然后在 <code>Generator</code> 函数体内捕获。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">var g = function* () {
+  try {
+    yield;
+  } catch (e) {
+    console.log(<span style="color:#e6db74">&#39;内部捕获&#39;</span>, e);
+  }
+};
+
+var i = g();
+i.next();
+
+try {
+  i.throw(<span style="color:#e6db74">&#39;a&#39;</span>);
+  i.throw(<span style="color:#e6db74">&#39;b&#39;</span>); //Generator 函数内部的catch语句已经执行过了，不会再捕捉到这个错误了
+} catch (e) {
+  console.log(<span style="color:#e6db74">&#39;外部捕获&#39;</span>, e);
+}
+// 内部捕获 a
+// 外部捕获 b
+
+//throw方法被捕获以后，会附带执行下一条yield表达式
+var gen = function* gen(){
+  try {
+    yield console.log(<span style="color:#e6db74">&#39;a&#39;</span>);
+  } catch (e) {
+    // ...
+  }
+  yield console.log(<span style="color:#e6db74">&#39;b&#39;</span>);
+  yield console.log(<span style="color:#e6db74">&#39;c&#39;</span>);
+}
+
+var g = gen();
+g.next() // a
+g.throw() // b
+g.next() // c
+</code></pre></div></li>
+</ul>
+<h3 id="generatorprototypereturn">Generator.prototype.return()</h3>
+<ul>
+<li>基本用法：
+<code>Generator</code> 函数返回的遍历器对象，还有一个<code>return</code>方法，可以返回给定的值，并且终结遍历 <code>Generator</code> 函数。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">function* gen() {
+  yield <span style="color:#ae81ff">1</span>;
+  yield <span style="color:#ae81ff">2</span>;
+  yield <span style="color:#ae81ff">3</span>;
+}
+
+var g = gen();
+g.next()        // { value: <span style="color:#ae81ff">1</span>, done: <span style="color:#66d9ef">false</span> }
+g.return(<span style="color:#e6db74">&#39;foo&#39;</span>) // { value: <span style="color:#e6db74">&#34;foo&#34;</span>, done: <span style="color:#66d9ef">true</span> }
+g.next()        // { value: undefined, done: <span style="color:#66d9ef">true</span> }
+</code></pre></div></li>
+</ul>
+<h4 id="nextthrowreturn-">next()、throw()、return() 的共同点</h4>
+<ul>
+<li>基本用法：
+<code>next()</code>、<code>throw()</code>、<code>return()</code>这三个方法本质上是同一件事，它们的作用都是让 <code>Generator</code> 函数恢复执行，并且使用不同的语句<code>替换``yield</code>表达式。</li>
+</ul>
+<h3 id="yield-">yield* 表达式</h3>
+<ul>
+<li>基本用法：
+ES6 提供了<code>yield*</code>表达式，用来在一个 <code>Generator</code> 函数里面执行另一个 <code>Generator</code> 函数。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">function* foo() {
+  yield <span style="color:#e6db74">&#39;a&#39;</span>;
+  yield <span style="color:#e6db74">&#39;b&#39;</span>;
+}
+
+function* bar() {
+  yield <span style="color:#e6db74">&#39;x&#39;</span>;
+  yield* foo();
+  yield <span style="color:#e6db74">&#39;y&#39;</span>;
+}
+
+// 等同于
+function* bar() {
+  yield <span style="color:#e6db74">&#39;x&#39;</span>;
+  yield <span style="color:#e6db74">&#39;a&#39;</span>;
+  yield <span style="color:#e6db74">&#39;b&#39;</span>;
+  yield <span style="color:#e6db74">&#39;y&#39;</span>;
+}
+</code></pre></div></li>
+</ul>
+<h3 id="-generator-">作为对象属性的 Generator 函数</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">let obj = {
+  * myGeneratorMethod() {
+    ···
+  }
+};
+
+等同于
+let obj = {
+  myGeneratorMethod: function* () {
+    // ···
+  }
+};
+</code></pre></div><h3 id="generator-this">Generator 函数的this</h3>
+<ul>
+<li>基本用法：
+<code>Generator</code> 函数总是返回一个遍历器，ES6 规定这个遍历器是 <code>Generator</code> 函数的实例，也继承了 <code>Generator</code> 函数的<code>prototype</code>对象上的方法。<code>Generator</code> 函数也不能跟<code>new</code>命令一起用，会报错。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">function* g() {}
+
+g.prototype.hello = function () { return <span style="color:#e6db74">&#39;hi!&#39;</span>; };
+
+let obj = g();
+
+obj instanceof g // <span style="color:#66d9ef">true</span>
+obj.hello() // <span style="color:#e6db74">&#39;hi!&#39;</span>
+</code></pre></div></li>
+</ul>
+
+                
+                
+<div class="entry-shang text-center">
+    
+	    <p>「真诚赞赏，手留余香」</p>
+	
+	<button class="zs show-zs btn btn-bred">赞赏支持</button>
+</div>
+<div class="zs-modal-bg"></div>
+<div class="zs-modal-box">
+	<div class="zs-modal-head">
+		<button type="button" class="close">×</button>
+		<span class="author">
+			
+				<img src="/img/favicon.png" />
+				
+			
+		</span>
+        
+	        <p class="tip"><i></i><span>真诚赞赏，手留余香</span></p>
+		
+ 
+	</div>
+	<div class="zs-modal-body">
+		<div class="zs-modal-btns">
+			<button class="btn btn-blink" data-num="2">2元</button>
+			<button class="btn btn-blink" data-num="5">5元</button>
+			<button class="btn btn-blink" data-num="10">10元</button>
+			<button class="btn btn-blink" data-num="50">50元</button>
+			<button class="btn btn-blink" data-num="100">100元</button>
+			<button class="btn btn-blink" data-num="1">任意金额</button>
+		</div>
+		<div class="zs-modal-pay">
+			<button class="btn btn-bred" id="pay-text">任意金额</button>
+			<p>使用<span id="pay-type">微信</span>扫描二维码完成支付</p>
+			<img src="/img/reward/wechat.png"  id="pay-image"/>
+		</div>
+	</div>
+	<div class="zs-modal-footer">
+		<label>
+			<input type="radio" name="zs-type" value="wechat" class="zs-type" checked="checked">
+			<img src="/img/reward/wechat-btn.png"/>
+		</label>
+		<label>
+			<input type="radio" name="zs-type" value="alipay" class="zs-type" class="zs-alipay">
+			<img src="/img/reward/alipay-btn.png"/>
+		</label>
+	</div>
+</div>
+<script type="text/javascript" src="/js/reward.js"></script>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2019/12/23/es6-7part/" data-toggle="tooltip" data-placement="top" title="ECMAScript 6（七）">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/es6" title="es6">
+                            es6
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/istio" title="istio">
+                            istio
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/microservice" title="microservice">
+                            microservice
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/security" title="security">
+                            security
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/service-mesh" title="service-mesh">
+                            service-mesh
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/tips" title="tips">
+                            tips
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                    
+                    <li>
+                        <a href="mailto:leezhuang96@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="/img/wechat_qrcode.jpg">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/leezhuang96">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Jordon&#39;s Blog 2019
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>

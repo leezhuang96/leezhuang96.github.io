@@ -109,6 +109,10 @@
                     </li>
                     
                     <li>
+                        <a href="/categories/note">note</a>
+                    </li>
+                    
+                    <li>
                         <a href="/categories/tech">tech</a>
                     </li>
                     
@@ -238,10 +242,10 @@
     <li><a href="#istio">安装Istio</a></li>
     <li><a href="#bookinfo">部署Bookinfo示例程序</a></li>
     <li><a href="#istio-proxy">理解Istio Proxy实现原理</a></li>
-    <li><a href="#heading-1">测试路由规则</a></li>
-    <li><a href="#heading-2">分布式调用追踪</a></li>
-    <li><a href="#heading-3">性能指标监控</a></li>
-    <li><a href="#heading-4">参考</a></li>
+    <li><a href="#heading1">测试路由规则</a></li>
+    <li><a href="#heading2">分布式调用追踪</a></li>
+    <li><a href="#heading3">性能指标监控</a></li>
+    <li><a href="#heading4">参考</a></li>
   </ul>
 </nav>
                 
@@ -275,7 +279,7 @@ Rancher Server: 10.12.25.60<br>
 <p>通过Rancher安装Kubernetes集群的简要步骤如下：</p>
 <h3 id="serverdocker">在server和工作节点上安装docker</h3>
 <p>因为k8s并不支持最新版本的docker，因此需根据该页面安装指定版本的docker<br>
-<a href="http://rancher.com/docs/rancher/v1.6/en/hosts/">http://rancher.com/docs/rancher/v1.6/en/hosts/</a> ,目前是1.12版本。</p>
+<a href="http://rancher.com/docs/rancher/v1.6/en/hosts/"><a href="http://rancher.com/docs/rancher/v1.6/en/hosts/">http://rancher.com/docs/rancher/v1.6/en/hosts/</a></a> ,目前是1.12版本。</p>
 <pre><code>curl https://releases.rancher.com/install-docker/1.12.sh | sh
 </code></pre><p>如果需要以非root用户执行docker命令，参考<a href="http://zhaohuabing.com/2018/02/09/docker-without-sudo/">如何使用非root用户执行docker命令</a>。</p>
 <h3 id="rancher-server">启动Rancher server</h3>
@@ -428,7 +432,7 @@ Chain ISTIO_REDIRECT (3 references)
  pkts bytes target     prot opt in     out     source               destination
    16   960 REDIRECT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            /* istio/redirect-to-envoy-port */ redir ports 15001
 </code></pre><p>从pod所在network namespace的iptables规则中可以看到，pod的入口和出口流量分别通过PREROUTING和OUTPUT chain指向了自定义的ISTIO/_REDIRECT chain，而ISTIO/_REDIRECT chain中的规则将所有流量都重定向到了istio proxy正在监听的15001端口中。从而实现了对应用透明的通信代理。</p>
-<h2 id="heading-1">测试路由规则</h2>
+<h2 id="heading1">测试路由规则</h2>
 <p>多次刷新Bookinfo应用的productpage页面，我们会发现该页面中显示的Book Reviews有时候有带红星的评价信息，有时有带黑星的评价信息，有时只有文字评价信息。<br>
 这是因为Bookinfo应用程序部署了3个版本的Reviews服务，每个版本的返回结果不同，在没有设置路由规则时，缺省的路由会将请求随机路由到每个版本的服务上，如下图所示：</p>
 <p><img src="https://img.zhaohuabing.com/in-post/istio-install_and_example/withistio.svg" alt=""></p>
@@ -451,7 +455,7 @@ spec:
 删除该路由规则</p>
 <pre><code>istioctl delete -f route_rule.yaml -n default
 </code></pre><p>继续刷新productpage页面,将重新随机出现三个版本的评价内容页面。</p>
-<h2 id="heading-2">分布式调用追踪</h2>
+<h2 id="heading2">分布式调用追踪</h2>
 <p>首先修改安装包中的 <code>istio-0.2.10/install/kubernetes/addons/zipkin.yaml</code> 部署文件，增加Nodeport,以便能在kubernetes集群外部访问zipkin界面。</p>
 <pre><code>apiVersion: v1
 kind: Service
@@ -471,7 +475,7 @@ spec:
 </code></pre><p>在浏览器中打开zipkin页面，可以追踪一个端到端调用经过了哪些服务，以及各个服务花费的时间等详细信息，如下图所示：<br>
 <code>http://10.12.25.116:30001</code><br>
 <img src="https://img.zhaohuabing.com/in-post/istio-install_and_example/zipkin.PNG" alt=""></p>
-<h2 id="heading-3">性能指标监控</h2>
+<h2 id="heading3">性能指标监控</h2>
 <p>首先修改安装包中的 <code>istio-0.2.10/install/kubernetes/addons/grafana.yaml</code> 部署文件，增加Nodeport,以便能在kubernetes集群外部访问grafana界面。</p>
 <pre><code>apiVersion: v1
 kind: Service
@@ -494,7 +498,7 @@ kubectl apply -f istio-0.2.10/install/kubernetes/addons/grafana.yaml
 </code></pre><p>首先在浏览器中打开Bookinfo的页面<code>http://10.12.25.116/productpage</code>，刷新几次，以制造一些性能指标数据。</p>
 <p>然后打开grafana页面查看性能指标<code>http://10.12.25.116:30002/dashboard/db/istio-dashboard</code>，如下图所示：<br>
 <img src="https://img.zhaohuabing.com/in-post/istio-install_and_example/grafana.PNG" alt=""></p>
-<h2 id="heading-4">参考</h2>
+<h2 id="heading4">参考</h2>
 <ul>
 <li><a href="https://istio.io/docs/">Istio官方文档</a></li>
 <li><a href="http://philcalcado.com/2017/08/03/pattern_service_mesh.html">Pattern: Service Mesh</a></li>
@@ -589,6 +593,8 @@ kubectl apply -f istio-0.2.10/install/kubernetes/addons/grafana.yaml
                         
                         
                         
+                        
+                        
                         <a href="/tags/docker" title="docker">
                             docker
                         </a>
@@ -606,6 +612,8 @@ kubectl apply -f istio-0.2.10/install/kubernetes/addons/grafana.yaml
                         <a href="/tags/istio" title="istio">
                             istio
                         </a>
+                        
+                        
                         
                         
                         

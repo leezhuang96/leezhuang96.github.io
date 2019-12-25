@@ -109,6 +109,10 @@
                     </li>
                     
                     <li>
+                        <a href="/categories/note">note</a>
+                    </li>
+                    
+                    <li>
                         <a href="/categories/tech">tech</a>
                     </li>
                     
@@ -229,18 +233,18 @@
     <li><a href="#ecmascript-6-">ECMAScript 6 简介</a></li>
     <li><a href="#heading">对象的扩展</a>
       <ul>
-        <li><a href="#heading-1">属性的简洁表示法</a></li>
-        <li><a href="#heading-2">属性名表达式</a></li>
+        <li><a href="#heading1">属性的简洁表示法</a></li>
+        <li><a href="#heading2">属性名表达式</a></li>
         <li><a href="#-name-">方法的 name 属性</a></li>
-        <li><a href="#heading-3">属性的可枚举性</a></li>
-        <li><a href="#heading-4">属性的遍历</a></li>
+        <li><a href="#heading3">属性的可枚举性</a></li>
+        <li><a href="#heading4">属性的遍历</a></li>
         <li><a href="#super-">super 关键字</a></li>
-        <li><a href="#heading-5">对象的扩展运算符</a></li>
-        <li><a href="#heading-6">链判断运算符（?.）</a></li>
+        <li><a href="#heading5">对象的扩展运算符</a></li>
+        <li><a href="#heading6">链判断运算符（?.）</a></li>
         <li><a href="#null-">Null 判断运算符（??）</a></li>
       </ul>
     </li>
-    <li><a href="#heading-7">对象的新增方法</a>
+    <li><a href="#heading7">对象的新增方法</a>
       <ul>
         <li><a href="#objectis">Object.is()</a></li>
         <li><a href="#objectassign">Object.assign()</a></li>
@@ -248,7 +252,7 @@
         <li><a href="#objectsetprototypeof">Object.setPrototypeOf()</a></li>
         <li><a href="#objectgetprototypeof">Object.getPrototypeOf()</a></li>
         <li><a href="#objectkeysobjectvaluesobjectentries">Object.keys()，Object.values()，Object.entries()</a></li>
-        <li><a href="#objectfromentries----">Object.fromEntries() 键值对数组 -> 对象</a></li>
+        <li><a href="#objectfromentries---">Object.fromEntries() 键值对数组 -> 对象</a></li>
       </ul>
     </li>
   </ul>
@@ -257,7 +261,7 @@
                 <h2 id="ecmascript-6-">ECMAScript 6 简介</h2>
 <p>ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准，已经在 2015 年 6 月正式发布了。它的目标，是使得 JavaScript 语言可以用来编写复杂的大型应用程序，成为企业级开发语言。</p>
 <h2 id="heading">对象的扩展</h2>
-<h3 id="heading-1">属性的简洁表示法</h3>
+<h3 id="heading1">属性的简洁表示法</h3>
 <ul>
 <li>基本用法：
 ES6 允许在大括号里面，直接写入变量和函数，作为对象的属性和方法。
@@ -272,7 +276,7 @@ method() { return <span style="color:#e6db74">&#34;Hello!&#34;</span>; }
 method: function() { return <span style="color:#e6db74">&#34;Hello!&#34;</span>; }
 </code></pre></div></li>
 </ul>
-<h3 id="heading-2">属性名表达式</h3>
+<h3 id="heading2">属性名表达式</h3>
 <ul>
 <li>基本用法：
 ES6 允许对象的属性名定义为表达式，即把表达式放在方括号内。
@@ -297,7 +301,7 @@ let obj = {
 person.sayName.name   // <span style="color:#e6db74">&#34;sayName&#34;</span>
 </code></pre></div></li>
 </ul>
-<h3 id="heading-3">属性的可枚举性</h3>
+<h3 id="heading3">属性的可枚举性</h3>
 <ul>
 <li>基本用法：
 对象的每个属性都有一个描述对象（<code>Descriptor</code>），用来控制该属性的行为。<code>Object.getOwnPropertyDescriptor</code>方法可以获取该属性的描述对象。
@@ -312,7 +316,7 @@ Object.getOwnPropertyDescriptor(obj, <span style="color:#e6db74">&#39;foo&#39;</
 //  }
 </code></pre></div></li>
 </ul>
-<h3 id="heading-4">属性的遍历</h3>
+<h3 id="heading4">属性的遍历</h3>
 <ul>
 <li>基本用法：
 ES6 一共有 5 种方法可以遍历对象的属性。
@@ -353,7 +357,7 @@ Object.setPrototypeOf(obj, proto); //设置proto为obj的原型对象
 obj.find() // <span style="color:#e6db74">&#34;hello&#34;</span>
 </code></pre></div></li>
 </ul>
-<h3 id="heading-5">对象的扩展运算符</h3>
+<h3 id="heading5">对象的扩展运算符</h3>
 <ul>
 <li>基本用法：
 对象的扩展运算符等同于使用<code>Object.assign()</code>方法。
@@ -366,7 +370,7 @@ let ab = { ...a, ...b };
 let ab = Object.assign({}, a, b);
 </code></pre></div></li>
 </ul>
-<h3 id="heading-6">链判断运算符（?.）</h3>
+<h3 id="heading6">链判断运算符（?.）</h3>
 <ul>
 <li>基本用法：
 <code>?.运算符</code>:直接在链式调用的时候判断，左侧的对象是否为<code>null</code>或<code>undefined</code>。如果是的，就不再往下运算，返回<code>undefined</code>。
@@ -391,13 +395,13 @@ a == <span style="color:#66d9ef">null</span> ? undefined : a()
 <ul>
 <li>基本用法：
 <ul>
-<li><code>||</code>: 运算符左侧的值为<code>null</code>,<code>undefined</code>,<code>空字符串</code>,<code>false</code>或<code>0</code>时，会返回右侧的值。</li>
+<li><code>||</code>: 运算符左侧的值为<code>null`,</code>undefined<code>,</code>空字符串<code>,</code>false<code>或`0</code>时，会返回右侧的值。</li>
 <li><code>??</code>: 只有运算符左侧的值为<code>null</code>或<code>undefined</code>时，才会返回右侧的值。</li>
 </ul>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">const animationDuration = response.settings?.animationDuration ?? <span style="color:#ae81ff">300</span>;
 </code></pre></div></li>
 </ul>
-<h2 id="heading-7">对象的新增方法</h2>
+<h2 id="heading7">对象的新增方法</h2>
 <h3 id="objectis">Object.is()</h3>
 <ul>
 <li>基本用法：
@@ -496,7 +500,7 @@ ES2017 引入了跟<code>Object.keys</code>配套的<code>Object.values</code>�
   for (let [key, value] of entries(obj)) {
     console.log([key, value]); // [<span style="color:#e6db74">&#39;a&#39;</span>, <span style="color:#ae81ff">1</span>], [<span style="color:#e6db74">&#39;b&#39;</span>, <span style="color:#ae81ff">2</span>], [<span style="color:#e6db74">&#39;c&#39;</span>, <span style="color:#ae81ff">3</span>]
   }
-</code></pre></div><h3 id="objectfromentries----">Object.fromEntries() 键值对数组 -&gt; 对象</h3>
+</code></pre></div><h3 id="objectfromentries---">Object.fromEntries() 键值对数组 -&gt; 对象</h3>
 <ul>
 <li>基本用法：
 <code>Object.fromEntries()</code>方法是<code>Object.entries()</code>的逆操作，用于将一个<!-- raw HTML omitted -->键值对数组<!-- raw HTML omitted -->转为<!-- raw HTML omitted -->对象<!-- raw HTML omitted -->。</li>
@@ -604,6 +608,8 @@ ES2017 引入了跟<code>Object.keys</code>配套的<code>Object.values</code>�
                         
                         
                         
+                        
+                        
                         <a href="/tags/docker" title="docker">
                             docker
                         </a>
@@ -621,6 +627,8 @@ ES2017 引入了跟<code>Object.keys</code>配套的<code>Object.values</code>�
                         <a href="/tags/istio" title="istio">
                             istio
                         </a>
+                        
+                        
                         
                         
                         
