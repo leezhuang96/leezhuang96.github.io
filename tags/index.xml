@@ -66,24 +66,6 @@
     </item>
     
     <item>
-      <title>Bitcoin</title>
-      <link>https://leezhuang96.github.io/tags/bitcoin/</link>
-      <pubDate>Mon, 21 May 2018 11:00:00 +0000</pubDate>
-      
-      <guid>https://leezhuang96.github.io/tags/bitcoin/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Jekyll:q</title>
-      <link>https://leezhuang96.github.io/tags/jekyllq/</link>
-      <pubDate>Mon, 21 May 2018 11:00:00 +0000</pubDate>
-      
-      <guid>https://leezhuang96.github.io/tags/jekyllq/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Travel</title>
       <link>https://leezhuang96.github.io/tags/travel/</link>
       <pubDate>Tue, 01 May 2018 00:00:00 +0000</pubDate>
@@ -111,7 +93,7 @@
     </item>
     
     <item>
-      <title>service Mesh</title>
+      <title>Service Mesh</title>
       <link>https://leezhuang96.github.io/tags/service-mesh/</link>
       <pubDate>Wed, 11 Apr 2018 09:32:00 +0000</pubDate>
       
