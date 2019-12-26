@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Jordon&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://leezhuang96.github.io/img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://leezhuang96.github.io/img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="ECMAScript 6（十二）" />
+    <meta property="og:title" content="ECMAScript 6（十二）" />
+    <meta property="twitter:title" content="ECMAScript 6（十二）" />
+    
+
+    
+    <meta name="description" content="ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准，已经在 2015 年 6 月正式发布了。它的目标，是使得 JavaScript 语言可以用来编写复杂的大型应用程序，成为企业级开发语言。">
+    <meta property="og:description" content="ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准，已经在 2015 年 6 月正式发布了。它的目标，是使得 JavaScript 语言可以用来编写复杂的大型应用程序，成为企业级开发语言。" />
+    <meta property="twitter:description" content="ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准，已经在 2015 年 6 月正式发布了。它的目标，是使得 JavaScript 语言可以用来编写复杂的大型应用程序，成为企业级开发语言。" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="李状, Jordon, lizhuang, , 李状的网络日志, 李状的博客, Jordon&#39;s Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/Blog.png">
+
+    <title>ECMAScript 6（十二）-李状的博客 | Jordon&#39;s Blog</title>
+
+    <link rel="canonical" href="/2019/12/26/es6-12part/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/syntax.css">
+    
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/docco.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jordon&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/life">life</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/note">note</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/tech">tech</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/tips">tips</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/web">web</a>
+                    </li>
+                    
+                    
+		    
+                        <li><a href="/top/books/">BOOKS</a></li>
+                    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search">SEARCH <img src="/img/search.png" height="15" style="cursor: pointer;" alt="Search"></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('https://img.zhaohuabing.com/in-post/2018-06-04-introducing-the-istio-v1alpha3-routing-api/background.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/es6" title="ES6">
+                            ES6
+                        </a>
+                        
+                    </div>
+                    <h1>ECMAScript 6（十二）</h1>
+                    <h2 class="subheading">Module</h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                                &#34;Jordon Li&#34;
+                         
+                        on 
+                        Thursday, December 26, 2019
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ecmascript-6-">ECMAScript 6 简介</a></li>
+    <li><a href="#module-">Module 的语法</a>
+      <ul>
+        <li><a href="#heading">概述</a></li>
+        <li><a href="#heading-1">严格模式</a></li>
+        <li><a href="#export-">export 命令</a></li>
+        <li><a href="#import-">import 命令</a></li>
+        <li><a href="#heading-2">模块的整体加载</a></li>
+        <li><a href="#export-default-">export default 命令</a></li>
+        <li><a href="#export--import-">export 与 import 的复合写法</a></li>
+        <li><a href="#heading-3">跨模块常量</a></li>
+      </ul>
+    </li>
+    <li><a href="#module--1">Module 的加载实现</a>
+      <ul>
+        <li><a href="#heading-4">浏览器加载</a></li>
+        <li><a href="#es6--commonjs-">ES6 模块与 CommonJS 模块</a></li>
+        <li><a href="#nodejs-">Node.js 加载</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                
+                <h2 id="ecmascript-6-">ECMAScript 6 简介</h2>
+<p>ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准，已经在 2015 年 6 月正式发布了。它的目标，是使得 JavaScript 语言可以用来编写复杂的大型应用程序，成为企业级开发语言。</p>
+<h2 id="module-">Module 的语法</h2>
+<h3 id="heading">概述</h3>
+<ul>
+<li>基本用法：
+ES6 模块的设计思想是尽量的静态化，使得编译时就能确定模块的依赖关系，以及输入和输出的变量。<code>CommonJS</code> 和 <code>AMD</code> 模块，都只能在运行时确定这些东西。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">// CommonJS模块
+let { stat, exists, readFile } = require(<span style="color:#e6db74">&#39;fs&#39;</span>);
+
+// ES6模块
+import { stat, exists, readFile } from <span style="color:#e6db74">&#39;fs&#39;</span>;
+</code></pre></div></li>
+</ul>
+<h3 id="heading-1">严格模式</h3>
+<ul>
+<li>基本用法：
+ES6 的模块自动采用严格模式，不管你有没有在模块头部加上<code>&quot;use strict&quot;;</code>。</li>
+<li>严格模式限制:
+<ul>
+<li>变量必须声明后再使用</li>
+<li>函数的参数不能有同名属性</li>
+<li>不能使用<code>with</code>语句</li>
+<li>不能对只读属性赋值</li>
+<li>不能使用前缀 0 表示八进制数</li>
+<li>不能删除不可删除的属性</li>
+<li>不能删除变量<code>delete prop</code>，会报错，只能删除属性<code>delete global[prop]</code></li>
+<li><code>eval</code>不会在它的外层作用域引入变量</li>
+<li><code>eval</code>和<code>arguments</code>不能被重新赋值</li>
+<li><code>arguments</code>不会自动反映函数参数的变化</li>
+<li>不能使用<code>arguments.callee</code>和<code>arguments.caller</code></li>
+<li>禁止<code>this</code>指向全局对象</li>
+<li>不能使用<code>fn.caller</code>和<code>fn.arguments</code>获取函数调用的堆栈</li>
+<li>增加了保留字（比如<code>protected</code>、<code>static</code>和<code>interface</code>）</li>
+</ul>
+</li>
+</ul>
+<h3 id="export-">export 命令</h3>
+<ul>
+<li>基本用法：
+模块功能主要由两个命令构成：<code>export</code>和<code>import</code>。
+<ul>
+<li><code>export</code>命令用于规定模块的对外接口，<code>export</code>语句输出的接口，与其对应的值是动态绑定关系，即通过该接口，可以取到模块内部实时的值。</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">//输出一个变量
+export var firstName = <span style="color:#e6db74">&#39;Michael&#39;</span>;
+export var lastName = <span style="color:#e6db74">&#39;Jackson&#39;</span>;
+export var year = <span style="color:#ae81ff">1958</span>;
+
+//输出一组变量
+var firstName = <span style="color:#e6db74">&#39;Michael&#39;</span>;
+var lastName = <span style="color:#e6db74">&#39;Jackson&#39;</span>;
+var year = <span style="color:#ae81ff">1958</span>;
+
+export { firstName, lastName, year as date };
+
+//export命令除了输出变量，还可以输出函数或类（class）。
+//输出一个函数
+export function multiply(x, y) {
+  return x * y;
+};
+
+//输出一组函数
+function v1() { ... }
+function v2() { ... }
+
+export {
+  v1 as streamV1,
+  v2 as streamV2,
+  v2 as streamLatestVersion
+};
+</code></pre></div></li>
+</ul>
+<h3 id="import-">import 命令</h3>
+<ul>
+<li>基本用法：
+<code>import</code>命令用于输入其他模块提供的功能，<code>import</code>命令输入的变量都是只读的，因为它的本质是输入接口。也就是说，不允许在加载模块的脚本里面，改写接口。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">import { firstName, lastName as surname, year } from <span style="color:#e6db74">&#39;./profile.js&#39;</span>;
+
+function setName(element) {
+  element.textContent = firstName + <span style="color:#e6db74">&#39; &#39;</span> + surname;
+}
+</code></pre></div></li>
+</ul>
+<h3 id="heading-2">模块的整体加载</h3>
+<ul>
+<li>基本用法：
+除了指定加载某个输出值，还可以使用整体加载，即用星号（<code>*</code>）指定一个对象，所有输出值都加载在这个对象上面。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">  //a.js
+  function v1() { ... }
+  function v2() { ... }
+  export { v1, v2};
+
+  //b.js
+  import * as circle from <span style="color:#e6db74">&#39;./a.js&#39;</span>;
+  circle.v1();
+  circle.v2();
+</code></pre></div></li>
+</ul>
+<h3 id="export-default-">export default 命令</h3>
+<ul>
+<li>基本用法：
+<code>export default</code>命令，为模块指定默认输出。其他模块加载该模块时，<code>import</code>命令可以为该输出指定任意名字。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">// 默认输出
+export default function crc32() { ... } // 输出
+import crc32 from <span style="color:#e6db74">&#39;crc32&#39;</span>; // 输入
+
+// 正常输出
+export function crc32() { ... };// 输出
+import {crc32} from <span style="color:#e6db74">&#39;crc32&#39;</span>; // 输入
+</code></pre></div></li>
+</ul>
+<h3 id="export--import-">export 与 import 的复合写法</h3>
+<ul>
+<li>基本用法：
+如果在一个模块之中，先输入后输出同一个模块，<code>import</code>语句可以与<code>export</code>语句写在一起。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">export { foo, bar } from <span style="color:#e6db74">&#39;my_module&#39;</span>;
+
+// 可以简单理解为
+import { foo, bar } from <span style="color:#e6db74">&#39;my_module&#39;</span>;
+export { foo, bar };
+</code></pre></div><p>写成一行以后，foo和bar实际上并没有被导入当前模块，只是相当于对外转发了这两个接口，导致当前模块不能直接使用foo和bar。</p>
+</li>
+</ul>
+<h3 id="heading-3">跨模块常量</h3>
+<ul>
+<li>基本用法：
+<code>const</code>声明的常量只在当前代码块有效。如果想设置跨模块的常量（即跨多个文件），或者说一个值要被多个模块共享，可以采用下面的写法。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">// constants.js 模块
+export const A = <span style="color:#ae81ff">1</span>;
+export const B = <span style="color:#ae81ff">3</span>;
+
+// test1.js 模块
+import * as constants from <span style="color:#e6db74">&#39;./constants&#39;</span>;
+console.log(constants.A); // <span style="color:#ae81ff">1</span>
+console.log(constants.B); // <span style="color:#ae81ff">3</span>
+</code></pre></div><p>如果要使用的常量非常多，可以建一个专门的<code>constants</code>目录，将各种常量写在不同的文件里面，保存在该目录下。然后，将这些文件输出的常量，合并在<code>index.js</code>里面。使用的时候，直接加载<code>index.js</code>就可以了。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">// constants/db.js
+export const db = {
+  url: <span style="color:#e6db74">&#39;http://my.couchdbserver.local:5984&#39;</span>,
+  admin_username: <span style="color:#e6db74">&#39;admin&#39;</span>,
+  admin_password: <span style="color:#e6db74">&#39;admin password&#39;</span>
+};
+
+// constants/user.js
+export const users = [<span style="color:#e6db74">&#39;root&#39;</span>, <span style="color:#e6db74">&#39;admin&#39;</span>, <span style="color:#e6db74">&#39;staff&#39;</span>, <span style="color:#e6db74">&#39;ceo&#39;</span>, <span style="color:#e6db74">&#39;chief&#39;</span>, <span style="color:#e6db74">&#39;moderator&#39;</span>];
+
+// constants/index.js
+export {db} from <span style="color:#e6db74">&#39;./db&#39;</span>;
+export {users} from <span style="color:#e6db74">&#39;./users&#39;</span>;
+
+// script.js
+import {db, users} from <span style="color:#e6db74">&#39;./constants/index&#39;</span>;
+</code></pre></div></li>
+</ul>
+<h2 id="module--1">Module 的加载实现</h2>
+<h3 id="heading-4">浏览器加载</h3>
+<ul>
+<li>传统方法：HTML 网页中，浏览器通过<code>&lt;script&gt;</code>标签加载 <code>JavaScript</code> 脚本。默认情况下，浏览器是同步加载 <code>JavaScript</code> 脚本，即渲染引擎遇到<code>&lt;script&gt;</code>标签就会停下来，等到执行完脚本，再继续向下渲染。如果是外部脚本，还必须加入脚本下载的时间。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">&lt;!-- 页面内嵌的脚本 --<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&lt;script type=&#34;application/javascript&#34;&gt;</span>
+  // module code
+&lt;/script<span style="color:#e6db74">&gt;
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&lt;!-- 外部脚本 --&gt;</span>
+&lt;script type=<span style="color:#e6db74">&#34;application/javascript&#34;</span> src=<span style="color:#e6db74">&#34;path/to/myModule.js&#34;</span><span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&lt;/script&gt;</span>
+</code></pre></div><p>浏览器允许脚本异步加载:</p>
+<ul>
+<li><code>defer</code>: 要等到整个页面在内存中正常渲染结束（DOM 结构完全生成，以及其他脚本执行完成），才会执行</li>
+<li><code>async</code>: 一旦下载完，渲染引擎就会中断渲染，执行这个脚本以后，再继续渲染</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">&lt;script src=<span style="color:#e6db74">&#34;path/to/myModule.js&#34;</span> defer&gt;&lt;/script<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&lt;script src=&#34;path/to/myModule.js&#34; async&gt;&lt;/script&gt;</span>
+</code></pre></div></li>
+<li>加载规则:
+浏览器加载 ES6 模块，也使用<code>&lt;script&gt;</code>标签，但是要加入<code>type=&quot;module&quot;</code>属性。浏览器对于带有<code>type=&quot;module&quot;</code>的<code>&lt;script&gt;</code>，都是异步加载，不会造成堵塞浏览器，即等到整个页面渲染完，再执行模块脚本，等同于打开了<code>&lt;script&gt;</code>标签的<code>defer</code>属性。有多个<code>&lt;script type=&quot;module&quot;&gt;</code>，它们会按照在页面出现的顺序依次执行。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">&lt;script type=<span style="color:#e6db74">&#34;module&#34;</span> src=<span style="color:#e6db74">&#34;./foo.js&#34;</span>&gt;&lt;/script<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&lt;!-- 等同于 --&gt;</span>
+&lt;script type=<span style="color:#e6db74">&#34;module&#34;</span> src=<span style="color:#e6db74">&#34;./foo.js&#34;</span> defer&gt;&lt;/script<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74"></span></code></pre></div></li>
+</ul>
+<h3 id="es6--commonjs-">ES6 模块与 CommonJS 模块</h3>
+<ul>
+<li>差异：
+<ol>
+<li><code>CommonJS</code> 模块输出的是一个值的拷贝，<code>ES6</code> 模块输出的是值的引用:
+<ul>
+<li><code>ES6</code> 模块的运行机制与 <code>CommonJS</code> 不一样。JS 引擎对脚本静态分析的时候，遇到模块加载命令<code>import</code>，就会生成一个只读引用。等到脚本真正执行时，再根据这个只读引用，到被加载的那个模块里面去取值。</li>
+</ul>
+</li>
+<li><code>CommonJS</code> 模块是运行时加载，<code>ES6</code> 模块是编译时输出接口:
+<ul>
+<li>因为 <code>CommonJS</code> 加载的是一个对象（即<code>module.exports</code>属性），该对象只有在脚本运行完才会生成。</li>
+<li>而 <code>ES6</code> 模块不是对象，它的对外接口只是一种静态定义，在代码静态解析阶段就会生成。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="nodejs-">Node.js 加载</h3>
+<ul>
+<li>基本用法：
+<code>Node.js</code> 对 <code>ES6</code> 模块的处理比较麻烦，因为它有自己的 <code>CommonJS</code> 模块格式，与 <code>ES6</code> 模块格式是不兼容的。目前的解决方案是，将两者分开，<code>ES6</code> 模块和 <code>CommonJS</code> 采用各自的加载方案。
+<ul>
+<li><code>Node.js</code> 要求 <code>ES6</code> 模块采用<code>.mjs</code>后缀文件名。</li>
+<li>如果不希望将后缀名改成<code>.mjs</code>，可以在项目的<code>package.json</code>文件中，指定<code>type</code>字段为<code>module</code>。</li>
+<li>如果这时还要使用 <code>CommonJS</code> 模块，那么需要将 <code>CommonJS</code> 脚本的后缀名都改成<code>.cjs</code>。</li>
+<li>如果没有<code>type</code>字段，或者<code>type</code>字段为<code>commonjs</code>，则<code>.js</code>脚本会被解释成 <code>CommonJS</code> 模块。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">{
+  <span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;module&#34;</span>
+}
+</code></pre></div></li>
+</ul>
+<p><code>.mjs</code>文件总是以 <code>ES6</code> 模块加载，<code>.cjs</code>文件总是以 <code>CommonJS</code> 模块加载，<code>.js</code>文件的加载取决于<code>package.json</code>里面<code>type</code>字段的设置。</p>
+</li>
+</ul>
+<h4 id="main-">main 字段</h4>
+<ul>
+<li>
+<p>基本用法：
+<code>package.json</code>文件有两个字段可以指定模块的入口文件：<code>main</code>和<code>exports</code>。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">// ./node_modules/es-module-package/package.json
+{
+  <span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;module&#34;</span>,
+  <span style="color:#e6db74">&#34;main&#34;</span>: <span style="color:#e6db74">&#34;./src/index.js&#34;</span>
+}
+
+// ./my-app.mjs
+import { something } from <span style="color:#e6db74">&#39;es-module-package&#39;</span>;
+// 实际加载的是 ./node_modules/es-module-package/src/index.js
+</code></pre></div></li>
+</ul>
+<h4 id="exports">exports字段</h4>
+<ul>
+<li>基本用法：
+<code>exports</code>字段的优先级高于<code>main</code>字段。
+<ul>
+<li>子目录别名：<code>package.json</code>文件的<code>exports</code>字段可以指定脚本或子目录的别名。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">// ./node_modules/es-module-package/package.json
+{
+  <span style="color:#e6db74">&#34;exports&#34;</span>: {
+    <span style="color:#e6db74">&#34;./features/&#34;</span>: <span style="color:#e6db74">&#34;./src/features/&#34;</span>
+  }
+}
+
+import feature from <span style="color:#e6db74">&#39;es-module-package/features/x.js&#39;</span>;
+// 加载 ./node_modules/es-module-package/src/features/x.js
+</code></pre></div></li>
+<li>main 的别名: <code>exports</code>字段的别名如果是<code>.</code>，就代表模块的主入口，优先级高于<code>main</code>字段，并且可以直接简写成<code>exports</code>字段的值。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">{
+  <span style="color:#e6db74">&#34;exports&#34;</span>: {
+    <span style="color:#e6db74">&#34;.&#34;</span>: <span style="color:#e6db74">&#34;./main.js&#34;</span>
+  }
+}
+
+// 等同于
+{
+  <span style="color:#e6db74">&#34;exports&#34;</span>: <span style="color:#e6db74">&#34;./main.js&#34;</span>
+}
+</code></pre></div><p>由于<code>exports</code>字段只有支持 <code>ES6</code> 的 <code>Node.js</code> 才认识，所以可以用来兼容旧版本的<code> Node.js</code>。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">{
+  <span style="color:#e6db74">&#34;main&#34;</span>: <span style="color:#e6db74">&#34;./main-legacy.cjs&#34;</span>,
+  <span style="color:#e6db74">&#34;exports&#34;</span>: {
+    <span style="color:#e6db74">&#34;.&#34;</span>: <span style="color:#e6db74">&#34;./main-modern.cjs&#34;</span>
+  }
+}
+</code></pre></div></li>
+<li>条件加载: 利用<code>.</code>这个别名，可以为 <code>ES6</code> 模块和 <code>CommonJS</code> 指定不同的入口。目前，这个功能需要在 <code>Node.js</code> 运行的时候，打开<code>--experimental-conditional-exports</code>标志。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">//别名.的require条件指定require()命令的入口文件（即 CommonJS 的入口），default条件指定其他情况的入口（即 ES6 的入口）。
+{
+  <span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;module&#34;</span>,
+  <span style="color:#e6db74">&#34;exports&#34;</span>: {
+    <span style="color:#e6db74">&#34;.&#34;</span>: {
+      <span style="color:#e6db74">&#34;require&#34;</span>: <span style="color:#e6db74">&#34;./main.cjs&#34;</span>, //CommonJS 的入口
+      <span style="color:#e6db74">&#34;default&#34;</span>: <span style="color:#e6db74">&#34;./main.js&#34;</span> //ES6 的入口
+    }
+  }
+}
+
+// 等同于
+{
+  <span style="color:#e6db74">&#34;exports&#34;</span>: {
+    <span style="color:#e6db74">&#34;require&#34;</span>: <span style="color:#e6db74">&#34;./main.cjs&#34;</span>, //CommonJS 的入口
+    <span style="color:#e6db74">&#34;default&#34;</span>: <span style="color:#e6db74">&#34;./main.js&#34;</span> //ES6 的入口
+  }
+}
+</code></pre></div></li>
+</ul>
+</li>
+</ul>
+
+                
+                
+<div class="entry-shang text-center">
+    
+	    <p>「真诚赞赏，手留余香」</p>
+	
+	<button class="zs show-zs btn btn-bred">赞赏支持</button>
+</div>
+<div class="zs-modal-bg"></div>
+<div class="zs-modal-box">
+	<div class="zs-modal-head">
+		<button type="button" class="close">×</button>
+		<span class="author">
+			
+				<img src="/img/favicon.png" />
+				
+			
+		</span>
+        
+	        <p class="tip"><i></i><span>真诚赞赏，手留余香</span></p>
+		
+ 
+	</div>
+	<div class="zs-modal-body">
+		<div class="zs-modal-btns">
+			<button class="btn btn-blink" data-num="2">2元</button>
+			<button class="btn btn-blink" data-num="5">5元</button>
+			<button class="btn btn-blink" data-num="10">10元</button>
+			<button class="btn btn-blink" data-num="50">50元</button>
+			<button class="btn btn-blink" data-num="100">100元</button>
+			<button class="btn btn-blink" data-num="1">任意金额</button>
+		</div>
+		<div class="zs-modal-pay">
+			<button class="btn btn-bred" id="pay-text">任意金额</button>
+			<p>使用<span id="pay-type">微信</span>扫描二维码完成支付</p>
+			<img src="/img/reward/wechat.png"  id="pay-image"/>
+		</div>
+	</div>
+	<div class="zs-modal-footer">
+		<label>
+			<input type="radio" name="zs-type" value="wechat" class="zs-type" checked="checked">
+			<img src="/img/reward/wechat-btn.png"/>
+		</label>
+		<label>
+			<input type="radio" name="zs-type" value="alipay" class="zs-type" class="zs-alipay">
+			<img src="/img/reward/alipay-btn.png"/>
+		</label>
+	</div>
+</div>
+<script type="text/javascript" src="/js/reward.js"></script>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2019/12/25/es6-9part/" data-toggle="tooltip" data-placement="top" title="ECMAScript 6（九）">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2019/12/26/es6-11part/" data-toggle="tooltip" data-placement="top" title="ECMAScript 6（十一）">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/es6" title="es6">
+                            es6
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/istio" title="istio">
+                            istio
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/microservice" title="microservice">
+                            microservice
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/security" title="security">
+                            security
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/service-mesh" title="service-mesh">
+                            service-mesh
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/tips" title="tips">
+                            tips
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                    
+                    <li>
+                        <a href="mailto:leezhuang96@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="/img/wechat_qrcode.jpg">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/leezhuang96">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Jordon&#39;s Blog 2019
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>
