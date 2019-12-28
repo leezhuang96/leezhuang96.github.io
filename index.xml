@@ -6,10 +6,30 @@
     <description>Recent content on Jordon&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leezhuang96.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Vue Coding Style</title>
+      <link>https://leezhuang96.github.io/2019/12/27/vue-coding-style/</link>
+      <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://leezhuang96.github.io/2019/12/27/vue-coding-style/</guid>
+      <description>&lt;h2 id=&#34;vue-&#34;&gt;Vue 简介&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Vue&lt;/code&gt; (读音 &lt;code&gt;/vjuː/&lt;/code&gt;，类似于 &lt;code&gt;view&lt;/code&gt;) 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，&lt;code&gt;Vue&lt;/code&gt; 被设计为可以自底向上逐层应用。&lt;code&gt;Vue&lt;/code&gt; 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与现代化的工具链以及各种支持类库结合使用时，&lt;code&gt;Vue&lt;/code&gt; 也完全能够为复杂的单页应用提供驱动。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Vue Initialization</title>
+      <link>https://leezhuang96.github.io/2019/12/27/vue-init/</link>
+      <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://leezhuang96.github.io/2019/12/27/vue-init/</guid>
+      <description>&lt;h2 id=&#34;vue-&#34;&gt;Vue 简介&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Vue&lt;/code&gt; (读音 &lt;code&gt;/vjuː/&lt;/code&gt;，类似于 &lt;code&gt;view&lt;/code&gt;) 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，&lt;code&gt;Vue&lt;/code&gt; 被设计为可以自底向上逐层应用。&lt;code&gt;Vue&lt;/code&gt; 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与现代化的工具链以及各种支持类库结合使用时，&lt;code&gt;Vue&lt;/code&gt; 也完全能够为复杂的单页应用提供驱动。&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>ECMAScript 6（十一）</title>
@@ -221,26 +241,6 @@ sudo vi /usr/local/lib/python3.6/dist-packages/shadowsocks/crypto/openssl.py :%s
 &lt;p&gt;Kubernets 1.9版本引入了Admission Webhook(web 回调)扩展机制，通过Webhook,开发者可以非常灵活地对Kubernets API Server的功能进行扩展，在API Server创建资源时对资源进行验证或者修改。&lt;/p&gt;
 &lt;p&gt;使用webhook的优势是不需要对API Server的源码进行修改和重新编译就可以扩展其功能。插入的逻辑实现为一个独立的web进程，通过参数方式传入到kubernets中，由kubernets在进行自身逻辑处理时对扩展逻辑进行回调。&lt;/p&gt;
 &lt;p&gt;Istio 0.7版本就利用了Kubernets webhook实现了sidecar的自动注入。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>使用Algolia为Gitpage博客提供站内搜索</title>
-      <link>https://leezhuang96.github.io/2018/05/21/algolia-integration-with-jekyll/</link>
-      <pubDate>Mon, 21 May 2018 11:00:00 +0000</pubDate>
-      
-      <guid>https://leezhuang96.github.io/2018/05/21/algolia-integration-with-jekyll/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;This series of articles are my notes of &amp;ldquo;Bitcoin and Cryptocurrency Technologies&amp;rdquo; online course.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;table-of-content&#34;&gt;Table of Content&lt;/h2&gt;
-&lt;p&gt;{:.no_toc}&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Table of Content
-{:toc}&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;scrooge-coin-transaction&#34;&gt;Scrooge Coin Transaction&lt;/h2&gt;
-&lt;p&gt;Scrooge Coin programming assignment is a little bit tricky, the video of this lesson hasn&#39;t explained some implementation details. To help you understand the transaction data structure used in Scrooge Coin, I draw this diagram:
-&lt;img src=&#34;https://img.zhaohuabing.com/in-post/2018-5-20-cryptocurrency_week1_scroogecoin/scroogecoin.png&#34; alt=&#34;Scrooge Coin&#34;&gt;&lt;/p&gt;</description>
     </item>
     
     <item>

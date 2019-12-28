@@ -15,15 +15,15 @@
     
 
     
-    <meta name="title" content="Clean White Theme for Hugo" />
-    <meta property="og:title" content="Clean White Theme for Hugo" />
-    <meta property="twitter:title" content="Clean White Theme for Hugo" />
+    <meta name="title" content="Vue Initialization" />
+    <meta property="og:title" content="Vue Initialization" />
+    <meta property="twitter:title" content="Vue Initialization" />
     
 
     
-    <meta name="description" content="李状，程序员, 开源爱好者，生活探险家 | 这里是 李状 的博客，与你一起发现更大的世界。">
-    <meta property="og:description" content="李状，程序员, 开源爱好者，生活探险家 | 这里是 李状 的博客，与你一起发现更大的世界。" />
-    <meta property="twitter:description" content="李状，程序员, 开源爱好者，生活探险家 | 这里是 李状 的博客，与你一起发现更大的世界。" />
+    <meta name="description" content="渐进式 JavaScript 框架">
+    <meta property="og:description" content="渐进式 JavaScript 框架" />
+    <meta property="twitter:description" content="渐进式 JavaScript 框架" />
     
 
     
@@ -34,9 +34,9 @@
     <meta name="keyword"  content="李状, Jordon, lizhuang, , 李状的网络日志, 李状的博客, Jordon&#39;s Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
     <link rel="shortcut icon" href="/img/Blog.png">
 
-    <title>Clean White Theme for Hugo-李状的博客 | Jordon&#39;s Blog</title>
+    <title>Vue Initialization-李状的博客 | Jordon&#39;s Blog</title>
 
-    <link rel="canonical" href="/post/readme/">
+    <link rel="canonical" href="/2019/12/27/vue-init/">
 
     <link rel="stylesheet" href="/css/iDisqus.min.css"/>
 	
@@ -173,7 +173,7 @@
 
 <style type="text/css">
     header.intro-header {
-        background-image: url('https://img.zhaohuabing.com/post-bg-2015.jpg')
+        background-image: url('https://img.zhaohuabing.com/in-post/2018-06-04-introducing-the-istio-v1alpha3-routing-api/background.jpg')
     }
 </style>
 <header class="intro-header">
@@ -183,16 +183,20 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                        <a class="tag" href="/tags/vue" title="Vue">
+                            Vue
+                        </a>
+                        
                     </div>
-                    <h1>Clean White Theme for Hugo</h1>
-                    <h2 class="subheading">How to set up this theme</h2>
+                    <h1>Vue Initialization</h1>
+                    <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by 
                         
-                            Jordon Li
+                                &#34;Jordon Li&#34;
                          
                         on 
-                        Wednesday, January 9, 2019
+                        Friday, December 27, 2019
                         
                         
                         
@@ -222,115 +226,101 @@
                 </header>
                 <nav id="TableOfContents">
   <ul>
-    <li><a href="#screenshots">Screenshots</a></li>
-    <li><a href="#quick-start">Quick Start</a></li>
-    <li><a href="#configuration">Configuration</a>
-      <ul>
-        <li><a href="#comments">Comments</a></li>
-        <li><a href="#disqus-in-china">Disqus in China</a></li>
-        <li><a href="#site-search-with-algolia">Site Search with Algolia</a></li>
-        <li><a href="#analytics">Analytics</a></li>
-        <li><a href="#wechat-pay--alipay-rewards">Wechat Pay & Alipay Rewards</a></li>
-      </ul>
-    </li>
-    <li><a href="#thank">Thank</a></li>
-    <li><a href="#feedback">Feedback</a></li>
+    <li><a href="#vue-">Vue 简介</a></li>
+    <li><a href="#create-vue3x-project">Create Vue3.x project</a></li>
+    <li><a href="#issue">Issue</a></li>
   </ul>
 </nav>
                 
-                <h1 id="clean-white-theme-for-hugo">Clean White Theme for Hugo</h1>
-<p>CleanWhite is a clean, elegant, but fully functional blog theme for Hugo. Here is a live <a href="https://zhaohuabing.com">demo site</a> using this theme.</p>
-<p>It is based on <a href="https://github.com/Huxpro/huxpro.github.io">huxblog Jekyll Theme</a>
-and <a href="https://github.com/BlackrockDigital/startbootstrap-clean-blog-jekyll">Clean Blog Jekyll Theme</a>.</p>
-<p>These two upstream projects have done awesome jobs to create a blog theme, what I'm doing here is porting it to Hugo, of which I like the simplicity and the much faster compiling speed. Some other features which I think could be useful, such as site search with algolia and proxy for Disqus access in China, have also been built in the CleanWhite theme. Other fancy features of upstream projects are not supported by this Hugo theme, I'd like to make it as simple as possible and only focus on blog purpose, at least for now.
-While I created this theme, I followed the Hugo theme best practice and tried to make every part of the template as a replaceable partial html, so it could be much easier for you to make your customization based on it.</p>
-<h2 id="screenshots">Screenshots</h2>
-<p><strong>Home</strong>
-<img src="/img/fullscreenshot.png" alt="screenshot"></p>
-<p><strong>Post</strong>
-<img src="/img/post.png" alt="screenshot"></p>
-<p><strong>Search</strong>
-<img src="/img/sitesearch.png" alt="screenshot"></p>
-<p><strong>Disqus</strong>
-<img src="/img/disqus.png" alt="screenshot"></p>
-<p><strong>Wechat Pay &amp; Alipay</strong>
-<img src="/img/rewards.png" alt="screenshot"></p>
-<h2 id="quick-start">Quick Start</h2>
-<p>Go to the directory where you have your Hugo site and run:</p>
-<pre><code>$ mkdir themes
-$ cd themes
-$ git clone https://github.com/zhaohuabing/hugo-theme-cleanwhite.git
-</code></pre><p>If your site is already a git project, you may want to choose to add the cleanwhite theme as a submodule to avoid messing up your existing git repository.</p>
-<pre><code>$ mkdir themes
-$ git submodule add https://github.com/zhaohuabing/hugo-theme-cleanwhite.git themes/hugo-theme-cleanwhite
-</code></pre><p>Run  Hugo Build-in Server Locally</p>
-<pre><code>$ hugo serve -t  hugo-theme-cleanwhite
-</code></pre><p>Now enter <a href="http://localhost:1313"><code>localhost:1313</code></a> in the address bar of your browser.</p>
-<p>If you start from scratch, there is a working Hugo site configured with the CleanWhite theme in the <a href="https://github.com/zhaohuabing/hugo-theme-cleanwhite/tree/master/exampleSite">exampleSite</a> directory.  You can use it as a starting point for your site.</p>
-<p>For more information read the official <a href="https://gohugo.io/overview/installing/">setup guide</a> of Hugo</p>
-<h2 id="configuration">Configuration</h2>
-<p>First, let's take a look at the <a href="https://github.com/zhaohuabing/hugo-cleanwhite-theme/tree/master/exampleSite/config.toml">config.toml</a>. It will be useful to learn how to customize your site. Feel free to play around with the settings.</p>
-<h3 id="comments">Comments</h3>
-<p>The optional comments system is powered by <a href="https://disqus.com">Disqus</a>. If you want to enable comments, create an account in Disqus and write down your shortname.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml"><span style="color:#a6e22e">disqusShortname</span> = <span style="color:#e6db74">&#34;your-disqus-short-name&#34;</span>
-</code></pre></div><p>You can disable the comments system by leaving the <code>disqusShortname</code> empty.</p>
-<h3 id="disqus-in-china">Disqus in China</h3>
-<p>Disqus is inaccessible in China. To get it to work, we can set up a proxy with <a href="https://github.com/zhaohuabing/disqus-php-api">disqus-php-api</a> in a host which sets between the client browser and the Disqus server. The idea is that if Disqus can be reached in the guest network, the blog page will show the original Disqus comments UI, otherwise, it will downgrade and use the proxy to access the Disqus, the UI will be a little different, but the visitors can still write their comments on the page.</p>
-<p>The client side java script has already been integrated to CleanWhite them, but you need to set up a proxy server yourself.</p>
-<p>The proxy is written in php, which can be found here: <a href="https://github.com/zhaohuabing/disqus-php-api/tree/master/api">https://github.com/zhaohuabing/disqus-php-api/tree/master/api</a></p>
-<p>You need to specify  your Disqus account information in the config.php.</p>
-<pre><code>define('PUBLIC_KEY', '');
-define('SECRET_KEY', '');
-define('DISQUS_USERNAME', '');
-define('DISQUS_EMAIL', '');
-define('DISQUS_PASSWORD', '');
-define('DISQUS_WEBSITE', '');
-define('DISQUS_SHORTNAME', '');
-</code></pre><p>Set the proxy server address in the site config file of your Hugo project.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml"><span style="color:#a6e22e">disqus_proxy</span> = <span style="color:#e6db74">&#34;http://yourdisqusproxy.com&#34;</span>
-</code></pre></div><h3 id="site-search-with-algolia">Site Search with Algolia</h3>
-<p>Follow this <a href="https://forestry.io/blog/search-with-algolia-in-hugo/#3-create-your-index-in-algolia">tutorial</a> to create your index in Algolia. The index is just the storage of the indexing data of your site in the the cloud . The search page of CleanWhite theme will utilize this indexing data to do the search.</p>
-<p>Go to the directory where you have your Hugo site and run the following commands:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ npm init
-$ npm install atomic-algolia --save
-</code></pre></div><p>Next, open up the newly created package.json, where we’ll add an NPM script to update your index at Algolia. Find &ldquo;scripts&rdquo;, and add the following:</p>
-<pre><code class="language-josn" data-lang="josn">&quot;algolia&quot;: &quot;atomic-algolia&quot;
-</code></pre><p>Algolia index output format has already been supported by the CleanWhite theme, so you can just build your site, then you’ll find a file called algolia.json in the root, which we can use to update your index in Algolia.
-Generate index file:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ hugo
-</code></pre></div><p>Create a new file in the root of your Hugo project called .env, and add the following contents:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ALGOLIA_APP_ID<span style="color:#f92672">=</span><span style="color:#f92672">{</span><span style="color:#f92672">{</span> YOUR_APP_ID <span style="color:#f92672">}</span><span style="color:#f92672">}</span>
-ALGOLIA_ADMIN_KEY<span style="color:#f92672">=</span><span style="color:#f92672">{</span><span style="color:#f92672">{</span> YOUR_ADMIN_KEY <span style="color:#f92672">}</span><span style="color:#f92672">}</span>
-ALGOLIA_INDEX_NAME<span style="color:#f92672">=</span><span style="color:#f92672">{</span><span style="color:#f92672">{</span> YOUR_INDEX_NAME <span style="color:#f92672">}</span><span style="color:#f92672">}</span>
-ALGOLIA_INDEX_FILE<span style="color:#f92672">=</span><span style="color:#f92672">{</span><span style="color:#f92672">{</span> PATH/TO/algolia.json <span style="color:#f92672">}</span><span style="color:#f92672">}</span>
-</code></pre></div><p>Now you can push your index to Algolia by simply running:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ npm run algolia
-</code></pre></div><p>Add the following variables to your hugo site config so the search page can get access to algolia index data in the cloud:</p>
-<pre><code>algolia_search = true
-algolia_appId = {{ YOUR_APP_ID }}
-algolia_indexName = {{ YOUR_INDEX_NAME }}
-algolia_apiKey = {{ YOUR_ADMIN_KEY }}
-</code></pre><p>Open search page in your browser: http://localhost:1313/search</p>
-<h3 id="analytics">Analytics</h3>
-<p>You can optionally enable Google or Baidu Analytics. Type your tracking code in the</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml"><span style="color:#a6e22e">googleAnalytics</span> = <span style="color:#e6db74">&#34;UA-XXXXX-X&#34;</span>
-<span style="color:#a6e22e">ba_track_id</span>  = <span style="color:#e6db74">&#34;XXXXXXXXXXXXXXXX&#34;</span>
-</code></pre></div><p>Leave the <code>googleAnalytics</code>  or &lsquo;ba_track_id ' key empty to disable it.</p>
-<h3 id="wechat-pay--alipay-rewards">Wechat Pay &amp; Alipay Rewards</h3>
-<p>You can enable Wechat Pay &amp; Alipay to allow readers send you money. So if they like your articles, you may even get rewards from your writing. Now you must be motivated to write more.</p>
+                <h2 id="vue-">Vue 简介</h2>
+<p><code>Vue</code> (读音 <code>/vjuː/</code>，类似于 <code>view</code>) 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，<code>Vue</code> 被设计为可以自底向上逐层应用。<code>Vue</code> 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与现代化的工具链以及各种支持类库结合使用时，<code>Vue</code> 也完全能够为复杂的单页应用提供驱动。</p>
+<h2 id="create-vue3x-project">Create Vue3.x project</h2>
 <ul>
-<li>Enable Wechat Pay &amp; Alipay in the site config</li>
+<li>Install Node, npm, vue-devtools</li>
+<li>Install cnpm:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">url: https://npm.taobao.org/
+command: npm install -g cnpm --registry=https://registry.npm.taobao.org
+</code></pre></div></li>
+<li>Install vue-cli:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">//vue-cli3.x:
+npm install -g @vue/cli
+//vue-cli2.x:
+npm install -g vue-cli
+</code></pre></div></li>
+<li>Initialization project:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">//vue-cli3.x:
+vue create app-name
+//or:
+vue ui
+//vue-cli2.x:
+vue init webpack app-name
+</code></pre></div></li>
+<li>Install npm dependencies package:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">cd app-name
+npm install
+</code></pre></div></li>
+<li>Build project:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">npm run build
+</code></pre></div></li>
+<li>Run project:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">//vue-cli3.x:
+npm run serve
+//vue-cli2.x:
+npm run dev
+</code></pre></div></li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml"><span style="color:#a6e22e">reward</span> = <span style="color:#66d9ef">true</span>
-</code></pre></div><ul>
-<li>Replace the QR codes of Wechat Pay &amp; Alipay by overriding the photos in folder /static/img/reward/, otherwise the money will be sent to my accounts!</li>
-</ul>
-<h2 id="thank">Thank</h2>
-<p>Thanks for the great jobs of <a href="https://github.com/Huxpro/huxpro.github.io">huxblog Jekyll Theme</a> and <a href="https://github.com/BlackrockDigital/startbootstrap-clean-blog-jekyll">Clean Blog Jekyll Theme</a> which are the the two upstream projects CleanWhite Hugo theme is based on.</p>
-<h2 id="feedback">Feedback</h2>
-<p>If you find any problems, please feel free to <a href="https://github.com/zhaohuabing/hugo-theme-cleanwhite/issues/new">raise an issue</a> or create a pull request to fix it.</p>
-<p>If it's helpful for you, I would appreciate it if you could star this repository, thanks!</p>
+<h2 id="issue">Issue</h2>
+<ul>
+<li>
+<p>Create project:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">Q: Use history mode for router?
+A: 选择路由模式: Yes-&gt;history, No-&gt;hash
 
+Q: Pick a CSS pre-processor
+A: CSS 的预编译工具:
+   * Sass/SCSS (with dart-sass) -&gt; 保存后才会生效, sass 官方主力推dart-sass, 最新的特性都会在这个上面先实现
+   * Sass/SCSS (with node-sass) -&gt; 实时自动编译
+   * Less
+   * Stylus -&gt; 不支持原生 CSS 写法
+
+Q: Pick a linter / formatter config
+A: 规则强度: airbnb &gt; standard &gt; recommended.
+   * ESLint with error prevention only
+   * ESLint + Airbnb config
+   * ESLint + Standard config
+   * ESLint + Prettier
+   * TSLint (deprecated)
+</code></pre></div></li>
+<li>
+<p>Config <code>npm run xxx</code> commad script:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">//package.json &gt; scripts:
+//vue-cli3.x:
+<span style="color:#e6db74">&#34;scripts&#34;</span>: {
+  <span style="color:#e6db74">&#34;serve&#34;</span>: <span style="color:#e6db74">&#34;vue-cli-service serve&#34;</span>,
+  <span style="color:#e6db74">&#34;build&#34;</span>: <span style="color:#e6db74">&#34;vue-cli-service build&#34;</span>,
+  <span style="color:#e6db74">&#34;lint&#34;</span>: <span style="color:#e6db74">&#34;vue-cli-service lint&#34;</span>
+},
+//vue-cli2.x:
+<span style="color:#e6db74">&#34;scripts&#34;</span>: {
+  <span style="color:#e6db74">&#34;dev&#34;</span>: <span style="color:#e6db74">&#34;webpack-dev-server --inline --progress --config build/webpack.dev.conf.js&#34;</span>,
+  <span style="color:#e6db74">&#34;start&#34;</span>: <span style="color:#e6db74">&#34;npm run dev&#34;</span>,
+  <span style="color:#e6db74">&#34;lint&#34;</span>: <span style="color:#e6db74">&#34;eslint --ext .js,.vue src&#34;</span>,
+  <span style="color:#e6db74">&#34;build&#34;</span>: <span style="color:#e6db74">&#34;node build/build.js&#34;</span>
+},
+</code></pre></div></li>
+<li>
+<p><code>eslint</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">Error: Expected linebreaks to be <span style="color:#e6db74">&#39;LF&#39;</span> but found <span style="color:#e6db74">&#39;CRLF&#39;</span>
+
+//在`.eslintrc.js` &gt; `rules` 中配置`windows`开发环境:
+<span style="color:#e6db74">&#34;linebreak-style&#34;</span>: [<span style="color:#ae81ff">0</span> ,<span style="color:#e6db74">&#34;error&#34;</span>, <span style="color:#e6db74">&#34;windows&#34;</span>], 
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">Error: Expected indentation of <span style="color:#ae81ff">2</span> spaces but found <span style="color:#ae81ff">4</span>
+
+//TODO:
+//在`.eslintrc.js` &gt; `rules` 中配置`indent`:
+<span style="color:#e6db74">&#34;indent&#34;</span>: <span style="color:#e6db74">&#34;off&#34;</span>,
+</code></pre></div></li>
+</ul>
 
                 
                 
@@ -389,13 +379,13 @@ algolia_apiKey = {{ YOUR_ADMIN_KEY }}
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2018/06/04/introducing-the-istio-v1alpha3-routing-api/" data-toggle="tooltip" data-placement="top" title="Istio v1aplha3 routing API介绍(译文）">&larr;
+                        <a href="/2019/12/26/es6-11part/" data-toggle="tooltip" data-placement="top" title="ECMAScript 6（十一）">&larr;
                             Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2019/12/13/es6-1part/" data-toggle="tooltip" data-placement="top" title="ECMAScript 6（一）">Next
+                        <a href="/2019/12/27/vue-coding-style/" data-toggle="tooltip" data-placement="top" title="Vue Coding Style">Next
                             Post &rarr;</a>
                     </li>
                     

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Jordon&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://leezhuang96.github.io/img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://leezhuang96.github.io/img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="Vue Coding Style" />
+    <meta property="og:title" content="Vue Coding Style" />
+    <meta property="twitter:title" content="Vue Coding Style" />
+    
+
+    
+    <meta name="description" content="渐进式 JavaScript 框架">
+    <meta property="og:description" content="渐进式 JavaScript 框架" />
+    <meta property="twitter:description" content="渐进式 JavaScript 框架" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="李状, Jordon, lizhuang, , 李状的网络日志, 李状的博客, Jordon&#39;s Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/Blog.png">
+
+    <title>Vue Coding Style-李状的博客 | Jordon&#39;s Blog</title>
+
+    <link rel="canonical" href="/2019/12/27/vue-coding-style/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/syntax.css">
+    
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/docco.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jordon&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/life">life</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/tech">tech</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/tips">tips</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/web">web</a>
+                    </li>
+                    
+                    
+		    
+                        <li><a href="/top/books/">BOOKS</a></li>
+                    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search">SEARCH <img src="/img/search.png" height="15" style="cursor: pointer;" alt="Search"></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('https://img.zhaohuabing.com/in-post/2018-06-04-introducing-the-istio-v1alpha3-routing-api/background.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/vue" title="Vue">
+                            Vue
+                        </a>
+                        
+                    </div>
+                    <h1>Vue Coding Style</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                                &#34;Jordon Li&#34;
+                         
+                        on 
+                        Friday, December 27, 2019
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+  <ul>
+    <li><a href="#vue-">Vue 简介</a>
+      <ul>
+        <li><a href="#-a--">优先级 A 的规则：必要的 (规避错误)</a></li>
+        <li><a href="#-b--">优先级 B 的规则：强烈推荐 (增强可读性)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                
+                <h2 id="vue-">Vue 简介</h2>
+<p><code>Vue</code> (读音 <code>/vjuː/</code>，类似于 <code>view</code>) 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，<code>Vue</code> 被设计为可以自底向上逐层应用。<code>Vue</code> 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与现代化的工具链以及各种支持类库结合使用时，<code>Vue</code> 也完全能够为复杂的单页应用提供驱动。</p>
+<h3 id="-a--">优先级 A 的规则：必要的 (规避错误)</h3>
+<ol>
+<li><strong>组件名为多个单词:</strong> 避免跟现有的以及未来的 <code>HTML</code> 元素相冲突</li>
+<li><strong>组件的 <code>data</code> (除了 <code>new Vue</code> 外的任何地方)必须是一个函数:</strong> 当 <code>data</code> 的值是一个对象时，它会在这个组件的所有实例之间共享，为了每个组件实例都管理其自己的数据，每个实例必须生成一个独立的数据对象，在 <code>JavaScript</code> 中，在一个函数中返回这个对象就可以了。</li>
+<li><strong><code>Prop</code> 定义应该尽量详细</strong></li>
+<li><strong>总是用 <code>key</code> 配合 <code>v-for</code></strong></li>
+<li><strong>永远不要把 <code>v-if</code> 和<code> v-for</code> 同时用在同一个<code>元素</code>上</strong></li>
+<li><strong>为组件样式设置作用域:</strong> 对于应用来说，顶级 App 组件和布局组件中的样式可以是全局的，但是其它所有组件都应该是有作用域的。使用 <code>scoped</code> 特性或 <code>CSS Modules</code>（基于 <code>class</code> 的类似 <code>BEM</code> 的策略）。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">//scoped
+&lt;template<span style="color:#e6db74">&gt;
+</span><span style="color:#e6db74"> </span><span style="color:#e6db74"> </span><span style="color:#e6db74">&lt;button class=&#34;button-close&#34;&gt;X&lt;/button&gt;</span>
+&lt;/template<span style="color:#e6db74">&gt;
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&lt;!-- 使用 `scoped` 特性 --&gt;</span>
+&lt;style scoped<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">.button-close {</span>
+  background-color: red;
+}
+&lt;/style<span style="color:#e6db74">&gt;
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">//CSS Modules</span>
+&lt;template<span style="color:#e6db74">&gt;
+</span><span style="color:#e6db74"> </span><span style="color:#e6db74"> </span><span style="color:#e6db74">&lt;button :class=&#34;[$style.buttonClose]&#34;&gt;X&lt;/button&gt;</span>
+&lt;/template<span style="color:#e6db74">&gt;
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&lt;!-- 使用 CSS Modules --&gt;</span>
+&lt;style module<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">.buttonClose {</span>
+  background-color: red;
+}
+&lt;/style<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74"></span></code></pre></div></li>
+<li><strong>私有属性名:</strong> 使用模块作用域保持不允许外部访问的函数的私有性。如果无法做到这一点，就始终为插件、混入等不考虑作为对外公共 API 的自定义私有属性使用 <code>$_</code> 前缀。并附带一个命名空间以回避和其它作者的冲突 (比如 <code>$_yourPluginName_</code>)。</li>
+</ol>
+<h3 id="-b--">优先级 B 的规则：强烈推荐 (增强可读性)</h3>
+<ol>
+<li><strong>组件文件:</strong> 只要有能够拼接文件的构建系统，就把每个组件单独分成文件。</li>
+<li><strong>文件名命名要么始终是<code>单词大写开头</code> (<code>PascalCase</code>)，要么始终是<code>横线连接</code> (<code>kebab-case</code>)</strong></li>
+<li><strong>基础组件名:</strong> 应用特定样式和约定的<code>基础组件</code> (也就是展示类的、无逻辑的或无状态的组件) 应该全部以一个特定的前缀开头，比如 <code>Base</code>、<code>App</code> 或 <code>V</code>。</li>
+<li><strong>单例组件名应该以 <code>The</code> 前缀命名，以示其唯一性</strong></li>
+<li><strong>紧密耦合的组件名:</strong> 和父组件紧密耦合的子组件应该以父组件名作为前缀命名，不推荐通过在其父组件命名的目录中新建子组件文件夹嵌套子组件。</li>
+<li><strong>组件名中的单词顺序:</strong> 组件名应该以高级别的 (通常是一般化描述的) 单词开头，以描述性的修饰词结尾。</li>
+<li><strong>自闭合组件:</strong>
+<ol>
+<li>在单文件组件、字符串模板和 <code>JSX</code> 中没有内容的组件应该是自闭合的:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">&lt;!-- 在单文件组件、字符串模板和 JSX 中 --<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&lt;MyComponent/&gt;</span>
+</code></pre></div></li>
+<li>在 <code>DOM</code> 模板中，<code>HTML</code> 并不支持自闭合的自定义元素:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">&lt;!-- 在 DOM 模板中 --<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&lt;my-component&gt;&lt;/my-component&gt;</span>
+</code></pre></div></li>
+</ol>
+</li>
+<li><strong>组件名大小写：</strong>
+<ol>
+<li>在单文件组件、字符串模板中组件名应该总是 <code>PascalCase</code> 的:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">&lt;!-- 在单文件组件和字符串模板中 --<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&lt;MyComponent/&gt;</span>
+</code></pre></div></li>
+<li>在 <code>DOM</code> 模板中总是 <code>kebab-case</code> 的:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">&lt;!-- 在 DOM 模板中 --<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&lt;my-component&gt;&lt;/my-component&gt;</span>
+</code></pre></div></li>
+</ol>
+</li>
+<li><strong>JS/JSX 中的组件名大小写:</strong> <code>JS/JSX</code> 中的组件名应该始终是 <code>PascalCase</code> 的，尽管在较为简单的应用中只使用 <code>Vue.component</code> 进行全局组件注册时，可以使用 <code>kebab-case</code> 字符串。</li>
+<li><strong>完整单词的组件名:</strong> 组件名应该倾向于完整单词而不是缩写。</li>
+<li><strong>Prop 名大小写:</strong> 在声明 <code>prop</code> 的时候，其命名应该始终使用 <code>camelCase</code>(<code>JavaScript</code>中)，而在模板和 <code>JSX</code> 中应该始终使用 <code>kebab-case</code>(<code>HTML</code>中)。</li>
+<li><strong>多个特性的元素应该分多行撰写，每个特性一行</strong></li>
+<li><strong>简单的表达式：</strong> 组件模板应该只包含简单的表达式，复杂的表达式则应该重构为计算属性或方法。</li>
+<li><strong>简单的计算属性:</strong> 应该把复杂计算属性分割为尽可能多的更简单的属性。</li>
+<li><strong>带引号的特性值:</strong> 非空 HTML 特性值应该始终带引号。</li>
+<li><strong>指令缩写：</strong> 指令缩写 (用 <code>:</code> 表示 <code>v-bind:</code> 、用<code> @</code> 表示 <code>v-on:</code> 和用 <code>#</code> 表示 <code>v-slot:</code>) 应该要么都用要么都不用。</li>
+<li><strong>多个属性之间增加一个空行，易于阅读和导航</strong></li>
+<li><strong>应该避免在 scoped 中出现元素选择器</strong></li>
+</ol>
+
+                
+                
+<div class="entry-shang text-center">
+    
+	    <p>「真诚赞赏，手留余香」</p>
+	
+	<button class="zs show-zs btn btn-bred">赞赏支持</button>
+</div>
+<div class="zs-modal-bg"></div>
+<div class="zs-modal-box">
+	<div class="zs-modal-head">
+		<button type="button" class="close">×</button>
+		<span class="author">
+			
+				<img src="/img/favicon.png" />
+				
+			
+		</span>
+        
+	        <p class="tip"><i></i><span>真诚赞赏，手留余香</span></p>
+		
+ 
+	</div>
+	<div class="zs-modal-body">
+		<div class="zs-modal-btns">
+			<button class="btn btn-blink" data-num="2">2元</button>
+			<button class="btn btn-blink" data-num="5">5元</button>
+			<button class="btn btn-blink" data-num="10">10元</button>
+			<button class="btn btn-blink" data-num="50">50元</button>
+			<button class="btn btn-blink" data-num="100">100元</button>
+			<button class="btn btn-blink" data-num="1">任意金额</button>
+		</div>
+		<div class="zs-modal-pay">
+			<button class="btn btn-bred" id="pay-text">任意金额</button>
+			<p>使用<span id="pay-type">微信</span>扫描二维码完成支付</p>
+			<img src="/img/reward/wechat.png"  id="pay-image"/>
+		</div>
+	</div>
+	<div class="zs-modal-footer">
+		<label>
+			<input type="radio" name="zs-type" value="wechat" class="zs-type" checked="checked">
+			<img src="/img/reward/wechat-btn.png"/>
+		</label>
+		<label>
+			<input type="radio" name="zs-type" value="alipay" class="zs-type" class="zs-alipay">
+			<img src="/img/reward/alipay-btn.png"/>
+		</label>
+	</div>
+</div>
+<script type="text/javascript" src="/js/reward.js"></script>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2019/12/27/vue-init/" data-toggle="tooltip" data-placement="top" title="Vue Initialization">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/es6" title="es6">
+                            es6
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/istio" title="istio">
+                            istio
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/microservice" title="microservice">
+                            microservice
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/security" title="security">
+                            security
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/service-mesh" title="service-mesh">
+                            service-mesh
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/tips" title="tips">
+                            tips
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/vue" title="vue">
+                            vue
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                    
+                    <li>
+                        <a href="mailto:leezhuang96@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="/img/wechat_qrcode.jpg">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/leezhuang96">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Jordon&#39;s Blog 2019
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>

@@ -6,10 +6,30 @@
     <description>Recent content in Web on Jordon&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leezhuang96.github.io/categories/web/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Vue Coding Style</title>
+      <link>https://leezhuang96.github.io/2019/12/27/vue-coding-style/</link>
+      <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://leezhuang96.github.io/2019/12/27/vue-coding-style/</guid>
+      <description>&lt;h2 id=&#34;vue-&#34;&gt;Vue 简介&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Vue&lt;/code&gt; (读音 &lt;code&gt;/vjuː/&lt;/code&gt;，类似于 &lt;code&gt;view&lt;/code&gt;) 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，&lt;code&gt;Vue&lt;/code&gt; 被设计为可以自底向上逐层应用。&lt;code&gt;Vue&lt;/code&gt; 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与现代化的工具链以及各种支持类库结合使用时，&lt;code&gt;Vue&lt;/code&gt; 也完全能够为复杂的单页应用提供驱动。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Vue Initialization</title>
+      <link>https://leezhuang96.github.io/2019/12/27/vue-init/</link>
+      <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://leezhuang96.github.io/2019/12/27/vue-init/</guid>
+      <description>&lt;h2 id=&#34;vue-&#34;&gt;Vue 简介&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Vue&lt;/code&gt; (读音 &lt;code&gt;/vjuː/&lt;/code&gt;，类似于 &lt;code&gt;view&lt;/code&gt;) 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，&lt;code&gt;Vue&lt;/code&gt; 被设计为可以自底向上逐层应用。&lt;code&gt;Vue&lt;/code&gt; 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与现代化的工具链以及各种支持类库结合使用时，&lt;code&gt;Vue&lt;/code&gt; 也完全能够为复杂的单页应用提供驱动。&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>ECMAScript 6（十一）</title>
