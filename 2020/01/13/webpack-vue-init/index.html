@@ -15,15 +15,15 @@
     
 
     
-    <meta name="title" content="Vue Coding Style" />
-    <meta property="og:title" content="Vue Coding Style" />
-    <meta property="twitter:title" content="Vue Coding Style" />
+    <meta name="title" content="Vue &#43; Webpack Initialization" />
+    <meta property="og:title" content="Vue &#43; Webpack Initialization" />
+    <meta property="twitter:title" content="Vue &#43; Webpack Initialization" />
     
 
     
-    <meta name="description" content="渐进式 JavaScript 框架">
-    <meta property="og:description" content="渐进式 JavaScript 框架" />
-    <meta property="twitter:description" content="渐进式 JavaScript 框架" />
+    <meta name="description" content="Vue &#43; Webpack 项目工程配置">
+    <meta property="og:description" content="Vue &#43; Webpack 项目工程配置" />
+    <meta property="twitter:description" content="Vue &#43; Webpack 项目工程配置" />
     
 
     
@@ -34,9 +34,9 @@
     <meta name="keyword"  content="李状, Jordon, lizhuang, , 李状的网络日志, 李状的博客, Jordon&#39;s Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
     <link rel="shortcut icon" href="/img/Blog.png">
 
-    <title>Vue Coding Style-李状的博客 | Jordon&#39;s Blog</title>
+    <title>Vue &#43; Webpack Initialization-李状的博客 | Jordon&#39;s Blog</title>
 
-    <link rel="canonical" href="/2019/12/27/vue-coding-style/">
+    <link rel="canonical" href="/2020/01/13/webpack-vue-init/">
 
     <link rel="stylesheet" href="/css/iDisqus.min.css"/>
 	
@@ -187,8 +187,12 @@
                             Vue
                         </a>
                         
+                        <a class="tag" href="/tags/webpack" title="Webpack">
+                            Webpack
+                        </a>
+                        
                     </div>
-                    <h1>Vue Coding Style</h1>
+                    <h1>Vue &#43; Webpack Initialization</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by 
@@ -196,7 +200,7 @@
                                 &#34;Jordon Li&#34;
                          
                         on 
-                        Friday, December 27, 2019
+                        Monday, January 13, 2020
                         
                         
                         
@@ -226,94 +230,216 @@
                 </header>
                 <nav id="TableOfContents">
   <ul>
-    <li><a href="#vue-">Vue 简介</a>
-      <ul>
-        <li><a href="#-a--">优先级 A 的规则：必要的 (规避错误)</a></li>
-        <li><a href="#-b--">优先级 B 的规则：强烈推荐 (增强可读性)</a></li>
-      </ul>
-    </li>
+    <li><a href="#vue--webpack-initialization">Vue + Webpack Initialization</a></li>
+    <li><a href="#use-webpack-initialization-vue-project-process">Use Webpack Initialization vue project process:</a></li>
+    <li><a href="#issues">Issues</a></li>
   </ul>
 </nav>
                 
-                <h2 id="vue-">Vue 简介</h2>
-<p><code>Vue</code> (读音 <code>/vjuː/</code>，类似于 <code>view</code>) 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，<code>Vue</code> 被设计为可以自底向上逐层应用。<code>Vue</code> 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与现代化的工具链以及各种支持类库结合使用时，<code>Vue</code> 也完全能够为复杂的单页应用提供驱动。</p>
-<h3 id="-a--">优先级 A 的规则：必要的 (规避错误)</h3>
-<ol>
-<li><strong>组件名为多个单词:</strong> 避免跟现有的以及未来的 <code>HTML</code> 元素相冲突</li>
-<li><strong>组件的 <code>data</code> (除了 <code>new Vue</code> 外的任何地方)必须是一个函数:</strong> 当 <code>data</code> 的值是一个对象时，它会在这个组件的所有实例之间共享，为了每个组件实例都管理其自己的数据，每个实例必须生成一个独立的数据对象，在 <code>JavaScript</code> 中，在一个函数中返回这个对象就可以了。</li>
-<li><strong><code>Prop</code> 定义应该尽量详细</strong></li>
-<li><strong>总是用 <code>key</code> 配合 <code>v-for</code></strong></li>
-<li><strong>永远不要把 <code>v-if</code> 和<code> v-for</code> 同时用在同一个<code>元素</code>上</strong></li>
-<li><strong>为组件样式设置作用域:</strong> 对于应用来说，顶级 App 组件和布局组件中的样式可以是全局的，但是其它所有组件都应该是有作用域的。使用 <code>scoped</code> 特性或 <code>CSS Modules</code>（基于 <code>class</code> 的类似 <code>BEM</code> 的策略）。
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">//scoped
-&lt;template<span style="color:#e6db74">&gt;
-</span><span style="color:#e6db74"> </span><span style="color:#e6db74"> </span><span style="color:#e6db74">&lt;button class=&#34;button-close&#34;&gt;X&lt;/button&gt;</span>
+                <h2 id="vue--webpack-initialization">Vue + Webpack Initialization</h2>
+<h2 id="use-webpack-initialization-vue-project-process">Use Webpack Initialization vue project process:</h2>
+<ul>
+<li>Create project directory:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">src
+| |-- assest
+| <span style="color:#e6db74">|  </span><span style="color:#e6db74"> </span><span style="color:#e6db74">|-- images</span>
+| <span style="color:#e6db74">|      </span><span style="color:#e6db74"> </span><span style="color:#e6db74">|-- ***.png ***.jpg</span>
+| <span style="color:#e6db74">|  </span><span style="color:#e6db74"> </span><span style="color:#e6db74">|-- styles</span>
+| <span style="color:#e6db74">|     </span><span style="color:#e6db74"> </span><span style="color:#e6db74">|-- ***.css ***.stylus.styl</span>
+| |-- app.vue
+| |-- index.js
+package.json
+webpack.config.js
+</code></pre></div></li>
+<li>Initialization project, output <code>package.json</code>：
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">npm init
+</code></pre></div></li>
+<li>Install <code>webpack</code>, <code>vue</code> and <code>vue-loader</code>：
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">npm install webpack vue vue-loader
+</code></pre></div></li>
+<li>Install <code>css-loader</code> and <code>vue-template-compiler</code>：
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">npm install css-loader vue-template-compiler
+</code></pre></div></li>
+<li>Create <code>src\app.vue</code> file.
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">&lt;template<span style="color:#e6db74">&gt;
+</span><span style="color:#e6db74"> </span><span style="color:#e6db74"> </span><span style="color:#e6db74">&lt;div class=&#34;app&#34;&gt;{{msg}}&lt;/div&gt;    </span>
 &lt;/template<span style="color:#e6db74">&gt;
 </span><span style="color:#e6db74"></span><span style="color:#e6db74">
-</span><span style="color:#e6db74"></span><span style="color:#e6db74">&lt;!-- 使用 `scoped` 特性 --&gt;</span>
-&lt;style scoped<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
-</span><span style="color:#e6db74"></span><span style="color:#e6db74">.button-close {</span>
-  background-color: red;
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&lt;script&gt;</span>
+export default {
+    data() {
+        return {
+            msg: <span style="color:#e6db74">&#39;abc&#39;</span>,
+        }
+    }
 }
-&lt;/style<span style="color:#e6db74">&gt;
+&lt;/script<span style="color:#e6db74">&gt;
 </span><span style="color:#e6db74"></span><span style="color:#e6db74">
-</span><span style="color:#e6db74"></span><span style="color:#e6db74">//CSS Modules</span>
-&lt;template<span style="color:#e6db74">&gt;
-</span><span style="color:#e6db74"> </span><span style="color:#e6db74"> </span><span style="color:#e6db74">&lt;button :class=&#34;[$style.buttonClose]&#34;&gt;X&lt;/button&gt;</span>
-&lt;/template<span style="color:#e6db74">&gt;
-</span><span style="color:#e6db74"></span><span style="color:#e6db74">
-</span><span style="color:#e6db74"></span><span style="color:#e6db74">&lt;!-- 使用 CSS Modules --&gt;</span>
-&lt;style module<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
-</span><span style="color:#e6db74"></span><span style="color:#e6db74">.buttonClose {</span>
-  background-color: red;
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&lt;style scoped&gt;</span>
+.app {
+    color: red;
 }
 &lt;/style<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
 </span><span style="color:#e6db74"></span><span style="color:#e6db74"></span></code></pre></div></li>
-<li><strong>私有属性名:</strong> 使用模块作用域保持不允许外部访问的函数的私有性。如果无法做到这一点，就始终为插件、混入等不考虑作为对外公共 API 的自定义私有属性使用 <code>$_</code> 前缀。并附带一个命名空间以回避和其它作者的冲突 (比如 <code>$_yourPluginName_</code>)。</li>
-</ol>
-<h3 id="-b--">优先级 B 的规则：强烈推荐 (增强可读性)</h3>
-<ol>
-<li><strong>组件文件:</strong> 只要有能够拼接文件的构建系统，就把每个组件单独分成文件。</li>
-<li><strong>文件名命名要么始终是<code>单词大写开头</code> (<code>PascalCase</code>)，要么始终是<code>横线连接</code> (<code>kebab-case</code>)</strong></li>
-<li><strong>基础组件名:</strong> 应用特定样式和约定的<code>基础组件</code> (也就是展示类的、无逻辑的或无状态的组件) 应该全部以一个特定的前缀开头，比如 <code>Base</code>、<code>App</code> 或 <code>V</code>。</li>
-<li><strong>单例组件名应该以 <code>The</code> 前缀命名，以示其唯一性</strong></li>
-<li><strong>紧密耦合的组件名:</strong> 和父组件紧密耦合的子组件应该以父组件名作为前缀命名，不推荐通过在其父组件命名的目录中新建子组件文件夹嵌套子组件。</li>
-<li><strong>组件名中的单词顺序:</strong> 组件名应该以高级别的 (通常是一般化描述的) 单词开头，以描述性的修饰词结尾。</li>
-<li><strong>自闭合组件:</strong>
-<ol>
-<li>在单文件组件、字符串模板和 <code>JSX</code> 中没有内容的组件应该是自闭合的:
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">&lt;!-- 在单文件组件、字符串模板和 JSX 中 --<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
-</span><span style="color:#e6db74"></span><span style="color:#e6db74">&lt;MyComponent/&gt;</span>
+<li>Create <code>src\index.js</code> entry point file, mount <code>vue</code> components to <code>HTML</code>:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">import Vue from <span style="color:#e6db74">&#39;vue&#39;</span>
+import App from <span style="color:#e6db74">&#39;./app.vue&#39;</span>
+
+// Create div element
+const root = document.createElement(<span style="color:#e6db74">&#39;div&#39;</span>)
+// Add div to html&gt;body
+document.body.appendChild(root)
+
+// Mount vue to html
+new Vue({
+    render: (h) =&gt; h(App)
+}).$mount(root)
 </code></pre></div></li>
-<li>在 <code>DOM</code> 模板中，<code>HTML</code> 并不支持自闭合的自定义元素:
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">&lt;!-- 在 DOM 模板中 --<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
-</span><span style="color:#e6db74"></span><span style="color:#e6db74">&lt;my-component&gt;&lt;/my-component&gt;</span>
+<li>Config webpack parameter: <code>entry</code>, <code>output</code> and<code>module &gt; rules</code> in <code>webpack.config.js</code>:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">const path = require(<span style="color:#e6db74">&#39;path&#39;</span>)
+const VueLoaderPlugin = require(<span style="color:#e6db74">&#39;vue-loader/lib/plugin&#39;</span>);
+
+const config = {
+  mode: <span style="color:#e6db74">&#39;&#39;</span>,
+  //webpack 编译目标
+  target: <span style="color:#e6db74">&#39;web&#39;</span>,
+  // entry point path
+  entry: path.join(__dirname, <span style="color:#e6db74">&#39;src/index.js&#39;</span>),
+    
+  //output path
+  output: {
+      filename: <span style="color:#e6db74">&#39;bundle.js&#39;</span>,
+      path: path.join(__dirname, <span style="color:#e6db74">&#39;dist&#39;</span>)
+  },
+  module: {
+    rules: [
+          {
+              test: /\.vue$/,
+              loader: <span style="color:#e6db74">&#39;vue-loader&#39;</span>
+          },
+      ]
+  },
+  plugins: [
+      new VueLoaderPlugin(), //Vue-loader在15.<span style="color:#75715e">*之后的版本需要配合一个</span> VueLoaderPlugin 插件才能正确使用
+  ]
+}
+  
+module.exports = config
 </code></pre></div></li>
-</ol>
+<li>Config <code>build</code> script in <code>package.json &gt; scripts</code>:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#e6db74">&#34;scripts&#34;</span>: {
+  //...
+  <span style="color:#e6db74">&#34;build&#34;</span>: <span style="color:#e6db74">&#34;webpack --config webpack.config.js&#34;</span>
+},
+</code></pre></div><p><code>tips</code>：在<code>package.json</code>中配置<code>webpack</code>会调用安装在项目中<code>webpack</code>，而在<code>Terminal</code>中运行<code>webpack</code>会调用全局的<code>webpack</code>，全局的<code>webpack</code>可能和项目中要使用的不一样。</p>
 </li>
-<li><strong>组件名大小写：</strong>
-<ol>
-<li>在单文件组件、字符串模板中组件名应该总是 <code>PascalCase</code> 的:
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">&lt;!-- 在单文件组件和字符串模板中 --<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
-</span><span style="color:#e6db74"></span><span style="color:#e6db74">&lt;MyComponent/&gt;</span>
+<li>Config load static resourcies:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">module: {
+    rules: [
+        //...
+        {
+            test: /\.css$/,
+            use: [
+                <span style="color:#e6db74">&#39;style-loader&#39;</span>,
+                <span style="color:#e6db74">&#39;css-loader&#39;</span>
+            ]
+        },
+        {
+            test: /\.styl$/,
+            use: [
+                <span style="color:#e6db74">&#39;style-loader&#39;</span>,
+                <span style="color:#e6db74">&#39;css-loader&#39;</span>,
+                <span style="color:#e6db74">&#39;stylus-loader&#39;</span>
+            ]
+        },
+        {
+            test: /\.(gif|jpg|jpeg|png|svg)$/,
+            use: [
+                {
+                    loader: <span style="color:#e6db74">&#39;url-loader&#39;</span>, //封装的file-loader
+                    options: {
+                        limit: <span style="color:#ae81ff">1024</span>, //将小于1M的图片以代码的方式写在html中
+                        name: <span style="color:#e6db74">&#39;[name].[ext]&#39;</span>
+                    }
+                }
+            ]
+        }
+    ]
+}
 </code></pre></div></li>
-<li>在 <code>DOM</code> 模板中总是 <code>kebab-case</code> 的:
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">&lt;!-- 在 DOM 模板中 --<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
-</span><span style="color:#e6db74"></span><span style="color:#e6db74">&lt;my-component&gt;&lt;/my-component&gt;</span>
+<li>Install <code>style-loader</code>, <code>url-loader</code> and <code>file-loader</code>：
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">npm install style-loader url-loader file-loader
 </code></pre></div></li>
-</ol>
-</li>
-<li><strong>JS/JSX 中的组件名大小写:</strong> <code>JS/JSX</code> 中的组件名应该始终是 <code>PascalCase</code> 的，尽管在较为简单的应用中只使用 <code>Vue.component</code> 进行全局组件注册时，可以使用 <code>kebab-case</code> 字符串。</li>
-<li><strong>完整单词的组件名:</strong> 组件名应该倾向于完整单词而不是缩写。</li>
-<li><strong>Prop 名大小写:</strong> 在声明 <code>prop</code> 的时候，其命名应该始终使用 <code>camelCase</code>(<code>JavaScript</code>中)，而在模板和 <code>JSX</code> 中应该始终使用 <code>kebab-case</code>(<code>HTML</code>中)。</li>
-<li><strong>多个特性的元素应该分多行撰写，每个特性一行</strong></li>
-<li><strong>简单的表达式：</strong> 组件模板应该只包含简单的表达式，复杂的表达式则应该重构为计算属性或方法。</li>
-<li><strong>简单的计算属性:</strong> 应该把复杂计算属性分割为尽可能多的更简单的属性。</li>
-<li><strong>带引号的特性值:</strong> 非空 HTML 特性值应该始终带引号。</li>
-<li><strong>指令缩写：</strong> 指令缩写 (用 <code>:</code> 表示 <code>v-bind:</code> 、用<code> @</code> 表示 <code>v-on:</code> 和用 <code>#</code> 表示 <code>v-slot:</code>) 应该要么都用要么都不用。</li>
-<li><strong>多个属性之间增加一个空行，易于阅读和导航</strong></li>
-<li><strong>应该避免在 scoped 中出现元素选择器</strong></li>
-</ol>
+<li>Install <code>stylus-loader</code> and <code>stylus</code>：
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">npm install stylus-loader stylus
+</code></pre></div></li>
+<li>Install <code>html-webpack-plugin</code>:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">npm i html-webpack-plugin
+</code></pre></div></li>
+<li>Config <code>HTMLPlugin</code> in <code>webpack.config.js</code>:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">//...
+const HTMLPlugin = require(<span style="color:#e6db74">&#39;html-webpack-plugin&#39;</span>)
+  
+//...
+plugins: [
+    //...
+    new HTMLPlugin(), //dist编译出来的js和图片等静态文件，需要引入到html方能显示在web，引入html plugin
+]
+</code></pre></div></li>
+<li>Install webpack-dev-server:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">npm i webpack-dev-server
+</code></pre></div></li>
+<li>Install cross-env:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">npm i cross-env
+</code></pre></div></li>
+<li>Config build/dev script use cross-env in <code>package.json &gt; scripts</code>:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">  <span style="color:#e6db74">&#34;build&#34;</span>: <span style="color:#e6db74">&#34;cross-env NODE_ENV=production webpack --config webpack.config.js&#34;</span>,
+  <span style="color:#e6db74">&#34;dev&#34;</span>: <span style="color:#e6db74">&#34;cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js&#34;</span>
+</code></pre></div></li>
+<li>Config webpack devServer:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">//...
+const webpack = require(<span style="color:#e6db74">&#39;webpack&#39;</span>)
+
+//...
+const isDev = process.env.NODE_DEV === <span style="color:#e6db74">&#39;development&#39;</span>
+
+const config = {
+  //...
+  plugins: [
+    //...
+    //webpack编译过程和自己的js代码中用作判断是否为dev环境
+    new webpack.DefinePlugin({
+        <span style="color:#e6db74">&#39;process.env&#39;</span>: {
+            NODE_DEV: isDev ? <span style="color:#e6db74">&#39;&#34;development&#34;&#39;</span> : <span style="color:#e6db74">&#39;&#34;production&#34;&#39;</span>
+        }
+    })
+  ] 
+}
+
+if(isDev) {
+    // 方便在浏览器调试代码
+    // eval: 代码映射展示比较乱 source-map: 能够完整映射代码，单实效率低，文件大
+    config.devtool = <span style="color:#e6db74">&#39;#cheap-module-eval-source-map&#39;</span>
+    // webpack2引入dev server，配置webpack dev server
+    config.devServer = {
+        port: <span style="color:#ae81ff">8000</span>,
+        host: <span style="color:#e6db74">&#39;0.0.0.0&#39;</span>, // 可以通过loclhost、<span style="color:#ae81ff">127.0</span><span style="color:#ae81ff">.0</span>.1或本机ip访问
+        overlay: {
+            errors: <span style="color:#66d9ef">true</span>, // 将webpack编译的错误显示在网页上
+        },
+        // 不会重新加载整个页面，只重新渲染当前组件的效果
+        hot: <span style="color:#66d9ef">true</span>,
+        // historyFallback: {},
+        // open: <span style="color:#66d9ef">true</span>, //启动webpack dev server是自动打开浏览器
+    }
+    config.plugins.push(
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(), // 可以减少一些不必要的信息展示
+    )
+}
+</code></pre></div></li>
+</ul>
+<h2 id="issues">Issues</h2>
 
                 
                 
@@ -372,15 +498,10 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2019/12/27/vue-init/" data-toggle="tooltip" data-placement="top" title="Vue Initialization">&larr;
+                        <a href="/2019/12/27/vue-coding-style/" data-toggle="tooltip" data-placement="top" title="Vue Coding Style">&larr;
                             Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2020/01/13/webpack-vue-init/" data-toggle="tooltip" data-placement="top" title="Vue &#43; Webpack Initialization">Next
-                            Post &rarr;</a>
-                    </li>
                     
                 </ul>
 

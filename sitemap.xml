@@ -4,27 +4,42 @@
   
   <url>
     <loc>https://leezhuang96.github.io/categories/</loc>
-    <lastmod>2019-12-27T00:00:00+00:00</lastmod>
+    <lastmod>2020-01-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://leezhuang96.github.io/</loc>
-    <lastmod>2019-12-27T00:00:00+00:00</lastmod>
+    <lastmod>2020-01-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://leezhuang96.github.io/post/</loc>
-    <lastmod>2019-12-27T00:00:00+00:00</lastmod>
+    <lastmod>2020-01-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://leezhuang96.github.io/tags/</loc>
-    <lastmod>2019-12-27T00:00:00+00:00</lastmod>
+    <lastmod>2020-01-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://leezhuang96.github.io/tags/vue/</loc>
-    <lastmod>2019-12-27T00:00:00+00:00</lastmod>
+    <lastmod>2020-01-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://leezhuang96.github.io/2020/01/13/webpack-vue-init/</loc>
+    <lastmod>2020-01-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://leezhuang96.github.io/categories/web/</loc>
+    <lastmod>2020-01-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://leezhuang96.github.io/tags/webpack/</loc>
+    <lastmod>2020-01-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -34,11 +49,6 @@
   
   <url>
     <loc>https://leezhuang96.github.io/2019/12/27/vue-init/</loc>
-    <lastmod>2019-12-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://leezhuang96.github.io/categories/web/</loc>
     <lastmod>2019-12-27T00:00:00+00:00</lastmod>
   </url>
   
