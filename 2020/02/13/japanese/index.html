@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Jordon&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://leezhuang96.github.io/img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://leezhuang96.github.io/img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="にほんご" />
+    <meta property="og:title" content="にほんご" />
+    <meta property="twitter:title" content="にほんご" />
+    
+
+    
+    <meta name="description" content="日语">
+    <meta property="og:description" content="日语" />
+    <meta property="twitter:description" content="日语" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="李状, Jordon, lizhuang, , 李状的网络日志, 李状的博客, Jordon&#39;s Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/Blog.png">
+
+    <title>にほんご-李状的博客 | Jordon&#39;s Blog</title>
+
+    <link rel="canonical" href="/2020/02/13/japanese/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/syntax.css">
+    
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/docco.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jordon&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/books">books</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/life">life</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/tech">tech</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/tips">tips</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/web">web</a>
+                    </li>
+                    
+                    
+		    
+                        <li><a href="/top/books/">BOOKS</a></li>
+                    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search">SEARCH <img src="/img/search.png" height="15" style="cursor: pointer;" alt="Search"></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('https://img.zhaohuabing.com/in-post/2018-06-04-introducing-the-istio-v1alpha3-routing-api/background.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/japanese" title="Japanese">
+                            Japanese
+                        </a>
+                        
+                    </div>
+                    <h1>にほんご</h1>
+                    <h2 class="subheading">日本語</h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                                &#34;Jordon Li&#34;
+                         
+                        on 
+                        Thursday, February 13, 2020
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+  <ul>
+    <li><a href="#heading">にほんご</a>
+      <ul>
+        <li><a href="#heading-1">五十音</a></li>
+        <li><a href="#-">第１课 ：李さんは　中国人です。</a></li>
+        <li><a href="#--1">第２课 ：これは　本です。</a></li>
+        <li><a href="#--2">第３课 ：ここは　デパ－トです。</a></li>
+        <li><a href="#--3">第４课 ：部屋に　机といすか　あぃます。</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                
+                <h2 id="heading">にほんご</h2>
+<h3 id="heading-1">五十音</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"> あアa　 いイi　  うウu　  えエe   おオo
+ かカka　きキki　 くクku　 けケke　こコko   &lt;きゃキャkya　きゅキュkyu　きょキョkyo<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">(がガga　ぎギgi　 ぐグgu　 げゲge　ごゴgo)  &lt;ぎゃギャgya　ぎゅギュgyu　ぎょギョgyo&gt;</span>
+ さサsa　しシshi　すスsu　 せセse　そソso   &lt;しゃシャsha　しゅシュshu　しょショsho<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">(ざザza　じジji　 ずズzu　 ぜゼze　ぞゾzo)  &lt;じゃジャja　じゅジュju　じょジョjo&gt;</span>
+ たタta　ちチchi　つツtsu　てテte　とトto   &lt;ちゃチャcha　ちゅチュchu　ちょチョcho<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">(だダda　ぢヂdi　 づヅdu　 でデde　どドdo)  </span>
+ なナna　にニni　 ぬヌnu　 ねネne　のノno   &lt;にゃニャnya　にゅニュnyu　にょニョnyo<span style="color:#e6db74">&gt;
+</span><span style="color:#e6db74"></span><span style="color:#e6db74"> </span><span style="color:#e6db74">はハha　ひヒhi　 ふフfu　 へヘhe　ほホho   &lt;ひゃヒャhya　ひゅヒュhyu　ひょヒョhyo&gt;</span>
+(ばバba　びビbi　 ぶブbu　 べベbe　ぼボbo)　&lt;びゃビャbya　びゅビュbyu　びょビョbyo<span style="color:#e6db74">&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">[ぱパpa　ぴピpi 　ぷプpu　 ぺペpe　ぽポpo]  &lt;ぴゃピャpya　ぴゅピュpyu　ぴょピョpyo&gt;</span>
+ まマma　みミmi　 むムmu　 めメme　もモmo   &lt;みゃミャmya　みゅミュmyu　みょミョmyo<span style="color:#e6db74">&gt;
+</span><span style="color:#e6db74"></span><span style="color:#e6db74"> </span><span style="color:#e6db74">やヤya　　　     ゆユyu　  　   　よヨyo</span>
+ らラra　りリri　 るルru　 れレre　ろロro   &lt;りゃリャrya　りゅリュryu　りょリョryo<span style="color:#e6db74">&gt;
+</span><span style="color:#e6db74"></span><span style="color:#e6db74"> </span><span style="color:#e6db74">わワwa 　　　　　　     　        をヲwo</span>
+{んンn}
+
+拨音：{}
+浊音：()
+半浊音：[]
+拗音：&lt;<span style="color:#e6db74">&gt;
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">日语： 平假名 + 片假名 + 汉字 + 罗马字 + 外来语</span>
+</code></pre></div><h3 id="-">第１课 ：李さんは　中国人です。</h3>
+<ul>
+<li>语法+短句：
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">＿＿は　＿＿です。
+＿＿は　＿＿ですか。
+  
+はい、＿＿です。
+はい、そうです。：是，是这样的。
+  
+いいえ、＿＿では　ありません。
+いいえ、＿＿じゃ　ありません。
+いいえ、ちがいます。：不是，不是这样的。
+
+</code></pre></div></li>
+</ul>
+<hr>
+<p>こんにちは：你好
+はじめまして：初次见面
+よろしく　お願（ねが）いします：请多关照
+すみません：对不起；请问
+どうも　すみません：非常对不起
+どうぞ：请
+こちらこそ：我才要（请您）&hellip;
+分（わ）かりません：不知道
+～さん／～ちゃん／～君（くん）</p>
+<pre><code>
+* 单词：
+```yml
+中国（ちゅうごく）／中国人（ちゅうごくじん）／中国語（ちゅうごくご）
+日本（にほん）／日本人（にほんじん）／日本語（にほんご）
+韓国（かんこく）／韓国人（かんこくじん）／韓国語（かんこくご）
+アメリカ／アメリカ人（～じん）
+フランス／フランス人（～じん）
+大学（だいがく）／学生（がくせい）／生徒（せいと）／留学生（りゅうがくせい）／研修生（けんしゅうせい）
+先生（せんせい）／教授（きょうじゅ）
+会社（かいしゃ）／社員（しゃいん）／会社員（かいしゃいん）／店員（てんいん）
+企業（きぎょう）／企画（きかく）
+課長（かちょう）／部長（ぶちょう）／社長（しゃちょう）
+あの人（～ひと）／あの方（～かた）
+私（わたし）／あなた
+出迎え（でむか～）
+どうも
+はい／いいえ
+あっ／えっ／わあ
+李（り）／王（おう）／張（ちょう）
+森（もり）／林（はやし）／小野（おの）／太郎（たろう）
+吉田（よしだ）／田中（たなか）／中村（なかむら）
+金（キム）
+スミス／ジョンソン
+東京（とうきょう）／北京（ペキン）
+旅行（りょこ）／旅行社（りょこうしゃ）
+日中商事（にっちゅうしょうじ）
+</code></pre><ul>
+<li>应用：
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">出迎え
+李：JC企画の　小野さんですか。
+小野：はい、小野です。李秀麗さんですか。
+李：はい、李です。はじめまして。どうぞ　よろしく　お願いします。
+小野：はじめまして。小野緑です。
+
+森：李さん、こんにちは。
+李：吉田さんですか。
+森：いいえ、私は　吉田じゃ　ありません。森です。
+李：あっ、森さんですか。どうも　すみません。
+森：いいえ、どうぞ　よろしく。
+李：李秀麗です。こちらこそ、よろしく　お願いします。
+</code></pre></div></li>
+</ul>
+<h3 id="--1">第２课 ：これは　本です。</h3>
+<ul>
+<li>语法+短句：
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">これ　　　それ　　　あれ　　　どれ　　　
+この＿＿　その＿＿　あの＿＿　どの＿＿
+
+誰（だれ）／どなた／何（なん）
+＿＿の＿＿
+
+</code></pre></div></li>
+</ul>
+<hr>
+<p>この／その／あの人（ひと）：这个/那个人
+この／その／あの方（かた）：这位/那位
+何歳（なんさい）／おいくつ　ですか。：几岁了？
+はい／ええ
+どうも／どうも　ありがとう　ございます。：谢谢</p>
+<pre><code>
+* 单词：
+```yml
+本（ほん）／本棚（ほんだな）／本屋（ほんや）
+かばん
+えんびつ
+傘（かさ）
+靴（くつ）
+新聞（しんぶん）／雑誌（ざっし）／辞書（じしょ）
+ノート／カマラ／テレビ／パソコン／ラジオ
+電話（でんわ）
+机（つくえ）／いす
+鍵（かぎ）
+時計（とけい）／手帳（てちょう）／写真（しゃしん）
+車（くるま）／自転車（じてんしゃ）
+お土産（～みやげ）／名産品（めいさんひん）
+シルク／ハンカチ
+家族（かぞく）
+これ／それ／あれ／どれ
+この／その／あの／どの
+誰（だれ）／どなた／何（なん）
+長嶋（ながしま）／スワトウ／ロンドン
+
+父（ちち）／お父（とう）さん
+母（はは）／お母（かあ）さん
+息子（むすこ）／息子（むすこ）さん
+娘（むすめ）／娘（むすめ）さん／お嬢（じょう）さん
+祖父（そふ）／おじいさん
+祖母（そぼ）／おばあさん
+おじ／おじさん
+おば／おばさん
+兄（あに）／お兄（にい）さん
+姉（あね）／お姉（ねえ）さん
+弟（おとうと）／弟（おとうと）さん
+妹（いもうと）／妹（いもうと）さん
+兄弟（きょうだい）／ご兄弟（～きょうだい）
+両親（りょうしん）／ご両親（～りょうしん）
+</code></pre><ul>
+<li>应用：
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">家族の写真
+小野：李さん、それは　何ですか。
+李：これですか。家族の　写真です。
+小野：この方は　どなたですか。
+李：私の母です。
+小野：お母さんは　おいくつですか。
+李：52歳です。
+
+李：小野さん、これ、どうぞ。
+小野：えっ、何ですか。
+李：お土産です。
+小野：わあ、シルクの　ハンカチですか。
+李：ええ、スワトウの　ハンカチです。中国の　名産品です。
+小野：どうも　ありがとう　ございます。
+</code></pre></div></li>
+</ul>
+<h3 id="--2">第３课 ：ここは　デパ－トです。</h3>
+<ul>
+<li>
+<p>语法+短句：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">这里/（近/远）那里/哪里：
+  ここ　　そこ　　あそこ　どこ
+敬体：
+  こちら　そちら　あちら　どちら
+
+＿＿も　＿＿です。：也
+＿＿は　＿＿ですか、　＿＿ですか。
+＿＿は　いくら ですか。：多少钱
+あのう：请问对不起
+お～／～階（かい）／～円（えん）／～曜日（ようび）
+</code></pre></div></li>
+<li>
+<p>单词：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">食堂（しょくどう）／喫茶店（きっさてん）／病院（びょういん）
+郵便局（ゆうびんきょく）／銀行（ぎんこう）／事務所（じむしょ）
+図書館（としょかん）／図書室（としょしつ）
+トイレ：厕所／ホテル：宾馆／マンション：（高级）公寓
+デパート：百货商店／コンビニ：便利店／レストラン：餐馆，西餐馆
+ビル／建物（たてもの）
+売り場（うりば）／バーゲン会場（～かいじょう）／受付（うけつけ）
+服（ふく）／コート：大衣
+入り口（いりぐち）
+イスカレーター：自动扶梯
+カメラ／デジカメ／ビデオ
+国（くに）
+地図（ちず）
+隣（となり）／周辺（しゅうへん）
+ここ／そこ／あそこ／どこ
+こちら／そちら／あちら／どちら
+上海（シャンハイ）／東京（とうきょう）／北京（ペキン）
+
+今日（きょう）／～曜日（ようび）
+月曜日（げつようび）：星期一
+火曜日（かようび）：星期二
+水曜日（すいようび）：星期三
+木曜日（もくようび）：星期四
+金曜日（きんようび）：星期五
+土曜日（どようび）：星期六
+日曜日（にちようび）：星期日
+
+<span style="color:#ae81ff">0</span>：れい／ぜろ　<span style="color:#ae81ff">10</span>：じゅう　　　　　　　　　<span style="color:#ae81ff">20</span>：にじゅう
+<span style="color:#ae81ff">1</span>：いち　　　　<span style="color:#ae81ff">11</span>：じゅういち　　　　　　　<span style="color:#ae81ff">30</span>：さんじゅう
+<span style="color:#ae81ff">2</span>：に　　　　　<span style="color:#ae81ff">12</span>：じゅうに　　　　　　　　<span style="color:#ae81ff">40</span>：よんじゅう
+<span style="color:#ae81ff">3</span>：さん　　　　<span style="color:#ae81ff">13</span>：じゅうさん　　　　　　　<span style="color:#ae81ff">50</span>：ごじゅう
+<span style="color:#ae81ff">4</span>：よん／し　　<span style="color:#ae81ff">14</span>：じゅうよん／じゅうし　　<span style="color:#ae81ff">60</span>：ろくじゅう
+<span style="color:#ae81ff">5</span>：ご　　　　　<span style="color:#ae81ff">15</span>：じゅうご　　　　　　　　<span style="color:#ae81ff">70</span>：ななじゅう
+<span style="color:#ae81ff">6</span>：ろく　　　　<span style="color:#ae81ff">16</span>：じゅうろく　　　　　　　<span style="color:#ae81ff">80</span>：はちじゅう
+<span style="color:#ae81ff">7</span>：しち／なな　<span style="color:#ae81ff">17</span>：じゅうしち／じゅうなな　<span style="color:#ae81ff">90</span>：きゅうじゅう
+<span style="color:#ae81ff">8</span>：はち　　　　<span style="color:#ae81ff">18</span>：じゅうはち　　　　　　　<span style="color:#ae81ff">100</span>：ひゃく
+<span style="color:#ae81ff">9</span>：きゅう／く　<span style="color:#ae81ff">19</span>：じゅうきゅう／じゅうく
+  
+<span style="color:#ae81ff">100</span>：ひゃく　　　　<span style="color:#ae81ff">1000</span>：せん　　　　<span style="color:#ae81ff">10000</span>：いちまん
+<span style="color:#ae81ff">200</span>：にひゃく　　　<span style="color:#ae81ff">2000</span>：にせん　　　<span style="color:#ae81ff">100000</span>：じゅうまん
+<span style="color:#ae81ff">300</span>：さんびゃく　　<span style="color:#ae81ff">3000</span>：さんぜん　　<span style="color:#ae81ff">1000000</span>：ひゃくまん
+<span style="color:#ae81ff">400</span>：よんひゃく　　<span style="color:#ae81ff">4000</span>：よんせん　　<span style="color:#ae81ff">10000000</span>：いっせんまん
+<span style="color:#ae81ff">500</span>：ごひゃく　　　<span style="color:#ae81ff">5000</span>：ごせん　　　<span style="color:#ae81ff">100000000</span>：いちおく
+<span style="color:#ae81ff">600</span>：ろっぴゃく　　<span style="color:#ae81ff">6000</span>：ろくせん
+<span style="color:#ae81ff">700</span>：ななひゃく　　<span style="color:#ae81ff">7000</span>：ななせん
+<span style="color:#ae81ff">800</span>：はっぴゃく　　<span style="color:#ae81ff">8000</span>：はっせん
+<span style="color:#ae81ff">900</span>：きゅうひゃく　<span style="color:#ae81ff">9000</span>：きゅうせん
+  
+<span style="color:#ae81ff">0.1</span>：れんてんいち
+<span style="color:#ae81ff">2</span>/<span style="color:#ae81ff">3</span>：さんぶんのに
+</code></pre></div></li>
+<li>
+<p>应用：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">ホテルの周辺
+小野：ここは　コンビニです。隣は　喫茶店です。
+李：あの建物は　ホテルですか、マンションですか。
+小野：あそこは　マンションです。
+李：あの建物は　何ですか。
+小野：あそこも　マンションです。
+李：マンションの隣は？
+小野：マンションの隣は　病院です。
+
+李：本屋は　どこですか。
+小野：そこです。そのビルの　二階です。
+
+李：あのう、東京の地図は　どこですか。
+店員：地図ですか。そちらです。
+李：いくらですか。
+店員：五百円です。
+</code></pre></div></li>
+</ul>
+<h3 id="--3">第４课 ：部屋に　机といすか　あぃます。</h3>
+<ul>
+<li>
+<p>语法+短句：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">＿＿在＿＿：
+  ＿＿は　＿＿に　あります／ありますか。
+  ＿＿は　＿＿に　います／いますか。
+ 
+あります／ありません
+います／いません
+
+＿＿有＿＿：
+  ＿＿に　＿＿が　ある。
+  ＿＿に　＿＿が　いる。
+
+＿＿和＿＿：
+  ＿＿と　＿＿
+
+上（うえ）／下（した）／前（まえ）／後ろ（うしろ）／中（なか）／外（そと）／隣（となり）
+
+＿＿ね：征求同意
+ええと：嗯...
+
+全面否定：＿＿も　いません／ありません。
+  だれも　いません。：谁也没有
+  何（なに）も　ありません。：什么也没有
+
+地下鉄（ちかてつ）
+JR（ジェーアール）：国鉄（こくてつ）-&gt; Japan Railways
+私鉄（してつ）
+
+一人暮らし（ひとりく～）
+</code></pre></div></li>
+<li>
+<p>单词：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">家（いえ）／庭（にわ）
+花屋（はなや）／部屋（へや）／居間（いま）／壁（かべ）
+スイッチ／冷蔵庫（れいぞうこ）／べっど
+本屋（ほんや）／本棚（ほんだな）
+猫（ねこ）／箱（はこ）／犬（いぬ）
+眼鏡（めがね）
+ビデオ／サッカーボール
+ビール／ウイスキー
+子供（こども）
+男（おとこ）／女（おんな）
+学生（がくせい）／生徒（せいと）
+上（うえ）／下（した）
+外（そと）／中（なか）
+前（まえ）／後ろ（うしろ）
+近く（ちかく）／隣（となり）／周辺（しゅうへん）
+場所（ばじょ）
+公園（こうえん）
+売店（ばいてん）／店員（てんいん）
+教室（きょうしつ）／会議室（かいぎしつ）／図書室（としょしつ）／図書館（としょかん）
+駅（えき）／地下鉄（ちかてつ）
+木（き）
+一人暮らし（ひとりぐ～）
+横浜（よこはま）／名古屋（なごや）／大阪（おおさか）
+</code></pre></div></li>
+<li>
+<p>应用：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">会社の場所
+李：小野さん、会社は　どこに　ありますか。
+小野：ええと、　ここです。
+李：近くに　駅が　ありますか。
+小野：ええ、JRと　地下鉄の駅が　あります。JRの駅は　ここです。
+
+李：地下鉄の駅は　ここですね。
+小野：ええ、そうです。JRの駅の隣に　地下鉄の駅が　あります。
+
+李：小野さんの家は　どちらですか。
+小野：私の家は　横浜です。
+李：ご家族も　横浜ですか。
+小野：いいえ、私は　一人暮らしです。
+李：ご両親は　どちらですか。
+小野：両親は　名古屋に　います。
+李：ご兄弟は？
+小野：大阪に　妹が　います。
+</code></pre></div></li>
+</ul>
+
+
+                
+                
+<div class="entry-shang text-center">
+    
+	    <p>「真诚赞赏，手留余香」</p>
+	
+	<button class="zs show-zs btn btn-bred">赞赏支持</button>
+</div>
+<div class="zs-modal-bg"></div>
+<div class="zs-modal-box">
+	<div class="zs-modal-head">
+		<button type="button" class="close">×</button>
+		<span class="author">
+			
+				<img src="/img/favicon.png" />
+				
+			
+		</span>
+        
+	        <p class="tip"><i></i><span>真诚赞赏，手留余香</span></p>
+		
+ 
+	</div>
+	<div class="zs-modal-body">
+		<div class="zs-modal-btns">
+			<button class="btn btn-blink" data-num="2">2元</button>
+			<button class="btn btn-blink" data-num="5">5元</button>
+			<button class="btn btn-blink" data-num="10">10元</button>
+			<button class="btn btn-blink" data-num="50">50元</button>
+			<button class="btn btn-blink" data-num="100">100元</button>
+			<button class="btn btn-blink" data-num="1">任意金额</button>
+		</div>
+		<div class="zs-modal-pay">
+			<button class="btn btn-bred" id="pay-text">任意金额</button>
+			<p>使用<span id="pay-type">微信</span>扫描二维码完成支付</p>
+			<img src="/img/reward/wechat.png"  id="pay-image"/>
+		</div>
+	</div>
+	<div class="zs-modal-footer">
+		<label>
+			<input type="radio" name="zs-type" value="wechat" class="zs-type" checked="checked">
+			<img src="/img/reward/wechat-btn.png"/>
+		</label>
+		<label>
+			<input type="radio" name="zs-type" value="alipay" class="zs-type" class="zs-alipay">
+			<img src="/img/reward/alipay-btn.png"/>
+		</label>
+	</div>
+</div>
+<script type="text/javascript" src="/js/reward.js"></script>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2020/01/13/webpack-vue-init/" data-toggle="tooltip" data-placement="top" title="Vue &#43; Webpack Initialization">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/es6" title="es6">
+                            es6
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/istio" title="istio">
+                            istio
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/microservice" title="microservice">
+                            microservice
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/security" title="security">
+                            security
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/service-mesh" title="service-mesh">
+                            service-mesh
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/tips" title="tips">
+                            tips
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/vue" title="vue">
+                            vue
+                        </a>
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                    
+                    <li>
+                        <a href="mailto:leezhuang96@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="/img/wechat_qrcode.jpg">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/leezhuang96">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Jordon&#39;s Blog 2020
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>
