@@ -6,15 +6,24 @@
     <description>Recent content in Categories on Jordon&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 13 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 19 Feb 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leezhuang96.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Java</title>
+      <link>https://leezhuang96.github.io/categories/java/</link>
+      <pubDate>Wed, 19 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://leezhuang96.github.io/categories/java/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Books</title>
       <link>https://leezhuang96.github.io/categories/books/</link>
-      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 17 Feb 2020 00:00:00 +0000</pubDate>
       
       <guid>https://leezhuang96.github.io/categories/books/</guid>
       <description></description>
