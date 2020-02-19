@@ -228,21 +228,6 @@
   </url>
   
   <url>
-    <loc>https://leezhuang96.github.io/categories/life/</loc>
-    <lastmod>2018-05-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://leezhuang96.github.io/tags/travel/</loc>
-    <lastmod>2018-05-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://leezhuang96.github.io/2018/05/01/may-day-jiulonghu/</loc>
-    <lastmod>2018-05-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://leezhuang96.github.io/tags/helm/</loc>
     <lastmod>2018-04-16T15:00:00+00:00</lastmod>
   </url>
@@ -343,11 +328,23 @@
   </url>
   
   <url>
+    <loc>https://leezhuang96.github.io/categories/life/</loc>
+  </url>
+  
+  <url>
     <loc>https://leezhuang96.github.io/search/</loc>
   </url>
   
   <url>
     <loc>https://leezhuang96.github.io/top/</loc>
+  </url>
+  
+  <url>
+    <loc>https://leezhuang96.github.io/tags/travel/</loc>
+  </url>
+  
+  <url>
+    <loc>https://leezhuang96.github.io/2019/09/13/wugongshan/</loc>
   </url>
   
 </urlset>

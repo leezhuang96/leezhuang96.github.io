@@ -280,17 +280,6 @@ sudo vi /usr/local/lib/python3.6/dist-packages/shadowsocks/crypto/openssl.py :%s
     </item>
     
     <item>
-      <title>川西秘境探险</title>
-      <link>https://leezhuang96.github.io/2018/05/01/may-day-jiulonghu/</link>
-      <pubDate>Tue, 01 May 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://leezhuang96.github.io/2018/05/01/may-day-jiulonghu/</guid>
-      <description>&lt;h2 id=&#34;heading&#34;&gt;寻浮云牧场不遇&lt;/h2&gt;
-&lt;p&gt;五一节前的一周内，几个朋友就纷纷坐不住了，一个二个不再安心上班，开始在微信群里讨论过节要到哪里耍。
-大家思来想去，最后决定还是去理县方向。因为根据多年自驾的经验，只要出了汶川，沿途都是风景。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
       <title>Helm介绍</title>
       <link>https://leezhuang96.github.io/2018/04/16/using-helm-to-deploy-to-kubernetes/</link>
       <pubDate>Mon, 16 Apr 2018 15:00:00 +0000</pubDate>
@@ -424,6 +413,18 @@ export HTTPS_PROXY=&amp;quot;http://127.0.0.1:3128/&amp;quot;
       <description>Jorodn Li is an ICT veteran with a passion for open source. He has a solid experience in the telecommunication and information technology industry for more than 17 years.
 Throughout his career, he has built a number of large-scale, cross-country OSS/BSS platforms/systems and operation tools, most of them are still running in productions.
 He loves open source and has been contributing to a variety of open source projects, including Istio(Service Mesh https://istio.</description>
+    </item>
+    
+    <item>
+      <title>重装徒步反穿武功山</title>
+      <link>https://leezhuang96.github.io/2019/09/13/wugongshan/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://leezhuang96.github.io/2019/09/13/wugongshan/</guid>
+      <description>&lt;h2 id=&#34;heading&#34;&gt;重装徒步反穿武功山&lt;/h2&gt;
+&lt;p&gt;bilibili: &lt;a href=&#34;https://www.bilibili.com/video/av71750087&#34;&gt;https://www.bilibili.com/video/av71750087&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;两天一夜
+龙山村-发云界-好汉坡-绝望坡-夜宿汇锦山庄（帐篷）-金顶&lt;/p&gt;</description>
     </item>
     
   </channel>
