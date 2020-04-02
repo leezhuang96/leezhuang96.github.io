@@ -6,7 +6,7 @@
     <description>Recent content in Tags on Jordon&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leezhuang96.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Japanese</title>
       <link>https://leezhuang96.github.io/tags/japanese/</link>
-      <pubDate>Thu, 27 Feb 2020 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 01 Apr 2020 00:00:00 +0000</pubDate>
       
       <guid>https://leezhuang96.github.io/tags/japanese/</guid>
       <description></description>
@@ -98,24 +98,6 @@
       <pubDate>Wed, 23 May 2018 00:00:00 +0000</pubDate>
       
       <guid>https://leezhuang96.github.io/tags/kubernetes/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Bitcoin</title>
-      <link>https://leezhuang96.github.io/tags/bitcoin/</link>
-      <pubDate>Mon, 21 May 2018 11:00:00 +0000</pubDate>
-      
-      <guid>https://leezhuang96.github.io/tags/bitcoin/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Jekyll:q</title>
-      <link>https://leezhuang96.github.io/tags/jekyllq/</link>
-      <pubDate>Mon, 21 May 2018 11:00:00 +0000</pubDate>
-      
-      <guid>https://leezhuang96.github.io/tags/jekyllq/</guid>
       <description></description>
     </item>
     
