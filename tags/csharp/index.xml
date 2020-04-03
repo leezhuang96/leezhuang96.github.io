@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>.Net Core on Jordon&#39;s Blog</title>
-    <link>https://leezhuang96.github.io/tags/.net-core/</link>
-    <description>Recent content in .Net Core on Jordon&#39;s Blog</description>
+    <title>CSharp on Jordon&#39;s Blog</title>
+    <link>https://leezhuang96.github.io/tags/csharp/</link>
+    <description>Recent content in CSharp on Jordon&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 03 Apr 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://leezhuang96.github.io/tags/.net-core/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://leezhuang96.github.io/tags/csharp/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
