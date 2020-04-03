@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C# on Jordon&#39;s Blog</title>
+    <link>https://leezhuang96.github.io/categories/c#/</link>
+    <description>Recent content in C# on Jordon&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 03 Apr 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://leezhuang96.github.io/categories/c#/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Asp .Net Core 3.x Initialization</title>
+      <link>https://leezhuang96.github.io/2020/04/03/.net-core-init/</link>
+      <pubDate>Fri, 03 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://leezhuang96.github.io/2020/04/03/.net-core-init/</guid>
+      <description>Asp .Net Core 3.x Asp .Net Core 本质是 一个Server + 多个中间件（Middleware）组成的管道（Pipline）。 本身是一个console applica</description>
+    </item>
+    
+  </channel>
+</rss>
