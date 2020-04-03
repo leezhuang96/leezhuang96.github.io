@@ -13,10 +13,10 @@
     
     <item>
       <title>Asp .Net Core 3.x Initialization</title>
-      <link>https://leezhuang96.github.io/2020/04/03/.net-core-init/</link>
+      <link>https://leezhuang96.github.io/2020/04/03/dot-net-core-init/</link>
       <pubDate>Fri, 03 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://leezhuang96.github.io/2020/04/03/.net-core-init/</guid>
+      <guid>https://leezhuang96.github.io/2020/04/03/dot-net-core-init/</guid>
       <description>Asp .Net Core 3.x Asp .Net Core 本质是 一个Server + 多个中间件（Middleware）组成的管道（Pipline）。 本身是一个console applica</description>
     </item>
     
