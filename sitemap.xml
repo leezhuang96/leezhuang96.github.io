@@ -13,12 +13,17 @@
   </url>
   
   <url>
+    <loc>https://leezhuang96.github.io/tags/csharp/</loc>
+    <lastmod>2020-04-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://leezhuang96.github.io/categories/csharp/</loc>
     <lastmod>2020-04-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://leezhuang96.github.io/tags/csharp/</loc>
+    <loc>https://leezhuang96.github.io/categories/database/</loc>
     <lastmod>2020-04-03T00:00:00+00:00</lastmod>
   </url>
   
@@ -34,6 +39,16 @@
   
   <url>
     <loc>https://leezhuang96.github.io/post/</loc>
+    <lastmod>2020-04-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://leezhuang96.github.io/tags/redis/</loc>
+    <lastmod>2020-04-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://leezhuang96.github.io/2020/04/03/redis/</loc>
     <lastmod>2020-04-03T00:00:00+00:00</lastmod>
   </url>
   
@@ -58,7 +73,7 @@
   </url>
   
   <url>
-    <loc>https://leezhuang96.github.io/2020/04/03/vwindows-tips/</loc>
+    <loc>https://leezhuang96.github.io/2020/04/03/windows-tips/</loc>
     <lastmod>2020-04-03T00:00:00+00:00</lastmod>
   </url>
   
