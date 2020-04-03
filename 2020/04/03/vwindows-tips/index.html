@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-	<meta name="generator" content="Hugo 0.62.0" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,15 +15,15 @@
     
 
     
-    <meta name="title" content="" />
-    <meta property="og:title" content="" />
-    <meta property="twitter:title" content="" />
+    <meta name="title" content="Windows Tips" />
+    <meta property="og:title" content="Windows Tips" />
+    <meta property="twitter:title" content="Windows Tips" />
     
 
     
-    <meta name="description" content="李状，程序员, 开源爱好者，生活探险家 | 这里是 李状 的博客，与你一起发现更大的世界。">
-    <meta property="og:description" content="李状，程序员, 开源爱好者，生活探险家 | 这里是 李状 的博客，与你一起发现更大的世界。" />
-    <meta property="twitter:description" content="李状，程序员, 开源爱好者，生活探险家 | 这里是 李状 的博客，与你一起发现更大的世界。" />
+    <meta name="description" content="Windows Tips and tricks">
+    <meta property="og:description" content="Windows Tips and tricks" />
+    <meta property="twitter:description" content="Windows Tips and tricks" />
     
 
     
@@ -35,9 +34,9 @@
     <meta name="keyword"  content="李状, Jordon, lizhuang, , 李状的网络日志, 李状的博客, Jordon&#39;s Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
     <link rel="shortcut icon" href="/img/Blog.png">
 
-    <title>Jordon&#39;s Blog-李状的博客 | Jordon&#39;s Blog</title>
+    <title>Windows Tips-李状的博客 | Jordon&#39;s Blog</title>
 
-    <link rel="canonical" href="/">
+    <link rel="canonical" href="/2020/04/03/vwindows-tips/">
 
     <link rel="stylesheet" href="/css/iDisqus.min.css"/>
 	
@@ -177,14 +176,41 @@
 
 
 
-<header class="intro-header" style="background-image: url('/img/home-bg-jeep.jpg')">
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('https://img.zhaohuabing.com/in-post/2018-02-09-vim-tips/matrix.jpg')
+    }
+</style>
+<header class="intro-header">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>Jordon&#39;s Blog </h1>
-                    
-		    <span class="subheading">Be water, my friends.</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/tips" title="Tips">
+                            Tips
+                        </a>
+                        
+                        <a class="tag" href="/tags/windows" title="Windows">
+                            Windows
+                        </a>
+                        
+                    </div>
+                    <h1>Windows Tips</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                            Jordon Li
+                         
+                        on 
+                        Friday, April 3, 2020
+                        
+                        
+                        
+                    </span>
                 </div>
             </div>
         </div>
@@ -193,271 +219,217 @@
 
 
 
-  
-<div class="container">
-    <div class="row">
-        
-        
-   	    <div class="
-            col-lg-8 col-lg-offset-1
-            col-md-8 col-md-offset-1
-            col-sm-12
-            col-xs-12
-            post-container
-        ">
+
+<article>
+    <div class="container">
+        <div class="row">
+
             
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
 
-<div class="post-preview">
-    <a href="https://leezhuang96.github.io/2018/01/02/nginmesh-install/">
-        <h2 class="post-title">
-            Nginx开源Service Mesh组件Nginmesh安装指南
-        </h2>
-	
-        <div class="post-content-preview">
-	
-            Nginmesh是NGINX的Service Mesh开源项目，用于Istio服务网格平台中的数据面代理。它旨在提供七层负载均衡和服务路由功能，与Istio集成作为sidecar部署，并将以“标准，可靠和安全的方式”使得服务间通信更容易。Nginmesh在今年底已经连续发布了0.2和0.3版本，提供了服务发现，请求转发，路由规则，性能指标收集等功能。本文介绍如何采用kubeadmin安装kubernetes集群并部署Nginmesh sidecar。
-        
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by Jordon Li Tuesday, January 2, 2018
-    
-    
-    </p>
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+  <ul>
+    <li><a href="#windows-command-cheat-sheet">Windows command cheat sheet</a></li>
+    <li><a href="#windows-">windows 端口占用</a></li>
+    <li><a href="#others">Others</a></li>
+  </ul>
+</nav>
+                
+                <h2 id="windows-command-cheat-sheet">Windows command cheat sheet</h2>
+<h2 id="windows-">windows 端口占用</h2>
+<pre><code>&gt; netstat -ano|findstr &quot;&lt;port number&gt;&quot;
+&gt; tasklist|findstr &quot;&lt;PID&gt;&quot;
+&gt; taskkill /f /t /im &lt;process name&gt;
+</code></pre><h2 id="others">Others</h2>
 
+                
+                
+<div class="entry-shang text-center">
+    
+	    <p> 「下次一定」</p>
+	
+	<button class="zs show-zs btn btn-bred">赞赏支持</button>
 </div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://leezhuang96.github.io/2017/11/28/access-application-from-outside/">
-        <h2 class="post-title">
-            如何从外部访问Kubernetes集群中的应用？
-        </h2>
-	
-        <div class="post-content-preview">
-	
-            我们知道，kubernetes的Cluster Network属于私有网络，只能在cluster Network内部才能访问部署的应用，那如何才能将Kubernetes集群中的应用暴露到外部网络，为外部用户提供服务呢？本文探讨了从外部网络访问kubernetes cluster中应用的几种实现方式。
+<div class="zs-modal-bg"></div>
+<div class="zs-modal-box">
+	<div class="zs-modal-head">
+		<button type="button" class="close">×</button>
+		<span class="author">
+			
+				<img src="/img/favicon.png" />
+				
+			
+		</span>
         
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by Jordon Li Tuesday, November 28, 2017
-    
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://leezhuang96.github.io/2017/11/08/istio-canary-release/">
-        <h2 class="post-title">
-            采用Istio实现灰度发布(金丝雀发布)
-        </h2>
-	
-        <h3 class="post-subtitle">
-            用户无感知的平滑业务升级
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            当应用上线以后，运维面临的一大挑战是如何能在不影响已上线业务的情况下进行升级。本文将介绍如何使用Istio实现应用的灰度发布（金丝雀发布）
-        
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by Jordon Li Wednesday, November 8, 2017
-    
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://leezhuang96.github.io/2017/11/07/istio-traffic-shifting/">
-        <h2 class="post-title">
-            使用Istio实现应用流量转移
-        </h2>
-	
-        <h3 class="post-subtitle">
-              &#34;本文翻译自istio官方文档&#34;
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            本任务将演示如何将应用流量逐渐从旧版本的服务迁移到新版本。通过Istio，可以使用一系列不同权重的规则（10%，20%，··· 100%）将流量平缓地从旧版本服务迁移到新版本服务。
-        
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by     &#34;Jordon Li&#34; Tuesday, November 7, 2017
-    
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://leezhuang96.github.io/2017/11/04/istio-install_and_example/">
-        <h2 class="post-title">
-            Istio及Bookinfo示例程序安装试用笔记
-        </h2>
-	
-        <h3 class="post-subtitle">
-            手把手教你从零搭建Istio及Bookinfo示例程序
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            Istio是来自Google，IBM和Lyft的一个Service Mesh（服务网格）开源项目，是Google继Kubernetes之后的又一大作,本文将演示如何从裸机开始从零搭建Istio及Bookinfo示例程序。
-        
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by Jordon Li Saturday, November 4, 2017
-    
-    
-    </p>
-
-</div>
-<hr>
-
-
-            
-
-
-<ul class="pager">
-    
-    <li class="previous">
-        <a href="/page/7/">&larr; Newer Posts</a>
-    </li>
-    
-    
-    <li class="next">
-        <a href="/page/9/">Older Posts &rarr;</a>
-    </li>
-    
-</ul>
-
-
-       	</div>
-        
-
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-    
-    <section>
-        <hr class="hidden-sm hidden-xs">
-        <h5>FEATURED TAGS</h5>
-        <div class="tags">
-             
-            
-                
-            
-                
-            
-                
-                    <a href="/tags/docker" title="docker">
-                        docker
-                    </a>
-                
-            
-                
-            
-                
-                    <a href="/tags/es6" title="es6">
-                        es6
-                    </a>
-                
-            
-                
-            
-                
-                    <a href="/tags/istio" title="istio">
-                        istio
-                    </a>
-                
-            
-                
-                    <a href="/tags/japanese" title="japanese">
-                        japanese
-                    </a>
-                
-            
-                
-                    <a href="/tags/kubernetes" title="kubernetes">
-                        kubernetes
-                    </a>
-                
-            
-                
-                    <a href="/tags/microservice" title="microservice">
-                        microservice
-                    </a>
-                
-            
-                
-            
-                
-                    <a href="/tags/security" title="security">
-                        security
-                    </a>
-                
-            
-                
-                    <a href="/tags/service-mesh" title="service-mesh">
-                        service-mesh
-                    </a>
-                
-            
-                
-            
-                
-                    <a href="/tags/tips" title="tips">
-                        tips
-                    </a>
-                
-            
-                
-            
-                
-            
-                
-            
-                
-                    <a href="/tags/vue" title="vue">
-                        vue
-                    </a>
-                
-            
-                
-            
-                
-            
-        </div>
-    </section>
-    
-
-    
-	
-    
-    
-
-    
-    
-</div>
-
+	        <p class="tip"><i></i><span>下次一定</span></p>
+		
+ 
+	</div>
+	<div class="zs-modal-body">
+		<div class="zs-modal-btns">
+			<button class="btn btn-blink" data-num="2">2元</button>
+			<button class="btn btn-blink" data-num="5">5元</button>
+			<button class="btn btn-blink" data-num="10">10元</button>
+			<button class="btn btn-blink" data-num="50">50元</button>
+			<button class="btn btn-blink" data-num="100">100元</button>
+			<button class="btn btn-blink" data-num="1">任意金额</button>
+		</div>
+		<div class="zs-modal-pay">
+			<button class="btn btn-bred" id="pay-text">任意金额</button>
+			<p>使用<span id="pay-type">微信</span>扫描二维码完成支付</p>
+			<img src="/img/reward/wechat.png"  id="pay-image"/>
+		</div>
+	</div>
+	<div class="zs-modal-footer">
+		<label>
+			<input type="radio" name="zs-type" value="wechat" class="zs-type" checked="checked">
+			<img src="/img/reward/wechat-btn.png"/>
+		</label>
+		<label>
+			<input type="radio" name="zs-type" value="alipay" class="zs-type" class="zs-alipay">
+			<img src="/img/reward/alipay-btn.png"/>
+		</label>
 	</div>
 </div>
+<script type="text/javascript" src="/js/reward.js"></script>
 
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2020/04/01/japanese/3part" data-toggle="tooltip" data-placement="top" title="にほんご - 3 - 形容词">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2020/04/03/dot-net-core-init/" data-toggle="tooltip" data-placement="top" title="Asp .Net Core 3.x Initialization">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/es6" title="es6">
+                            es6
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/istio" title="istio">
+                            istio
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/japanese" title="japanese">
+                            japanese
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/microservice" title="microservice">
+                            microservice
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/security" title="security">
+                            security
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/service-mesh" title="service-mesh">
+                            service-mesh
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/tips" title="tips">
+                            tips
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/vue" title="vue">
+                            vue
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
 
 
 
