@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Jordon&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://leezhuang96.github.io/img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://leezhuang96.github.io/img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="Asp .Net Core 3.x Initialization - Blazor" />
+    <meta property="og:title" content="Asp .Net Core 3.x Initialization - Blazor" />
+    <meta property="twitter:title" content="Asp .Net Core 3.x Initialization - Blazor" />
+    
+
+    
+    <meta name="description" content="Asp .Net Core 3.x demo">
+    <meta property="og:description" content="Asp .Net Core 3.x demo" />
+    <meta property="twitter:description" content="Asp .Net Core 3.x demo" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="李状, Jordon, lizhuang, , 李状的网络日志, 李状的博客, Jordon&#39;s Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/Blog.png">
+
+    <title>Asp .Net Core 3.x Initialization - Blazor-李状的博客 | Jordon&#39;s Blog</title>
+
+    <link rel="canonical" href="/2020/04/08/dot-net-core-blazor/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/syntax.css">
+    
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/docco.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jordon&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/books">books</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/csharp">csharp</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/database">database</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/java">java</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/life">life</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/tech">tech</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/tips">tips</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/categories/web">web</a>
+                    </li>
+                    
+                    
+		    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-jeep.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/csharp" title="CSharp">
+                            CSharp
+                        </a>
+                        
+                        <a class="tag" href="/tags/dot-net-core" title="Dot Net Core">
+                            Dot Net Core
+                        </a>
+                        
+                    </div>
+                    <h1>Asp .Net Core 3.x Initialization - Blazor</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                                &#34;Jordon Li&#34;
+                         
+                        on 
+                        Wednesday, April 8, 2020
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+  <ul>
+    <li><a href="#asp-net-core-3x">Asp .Net Core 3.x</a>
+      <ul>
+        <li><a href="#asp-net-core">Asp .Net Core</a></li>
+        <li><a href="#asp--net-core-">Asp  .Net Core 应用多样性</a></li>
+        <li><a href="#4-blazor">4. Blazor</a></li>
+      </ul>
+    </li>
+    <li><a href="#heading">项目地址</a></li>
+  </ul>
+</nav>
+                
+                <h2 id="asp-net-core-3x">Asp .Net Core 3.x</h2>
+<h3 id="asp-net-core">Asp .Net Core</h3>
+<p>本质是 <code>一个Server</code> + <code>多个中间件（Middleware）组成的管道（Pipline）</code>。</p>
+<p>本身是一个<code>console application</code>，经 <code>Main() &gt; CreateHostBuilder(args).Build()</code>后成为<code>web application</code>。</p>
+<h3 id="asp--net-core-">Asp  .Net Core 应用多样性</h3>
+<ul>
+<li>MVC：/Home/Index</li>
+<li>Razor Pages: /SomePage</li>
+<li>SignalR: /Hub/Chat</li>
+</ul>
+<h3 id="4-blazor">4. Blazor</h3>
+<p>基于Component的编程模型，Blazor宿主模型：</p>
+<ul>
+<li>客户端宿主模型：
+<ul>
+<li>Mono解释器：
+<ul>
+<li>开源的.NET Freamework</li>
+<li>可以解释IL（中间语言）</li>
+<li>代码的IL是包含在.NET的Assembly里</li>
+<li>浏览器可以执行mono,(webAssembly)</li>
+<li>mono将Assembly的代码解析为WebAssembly</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>服务端宿主模型</li>
+</ul>
+<h4 id="create-project">Create Project</h4>
+<ul>
+<li>New &gt; Project &gt;  Asp .Net core web application</li>
+</ul>
+<h4 id="startupcs">Startup.cs</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Startup</span>
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services)
+    {
+        services.AddRazorPages();
+        services.AddServerSideBlazor();
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        <span style="color:#66d9ef">if</span> (env.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+
+        app.UseStaticFiles();
+        app.UseRouting();
+
+        app.UseEndpoints(endpoints =&gt;
+                         {
+                             endpoints.MapBlazorHub();
+                             endpoints.MapFallbackToPage(<span style="color:#e6db74">&#34;/_Host&#34;</span>);
+                         });
+    }
+}
+</code></pre></div><h4 id="create-models-service-and-register-services">Create Models, Service and Register services</h4>
+<p>Startup.cs</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services)
+{
+    services.AddRazorPages();
+    services.AddServerSideBlazor();
+
+    services.AddSingleton&lt;IDepartmentService, DepartmentService&gt;();
+    services.AddSingleton&lt;IEmployeeService, EmpolyeeService&gt;();
+}
+</code></pre></div><h4 id="config">Config配置信息源</h4>
+<ul>
+<li>
+<p>appsettings.json</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;Logging&#34;</span>: {
+    <span style="color:#f92672">&#34;LogLevel&#34;</span>: {
+      <span style="color:#f92672">&#34;Default&#34;</span>: <span style="color:#e6db74">&#34;Information&#34;</span>,
+      <span style="color:#f92672">&#34;Microsoft&#34;</span>: <span style="color:#e6db74">&#34;Warning&#34;</span>,
+      <span style="color:#f92672">&#34;Microsoft.Hosting.Lifetime&#34;</span>: <span style="color:#e6db74">&#34;Information&#34;</span>
+    }
+  },
+  <span style="color:#f92672">&#34;AllowedHosts&#34;</span>: <span style="color:#e6db74">&#34;*&#34;</span>,
+  <span style="color:#f92672">&#34;BlazorAppDemo&#34;</span>: {
+    <span style="color:#960050;background-color:#1e0010">&#34;</span><span style="color:#960050;background-color:#1e0010">B</span><span style="color:#960050;background-color:#1e0010">o</span><span style="color:#960050;background-color:#1e0010">l</span><span style="color:#960050;background-color:#1e0010">d</span><span style="color:#960050;background-color:#1e0010">D</span><span style="color:#960050;background-color:#1e0010">e</span><span style="color:#960050;background-color:#1e0010">p</span><span style="color:#960050;background-color:#1e0010">a</span><span style="color:#960050;background-color:#1e0010">r</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">m</span><span style="color:#960050;background-color:#1e0010">e</span><span style="color:#960050;background-color:#1e0010">n</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">E</span><span style="color:#960050;background-color:#1e0010">m</span><span style="color:#960050;background-color:#1e0010">p</span><span style="color:#960050;background-color:#1e0010">l</span><span style="color:#960050;background-color:#1e0010">o</span><span style="color:#960050;background-color:#1e0010">y</span><span style="color:#960050;background-color:#1e0010">e</span><span style="color:#960050;background-color:#1e0010">e</span><span style="color:#960050;background-color:#1e0010">C</span><span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#960050;background-color:#1e0010">3</span><span style="color:#960050;background-color:#1e0010">0</span>
+  }
+}
+</code></pre></div></li>
+</ul>
+<h4 id="startupcs-configoptions">Startup.cs 注入Config，映射为options类</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IConfiguration configuration;
+
+<span style="color:#66d9ef">public</span> Startup(IConfiguration configuration)
+{
+	<span style="color:#66d9ef">this</span>.configuration = configuration;
+}
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services)
+{
+    services.AddRazorPages();
+
+    services.AddSingleton&lt;IDepartmentService, DepartmentService&gt;();
+    services.AddSingleton&lt;IEmployeeService, EmpolyeeService&gt;();
+
+    services.Configure&lt;BlazorAppDemoOptions&gt;(configuration.GetSection(<span style="color:#e6db74">&#34;BlazorAppDemo&#34;</span>));
+}
+</code></pre></div><h4 id="using-libman-install-bootstrap">Using libman Install bootstrap</h4>
+<p>Add &gt; Client-Side Library &gt; <a href="mailto:bootstrap@4.4.1">bootstrap@4.4.1</a> &gt; Install, libman.json</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.0&#34;</span>,
+  <span style="color:#f92672">&#34;defaultProvider&#34;</span>: <span style="color:#e6db74">&#34;unpkg&#34;</span>,
+  <span style="color:#f92672">&#34;libraries&#34;</span>: [
+    {
+      <span style="color:#f92672">&#34;library&#34;</span>: <span style="color:#e6db74">&#34;bootstrap@4.4.1&#34;</span>,
+      <span style="color:#f92672">&#34;destination&#34;</span>: <span style="color:#e6db74">&#34;wwwroot/lib/bootstrap/&#34;</span>,
+      <span style="color:#f92672">&#34;files&#34;</span>: [
+        <span style="color:#e6db74">&#34;dist/css/bootstrap.css&#34;</span>
+      ]
+    }
+  ]
+}
+</code></pre></div><h4 id="using-buildbundlerminifier-merge-and-minify-css-files">Using BuildBundlerMinifier Merge and Minify css files</h4>
+<ul>
+<li>
+<p>Add &gt; New Item, bundleconfig.json</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">[
+  {
+    <span style="color:#f92672">&#34;outputFileName&#34;</span>: <span style="color:#e6db74">&#34;wwwroot/css/all.min.css&#34;</span>,
+    <span style="color:#f92672">&#34;inputFiles&#34;</span>: [
+      <span style="color:#e6db74">&#34;wwwroot/css/site.css&#34;</span>,
+      <span style="color:#e6db74">&#34;wwwroot/lib/bootstrap/dist/css/bootstrap.css&#34;</span>
+    ]
+  },
+  {
+    <span style="color:#f92672">&#34;outputFileName&#34;</span>: <span style="color:#e6db74">&#34;wwwroot/css/bootstrap.css&#34;</span>,
+    <span style="color:#f92672">&#34;inputFiles&#34;</span>: [
+      <span style="color:#e6db74">&#34;wwwroot/lib/bootstrap/dist/css/bootstrap.css&#34;</span>
+    ],
+    <span style="color:#f92672">&#34;minify&#34;</span>: {<span style="color:#f92672">&#34;enabled&#34;</span>: <span style="color:#66d9ef">true</span>}
+  }
+]
+</code></pre></div></li>
+<li>
+<p>Manage NuGet packges &gt; BuildBundlerMinifier</p>
+</li>
+</ul>
+<h4 id="aspnetcore-environment">ASPNETCORE_ENVIRONMENT</h4>
+<ul>
+<li>
+<p>\Properties\launchSettings.json</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;profiles&#34;</span>: {
+    <span style="color:#f92672">&#34;BlazorAppDemo&#34;</span>: {
+      <span style="color:#f92672">&#34;commandName&#34;</span>: <span style="color:#e6db74">&#34;Project&#34;</span>,
+      <span style="color:#f92672">&#34;launchBrowser&#34;</span>: <span style="color:#66d9ef">true</span>,
+      <span style="color:#f92672">&#34;applicationUrl&#34;</span>: <span style="color:#e6db74">&#34;https://localhost:5001;http://localhost:5000&#34;</span>,
+      <span style="color:#f92672">&#34;environmentVariables&#34;</span>: {
+        <span style="color:#f92672">&#34;ASPNETCORE_ENVIRONMENT&#34;</span>: <span style="color:#e6db74">&#34;Development&#34;</span>
+      }
+    }
+  }
+}
+</code></pre></div></li>
+</ul>
+<h4 id="views">Views</h4>
+<ul>
+<li>
+<p>Pages &gt; _Host.cshtml: Add &gt; NewItem &gt; Razor View</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">@page &#34;/&#34;
+@namespace BlazorAppDemo.Pages
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+  
+<span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span>&gt;
+&lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span> /&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;viewport&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width=device-width, initial-scale=1.0&#34;</span> /&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;Blazore App Demo&lt;/<span style="color:#f92672">title</span>&gt;
+    &lt;<span style="color:#f92672">base</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;~/&#34;</span> /&gt;
+    &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;css/bootstrap.css&#34;</span> /&gt;
+    &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;css/site.css&#34;</span> /&gt;
+&lt;/<span style="color:#f92672">head</span>&gt;
+&lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">app</span>&gt;
+        &lt;<span style="color:#f92672">component</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;typeof(App)&#34;</span> <span style="color:#a6e22e">render-mode</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ServerPrerendered&#34;</span> /&gt;
+    &lt;/<span style="color:#f92672">app</span>&gt;
+  
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;_framework/blazor.server.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+&lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div></li>
+<li>
+<p>App.razor: Add &gt; NewItem &gt; Razor Component</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">Router</span> <span style="color:#a6e22e">AppAssembly</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@typeof(Program).Assembly&#34;</span>&gt;
+    &lt;<span style="color:#f92672">Found</span> <span style="color:#a6e22e">Context</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;routeData&#34;</span>&gt;
+        &lt;<span style="color:#f92672">RouteView</span> <span style="color:#a6e22e">RouteData</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@routeData&#34;</span> <span style="color:#a6e22e">DefaultLayout</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@typeof(MainLayout)&#34;</span> /&gt;
+    &lt;/<span style="color:#f92672">Found</span>&gt;
+    &lt;<span style="color:#f92672">NotFound</span>&gt;
+        &lt;<span style="color:#f92672">LayoutView</span> <span style="color:#a6e22e">Layout</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@typeof(MainLayout)&#34;</span>&gt;
+            &lt;<span style="color:#f92672">p</span>&gt;Sorry, there&#39;s nothing at this address.&lt;/<span style="color:#f92672">p</span>&gt;
+        &lt;/<span style="color:#f92672">LayoutView</span>&gt;
+    &lt;/<span style="color:#f92672">NotFound</span>&gt;
+&lt;/<span style="color:#f92672">Router</span>&gt;
+</code></pre></div></li>
+<li>
+<p>_Imports.razor : Add &gt; NewItem &gt; Razor Component</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#">@using System.Net.Http
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.JSInterop
+@using BlazorAppDemo.Models
+@using BlazorAppDemo.Services
+</code></pre></div></li>
+<li>
+<p>Shared &gt; MainLayout.razor: Add &gt; NewItem &gt; Razor Component</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">@inherits LayoutComponentBase
+  
+&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;container&#34;</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;row&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-2&#34;</span>&gt;
+            &lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">asp-append-version</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;true&#34;</span>
+                 <span style="color:#a6e22e">alt</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;logo&#34;</span>
+                 <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/images/Home.png&#34;</span>
+                 <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;height: 60px; width: 100px;&#34;</span> /&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-10&#34;</span>&gt;
+            &lt;<span style="color:#f92672">span</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;h2&#34;</span>&gt;Blazor App Demo&lt;/<span style="color:#f92672">span</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;row&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-12&#34;</span>&gt;
+            @Body
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+</code></pre></div><ul>
+<li>
+<p>_Imports.razor</p>
+<pre><code>@using BlazorAppDemo.Shared
+</code></pre></li>
+</ul>
+</li>
+<li>
+<p>Pages &gt; Index.razor: Add &gt; NewItem &gt; Razor Component</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">@page &#34;/&#34;
+@inject IDepartmentService departmentService
+  
+@if (departments == null)
+{
+    &lt;<span style="color:#f92672">p</span>&gt;&lt;<span style="color:#f92672">em</span>&gt;loading...&lt;/<span style="color:#f92672">em</span>&gt;&lt;/<span style="color:#f92672">p</span>&gt;
+}
+else
+{
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;row&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-10 offset-md-2&#34;</span>&gt;
+            &lt;<span style="color:#f92672">table</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table&#34;</span>&gt;
+                &lt;<span style="color:#f92672">tr</span>&gt;
+                    &lt;<span style="color:#f92672">th</span>&gt;Name&lt;/<span style="color:#f92672">th</span>&gt;
+                    &lt;<span style="color:#f92672">th</span>&gt;Location&lt;/<span style="color:#f92672">th</span>&gt;
+                    &lt;<span style="color:#f92672">th</span>&gt;EmployeeCount&lt;/<span style="color:#f92672">th</span>&gt;
+                    &lt;<span style="color:#f92672">th</span>&gt;Opration&lt;/<span style="color:#f92672">th</span>&gt;
+                &lt;/<span style="color:#f92672">tr</span>&gt;
+                @foreach (var item in departments)
+                { 
+                    &lt;<span style="color:#f92672">DepartmentItem</span> <span style="color:#a6e22e">department</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@item&#34;</span>&gt;&lt;/<span style="color:#f92672">DepartmentItem</span>&gt;
+                }
+            &lt;/<span style="color:#f92672">table</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;row&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-4&#34;</span>&gt;
+            &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/add-department&#34;</span>&gt;Add&lt;/<span style="color:#f92672">a</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+}
+  
+@code {
+    IEnumerable&lt;<span style="color:#f92672">Department</span>&gt; departments;
+  
+    protected override async Task OnInitializedAsync()
+    {
+        departments = await departmentService.GetAll();
+    }
+}
+</code></pre></div></li>
+<li>
+<p>Componets &gt; DepartmentItem.razor: Add &gt; NewItem &gt; Razor Component</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">@using Microsoft.Extensions.Options
+@inject IOptions&lt;<span style="color:#f92672">BlazorAppDemoOptions</span>&gt; options
+  
+&lt;<span style="color:#f92672">tr</span>&gt;
+    @if (Department.EmployeeCount &gt; options.Value.BoldDepartmentEmployeeCount)
+    {
+        &lt;<span style="color:#f92672">td</span>&gt;&lt;<span style="color:#f92672">strong</span>&gt;@Department.Name&lt;/<span style="color:#f92672">strong</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
+    }
+    else 
+    {
+        &lt;<span style="color:#f92672">td</span>&gt;@Department.Name&lt;/<span style="color:#f92672">td</span>&gt;
+    }
+    &lt;<span style="color:#f92672">td</span>&gt;@Department.Location&lt;/<span style="color:#f92672">td</span>&gt;
+    &lt;<span style="color:#f92672">td</span>&gt;@Department.EmployeeCount&lt;/<span style="color:#f92672">td</span>&gt;
+&lt;/<span style="color:#f92672">tr</span>&gt;
+  
+@code {
+    [Parameter]
+    public Department Department { get; set; }
+}
+</code></pre></div><ul>
+<li>
+<p>_Imports.razor</p>
+<pre><code>@using BlazorAppDemo.Components
+</code></pre></li>
+</ul>
+</li>
+<li>
+<p>Pages &gt; Department &gt; AddDepartment.razor: Add &gt; NewItem &gt; Razor Component</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">@page &#34;/add-department&#34;
+@inject IDepartmentService departmentService
+@inject NavigationManager navigationManager
+  
+&lt;<span style="color:#f92672">EditForm</span> <span style="color:#a6e22e">Model</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@department&#34;</span> <span style="color:#a6e22e">OnValidSubmit</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@HandleValidSubmit&#34;</span>&gt;
+    &lt;<span style="color:#f92672">DataAnnotationsValidator</span> /&gt;
+    &lt;<span style="color:#f92672">ValidationSummary</span> /&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;row form-group&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-2 offset-md-2&#34;</span>&gt;
+            &lt;<span style="color:#f92672">label</span> <span style="color:#a6e22e">for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;name&#34;</span>&gt;Name&lt;/<span style="color:#f92672">label</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-6&#34;</span>&gt;
+            &lt;<span style="color:#f92672">InputText</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;name&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span>
+                       <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">bind-Value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@department.Name&#34;</span> /&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;row form-group&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-2 offset-md-2&#34;</span>&gt;
+            &lt;<span style="color:#f92672">label</span> <span style="color:#a6e22e">for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;location&#34;</span>&gt;Location&lt;/<span style="color:#f92672">label</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-6&#34;</span>&gt;
+            &lt;<span style="color:#f92672">InputText</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;location&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span>
+                       <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">bind-Value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@department.Location&#34;</span> /&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;row form-group&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-2 offset-md-2&#34;</span>&gt;
+            &lt;<span style="color:#f92672">label</span> <span style="color:#a6e22e">for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;employeeCount&#34;</span>&gt;EmployeeCount&lt;/<span style="color:#f92672">label</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-6&#34;</span>&gt;
+            &lt;<span style="color:#f92672">InputText</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;employeeCount&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span>
+                       <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">bind-Value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@employeeCount&#34;</span> /&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;row&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-2 offset-md-2&#34;</span>&gt;
+            &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;btn btn-primary&#34;</span>&gt;Add&lt;/<span style="color:#f92672">button</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+&lt;/<span style="color:#f92672">EditForm</span>&gt;
+  
+@code {
+    private Department department = new Department();
+    private string employeeCount;
+  
+    private async Task HandleValidSubmit()
+    {
+        department.EmployeeCount = int.Parse(employeeCount);
+        await departmentService.Add(department);
+        navigationManager.NavigateTo(&#34;/&#34;);
+    }
+}
+</code></pre></div></li>
+</ul>
+<h2 id="heading">项目地址</h2>
+<p>github: <a href="https://github.com/leezhuang96/Asp.NetCoreDemo">https://github.com/leezhuang96/Asp.NetCoreDemo</a></p>
+
+
+                
+                
+<div class="entry-shang text-center">
+    
+	    <p> 「下次一定」</p>
+	
+	<button class="zs show-zs btn btn-bred">赞赏支持</button>
+</div>
+<div class="zs-modal-bg"></div>
+<div class="zs-modal-box">
+	<div class="zs-modal-head">
+		<button type="button" class="close">×</button>
+		<span class="author">
+			
+				<img src="/img/favicon.png" />
+				
+			
+		</span>
+        
+	        <p class="tip"><i></i><span>下次一定</span></p>
+		
+ 
+	</div>
+	<div class="zs-modal-body">
+		<div class="zs-modal-btns">
+			<button class="btn btn-blink" data-num="2">2元</button>
+			<button class="btn btn-blink" data-num="5">5元</button>
+			<button class="btn btn-blink" data-num="10">10元</button>
+			<button class="btn btn-blink" data-num="50">50元</button>
+			<button class="btn btn-blink" data-num="100">100元</button>
+			<button class="btn btn-blink" data-num="1">任意金额</button>
+		</div>
+		<div class="zs-modal-pay">
+			<button class="btn btn-bred" id="pay-text">任意金额</button>
+			<p>使用<span id="pay-type">微信</span>扫描二维码完成支付</p>
+			<img src="/img/reward/wechat.png"  id="pay-image"/>
+		</div>
+	</div>
+	<div class="zs-modal-footer">
+		<label>
+			<input type="radio" name="zs-type" value="wechat" class="zs-type" checked="checked">
+			<img src="/img/reward/wechat-btn.png"/>
+		</label>
+		<label>
+			<input type="radio" name="zs-type" value="alipay" class="zs-type" class="zs-alipay">
+			<img src="/img/reward/alipay-btn.png"/>
+		</label>
+	</div>
+</div>
+<script type="text/javascript" src="/js/reward.js"></script>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2020/04/06/japanese/4part" data-toggle="tooltip" data-placement="top" title="にほんご - 4">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/csharp" title="csharp">
+                            csharp
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/dot-net-core" title="dot-net-core">
+                            dot-net-core
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/es6" title="es6">
+                            es6
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/istio" title="istio">
+                            istio
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/japanese" title="japanese">
+                            japanese
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/microservice" title="microservice">
+                            microservice
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/security" title="security">
+                            security
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/service-mesh" title="service-mesh">
+                            service-mesh
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/tips" title="tips">
+                            tips
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/vue" title="vue">
+                            vue
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                    
+                    <li>
+                        <a href="mailto:leezhuang96@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="/img/wechat_qrcode.jpg">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/leezhuang96">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Jordon&#39;s Blog 2020
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https'){
+       bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else{
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+
+
+<script>
+    
+    var _baId = 'leezhuang96';
+
+    
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+</body>
+</html>

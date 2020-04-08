@@ -6,10 +6,19 @@
     <description>Recent content in CSharp on Jordon&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leezhuang96.github.io/categories/csharp/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Asp .Net Core 3.x Initialization - Blazor</title>
+      <link>https://leezhuang96.github.io/2020/04/08/dot-net-core-blazor/</link>
+      <pubDate>Wed, 08 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://leezhuang96.github.io/2020/04/08/dot-net-core-blazor/</guid>
+      <description>Asp .Net Core 3.x Asp .Net Core 本质是 一个Server + 多个中间件（Middleware）组成的管道（Pipline）。 本身是一个console applica</description>
+    </item>
     
     <item>
       <title>Asp .Net Core 3.x Initialization - SignalR</title>
