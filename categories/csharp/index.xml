@@ -47,5 +47,14 @@
       <description>Asp .Net Core 3.x Asp .Net Core 本质是 一个Server + 多个中间件（Middleware）组成的管道（Pipline）。 本身是一个console applica</description>
     </item>
     
+    <item>
+      <title>CLR via C# - CLR基础</title>
+      <link>https://leezhuang96.github.io/2020/04/24/clr-via-csharp-1part/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://leezhuang96.github.io/2020/04/24/clr-via-csharp-1part/</guid>
+      <description>CLR via C# - CLR基础 CLR的执行模型 1. 将源代码编译成托管模块 托管代码（Managed Code） 非托管代码（Native Code） CLR（Com</description>
+    </item>
+    
   </channel>
 </rss>

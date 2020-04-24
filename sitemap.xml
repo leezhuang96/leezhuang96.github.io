@@ -13,12 +13,12 @@
   </url>
   
   <url>
-    <loc>https://leezhuang96.github.io/categories/csharp/</loc>
+    <loc>https://leezhuang96.github.io/tags/csharp/</loc>
     <lastmod>2020-04-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://leezhuang96.github.io/tags/csharp/</loc>
+    <loc>https://leezhuang96.github.io/categories/csharp/</loc>
     <lastmod>2020-04-08T00:00:00+00:00</lastmod>
   </url>
   
@@ -395,6 +395,14 @@
   <url>
     <loc>https://leezhuang96.github.io/top/about/</loc>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leezhuang96.github.io/tags/clr-via-c#/</loc>
+  </url>
+  
+  <url>
+    <loc>https://leezhuang96.github.io/2020/04/24/clr-via-csharp-1part/</loc>
   </url>
   
   <url>

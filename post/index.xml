@@ -468,6 +468,15 @@ export HTTPS_PROXY=&amp;quot;http://127.0.0.1:3128/&amp;quot;
     </item>
     
     <item>
+      <title>CLR via C# - CLR基础</title>
+      <link>https://leezhuang96.github.io/2020/04/24/clr-via-csharp-1part/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://leezhuang96.github.io/2020/04/24/clr-via-csharp-1part/</guid>
+      <description>CLR via C# - CLR基础 CLR的执行模型 1. 将源代码编译成托管模块 托管代码（Managed Code） 非托管代码（Native Code） CLR（Com</description>
+    </item>
+    
+    <item>
       <title>重装徒步反穿武功山</title>
       <link>https://leezhuang96.github.io/2019/09/13/wugongshan/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
