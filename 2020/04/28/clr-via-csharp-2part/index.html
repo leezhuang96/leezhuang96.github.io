@@ -15,15 +15,15 @@
     
 
     
-    <meta name="title" content="" />
-    <meta property="og:title" content="" />
-    <meta property="twitter:title" content="" />
+    <meta name="title" content="CLR via C# - 设计类型" />
+    <meta property="og:title" content="CLR via C# - 设计类型" />
+    <meta property="twitter:title" content="CLR via C# - 设计类型" />
     
 
     
-    <meta name="description" content="李状，程序员, 开源爱好者，生活探险家 | 这里是 李状 的博客，与你一起发现更大的世界。">
-    <meta property="og:description" content="李状，程序员, 开源爱好者，生活探险家 | 这里是 李状 的博客，与你一起发现更大的世界。" />
-    <meta property="twitter:description" content="李状，程序员, 开源爱好者，生活探险家 | 这里是 李状 的博客，与你一起发现更大的世界。" />
+    <meta name="description" content="设计类型">
+    <meta property="og:description" content="设计类型" />
+    <meta property="twitter:description" content="设计类型" />
     
 
     
@@ -34,9 +34,9 @@
     <meta name="keyword"  content="李状, Jordon, lizhuang, , 李状的网络日志, 李状的博客, Jordon&#39;s Blog, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
     <link rel="shortcut icon" href="/img/Blog.png">
 
-    <title>Searches-李状的博客 | Jordon&#39;s Blog</title>
+    <title>CLR via C# - 设计类型-李状的博客 | Jordon&#39;s Blog</title>
 
-    <link rel="canonical" href="/search/">
+    <link rel="canonical" href="/2020/04/28/clr-via-csharp-2part/">
 
     <link rel="stylesheet" href="/css/iDisqus.min.css"/>
 	
@@ -180,14 +180,41 @@
 
 
 
-<header class="intro-header" style="background-image: url('/img/home-bg-jeep.jpg')">
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-jeep.jpg')
+    }
+</style>
+<header class="intro-header">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>Jordon&#39;s Blog </h1>
-                    
-		    <span class="subheading">Be water, my friends.</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/csharp" title="CSharp">
+                            CSharp
+                        </a>
+                        
+                        <a class="tag" href="/tags/clr-via-c" title="CLR via C#">
+                            CLR via C#
+                        </a>
+                        
+                    </div>
+                    <h1>CLR via C# - 设计类型</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                                &#34;Jordon Li&#34;
+                         
+                        on 
+                        Tuesday, April 28, 2020
+                        
+                        
+                        
+                    </span>
                 </div>
             </div>
         </div>
@@ -196,257 +223,229 @@
 
 
 
-<div class="container">
-    <div class="row">
-        
-        
-   	    <div class="
-            col-lg-8 col-lg-offset-1
-            col-md-8 col-md-offset-1
-            col-sm-12
-            col-xs-12
-            post-container
-        ">
+
+<article>
+    <div class="container">
+        <div class="row">
+
             
-<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch-theme-algolia.min.css">
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
 
-<div id="search-searchbar"></div>
- <div class="post-list" id="search-hits">
- </div>
-
-<script>
-const search = instantsearch({
-  appId: '',
-  indexName: '',
-  apiKey: ''
-});
-
-const hitTemplate = function(hit) {
-
-
-  let date = '';
-  if (hit.date) {
-    date = moment.unix(hit.date).format('MMM D, YYYY');
-  }
-  let url = `${hit.url}#${hit.anchor}`;
-  const title = hit._highlightResult.title.value;
-
-  let breadcrumbs = '';
-  if (hit._highlightResult.headings) {
-    breadcrumbs = hit._highlightResult.headings.map(match => {
-      return `<span class="post-breadcrumb">${match.value}</span>`
-    }).join(' > ')
-  }
-
-  let content = "" ; 
-  if (hit._highlightResult.content){
-      content = hit._highlightResult.content.value;
-  }
-  else{
-      content = hit.summary;
-  }
+                
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+  <ul>
+    <li><a href="#clr-via-c---">CLR via C# - 设计类型</a>
+      <ul>
+        <li><a href="#heading">类型基础</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                
+                <h2 id="clr-via-c---">CLR via C# - 设计类型</h2>
+<h3 id="heading">类型基础</h3>
+<h4 id="1-systemobject">1. 所有类型都从System.Object派生</h4>
 
 
-  return `
-    <div class="post-item">
-      <span class="post-meta">${date}</span>
-      <h2><a class="post-link" href="${url}">${title}</a></h2>
-      <a href="${url}" class="post-breadcrumbs">${breadcrumbs}</a>
-      <div class="post-snippet">${content}</div>
-    </div>
-  `;
-}
-
-
-search.addWidget(
-  instantsearch.widgets.searchBox({
-    container: '#search-searchbar',
-    placeholder: 'Search into posts...',
-    poweredBy: true // This is required if you're on the free Community plan
-  })
-);
-
-search.addWidget(
-  instantsearch.widgets.hits({
-    container: '#search-hits',
-    templates: {
-      item: hitTemplate
-    }
-  })
-);
-
-search.start();
-</script>
-
-<style>
-.ais-search-box {
-  max-width: 100%;
-  margin-bottom: 15px;
-}
-.post-item {
-  margin-bottom: 30px;
-}
-.post-link .ais-Highlight {
-  color: #111;
-  font-style: normal;
-  text-decoration: underline;
-}
-.post-breadcrumbs {
-  color: #424242;
-  display: block;
-}
-.post-breadcrumb {
-  font-size: 18px;
-  color: #424242;
-}
-.post-breadcrumb .ais-Highlight {
-  font-weight: bold;
-  font-style: normal;
-}
-.post-snippet .ais-Highlight {
-  color: #2a7ae2;
-  font-style: normal;
-  font-weight: bold;
-}
-.post-snippet img {
-  display: none;
-}
-</style>
-
-       	</div>
-        
-
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
+                
+                
+<div class="entry-shang text-center">
     
-    
-    <section>
-        <hr class="hidden-sm hidden-xs">
-        <h5>FEATURED TAGS</h5>
-        <div class="tags">
-             
-            
-                
-            
-                
-                    <a href="/tags/clr-via-c" title="clr-via-c#">
-                        clr-via-c#
-                    </a>
-                
-            
-                
-                    <a href="/tags/csharp" title="csharp">
-                        csharp
-                    </a>
-                
-            
-                
-                    <a href="/tags/docker" title="docker">
-                        docker
-                    </a>
-                
-            
-                
-                    <a href="/tags/dot-net-core" title="dot-net-core">
-                        dot-net-core
-                    </a>
-                
-            
-                
-                    <a href="/tags/es6" title="es6">
-                        es6
-                    </a>
-                
-            
-                
-            
-                
-                    <a href="/tags/istio" title="istio">
-                        istio
-                    </a>
-                
-            
-                
-                    <a href="/tags/japanese" title="japanese">
-                        japanese
-                    </a>
-                
-            
-                
-                    <a href="/tags/kubernetes" title="kubernetes">
-                        kubernetes
-                    </a>
-                
-            
-                
-                    <a href="/tags/microservice" title="microservice">
-                        microservice
-                    </a>
-                
-            
-                
-            
-                
-            
-                
-                    <a href="/tags/security" title="security">
-                        security
-                    </a>
-                
-            
-                
-                    <a href="/tags/service-mesh" title="service-mesh">
-                        service-mesh
-                    </a>
-                
-            
-                
-            
-                
-                    <a href="/tags/tips" title="tips">
-                        tips
-                    </a>
-                
-            
-                
-            
-                
-            
-                
-            
-                
-                    <a href="/tags/vue" title="vue">
-                        vue
-                    </a>
-                
-            
-                
-            
-                
-            
-        </div>
-    </section>
-    
-
-    
+	    <p> 「下次一定」</p>
 	
-    
-    
-
-    
-    
+	<button class="zs show-zs btn btn-bred">赞赏支持</button>
 </div>
-
+<div class="zs-modal-bg"></div>
+<div class="zs-modal-box">
+	<div class="zs-modal-head">
+		<button type="button" class="close">×</button>
+		<span class="author">
+			
+				<img src="/img/favicon.png" />
+				
+			
+		</span>
+        
+	        <p class="tip"><i></i><span>下次一定</span></p>
+		
+ 
+	</div>
+	<div class="zs-modal-body">
+		<div class="zs-modal-btns">
+			<button class="btn btn-blink" data-num="2">2元</button>
+			<button class="btn btn-blink" data-num="5">5元</button>
+			<button class="btn btn-blink" data-num="10">10元</button>
+			<button class="btn btn-blink" data-num="50">50元</button>
+			<button class="btn btn-blink" data-num="100">100元</button>
+			<button class="btn btn-blink" data-num="1">任意金额</button>
+		</div>
+		<div class="zs-modal-pay">
+			<button class="btn btn-bred" id="pay-text">任意金额</button>
+			<p>使用<span id="pay-type">微信</span>扫描二维码完成支付</p>
+			<img src="/img/reward/wechat.png"  id="pay-image"/>
+		</div>
+	</div>
+	<div class="zs-modal-footer">
+		<label>
+			<input type="radio" name="zs-type" value="wechat" class="zs-type" checked="checked">
+			<img src="/img/reward/wechat-btn.png"/>
+		</label>
+		<label>
+			<input type="radio" name="zs-type" value="alipay" class="zs-type" class="zs-alipay">
+			<img src="/img/reward/alipay-btn.png"/>
+		</label>
 	</div>
 </div>
+<script type="text/javascript" src="/js/reward.js"></script>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2020/04/24/clr-via-csharp-1part/" data-toggle="tooltip" data-placement="top" title="CLR via C# - CLR基础">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/clr-via-c" title="clr-via-c#">
+                            clr-via-c#
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/csharp" title="csharp">
+                            csharp
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/dot-net-core" title="dot-net-core">
+                            dot-net-core
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/es6" title="es6">
+                            es6
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/istio" title="istio">
+                            istio
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/japanese" title="japanese">
+                            japanese
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/microservice" title="microservice">
+                            microservice
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/security" title="security">
+                            security
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/service-mesh" title="service-mesh">
+                            service-mesh
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/tips" title="tips">
+                            tips
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/vue" title="vue">
+                            vue
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
 
 
 

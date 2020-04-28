@@ -243,6 +243,8 @@
     <li><a href="#clr-via-c---clr">CLR via C# - CLR基础</a>
       <ul>
         <li><a href="#clr">CLR的执行模型</a></li>
+        <li><a href="#heading">生成、打包、部署和管理应用程序及类型</a></li>
+        <li><a href="#heading-1">共享程序集和强命名程序集</a></li>
       </ul>
     </li>
   </ul>
@@ -281,11 +283,11 @@
 </tr>
 <tr>
 <td>CLR头</td>
-<td>1. 需要的CLR版本。 2. 标志（flag）。 3. Mian方法的MethodDef元数据token。 4. 模块的元数据、资源、强名称、标志、数据项的位置/大小</td>
+<td>1. 需要的CLR的major（主）和minor（次）版本。 2. 标志（flag）。 3. Mian方法的MethodDef token。 4. 强名称数字签名 5. 元数据表的大小和偏移量</td>
 </tr>
 <tr>
 <td>元数据（Metadata）</td>
-<td>元数据表：1. 定义的类型和成员表 2. 引用的类型和成员表</td>
+<td>元数据表：1. 定义表（definition table）：定义的类型和成员表 2. 引用表(reference table)：引用的类型和成员表 3. 清单表(manifest table)：</td>
 </tr>
 <tr>
 <td>IL（Intermediate Language）代码/托管代码（Managed Code）</td>
@@ -497,6 +499,394 @@
 <li>非托管代码可以使用托管类型（服务器）</li>
 </ul>
 <p>Windows Runtime（WinRT）API：内部通过COM组件实现，但不是使用类型库文件，而是使用元数据标准描述API。</p>
+<hr>
+<h3 id="heading">生成、打包、部署和管理应用程序及类型</h3>
+<h4 id="1-net-framework-">1. .NET Framework 部署目标</h4>
+<p>Windows 不稳定和过于复杂的问题：</p>
+<ul>
+<li>
+<p>所有应用程序都使用来自Microsoft或其他厂商的动态链接库（Dynamic-Link Library， DLL），DLL hell问题</p>
+</li>
+<li>
+<p>安装的复杂性</p>
+</li>
+<li>
+<p>安全性</p>
+</li>
+</ul>
+<h4 id="2--1">2. 将类型生成到模块中</h4>
+<p>源代码文件 &ndash;csc.exe&ndash;&gt; 可部署文件</p>
+<ul>
+<li><code>/nostdlib</code>: 设置C#编译器不自动引用<code>MSCorLib.dll</code></li>
+<li><code>/t[arget]:exe</code>: 控制台用户界面（Console User Interface, CUI）</li>
+<li><code>/t[arget]:winexe</code>: 图形用户界面（Graphical User Interface, GUI）</li>
+<li><code>/t[arget]:appcontainerexe</code>: Windows Store应用</li>
+</ul>
+<p>响应文件：包含一组编译器命令行开关的文本文件。不必每次编译项目时都手动指定命令行参数。</p>
+<ul>
+<li><code>/noconfig</code>: 设置编译器忽略本地和全局CSC.rsp文件</li>
+</ul>
+<h4 id="3-">3. 元数据概述</h4>
+<p>托管PE（Protable Executable）文件（托管模块）：<code>PE32(+)头</code> + <code>CLR头</code> + <code>元数据</code> + <code>IL</code>。</p>
+<p>元数据：由<code>定义表（difinition table）</code>、<code>引用表（reference table）</code>和<code>清单表（manifest table）</code>组成的二进制数据块。</p>
+<ul>
+<li>
+<p>常用元数据定义表</p>
+<table>
+<thead>
+<tr>
+<th>元数据定义表名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ModuleDef</td>
+<td>对模块进行标识的记录项：模块文件名+扩展名+版本ID</td>
+</tr>
+<tr>
+<td>TypeDef</td>
+<td>模块定义的类型的记录项：类型名称+基类型+标志（public、private&hellip;）+索引(指向MethodDef中该类型的方法、FieldDef中该类型的字段、PropertyDef中该类型的属性、EventDef中该类型的事件)</td>
+</tr>
+<tr>
+<td>MethodDef</td>
+<td>模块定义的方法的记录项：方法名称+标志（flag）+签名+方法的IL代码在模块中的偏移量。每个记录项引用ParamDef中的记录项：与方法参数有关的信息</td>
+</tr>
+<tr>
+<td>FieldDef</td>
+<td>模块定义的字段的记录项：标志（flag）+类型+名称</td>
+</tr>
+<tr>
+<td>ParamDef</td>
+<td>模块定义的参数的记录项：标志（flag）+类型+名称</td>
+</tr>
+<tr>
+<td>PropertyDef</td>
+<td>模块定义的属性的记录项：标志（flag）+类型+名称</td>
+</tr>
+<tr>
+<td>EventDef</td>
+<td>模块定义的事件的记录项：标志（flag）+名称</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>常用元数据引用表</p>
+<table>
+<thead>
+<tr>
+<th>元数据引用表名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AssemblyRef</td>
+<td>模块引用的程序集的记录项：程序集名称（不含路径和扩展名）+版本号+语言文化（culture）+公钥token+标志（flag）+hash值</td>
+</tr>
+<tr>
+<td>ModuleRef</td>
+<td>引用类型的PE模块的记录项：模块文件名+扩展名（不含路径）</td>
+</tr>
+<tr>
+<td>TypeRef</td>
+<td>模块引用类型的记录项：类型名称+引用（指向类型的位置）</td>
+</tr>
+<tr>
+<td>MemberRef</td>
+<td>模块引用成员的记录项：成员（字段、方法、属性方法、事件方法）名称+签名</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h4 id="4--1">4. 将模块合并成程序集</h4>
+<p>程序集（Assembly）：</p>
+<ul>
+<li>一个或多个<code>类型定义文件</code>及<code>资源文件</code>的集合。</li>
+<li>一个或多个模块文件和资源文件组成的<code>逻辑单元</code>，其中有且只有一个后缀为.exe或.dll的主模块文件。.exe/.dll + .netmodule。</li>
+<li>程序集是进行重用、版本控制和应用安全性设置的基本单元。它允许将类型和资源文件划分到单独的文件中。</li>
+</ul>
+<p>程序集的文件：包含<code>清单（manifest）元数据表</code>的文件+其他文件。清单元数据表使其成为了程序集。</p>
+<ul>
+<li>清单：元数据表集合。清单使程序集具有了自描述性（self-describing）包含：
+<ul>
+<li>程序集所有文件</li>
+<li>版本</li>
+<li>语言文化</li>
+<li>发布者</li>
+<li>public的类型</li>
+</ul>
+</li>
+</ul>
+<p>程序集（中包含清单元数据表的文件）特点：</p>
+<ul>
+<li>程序集定义了可重用类型</li>
+<li>程序集用一个版本号标记</li>
+<li>程序集可以关联安全信息</li>
+</ul>
+<p>程序集作用：将可重用类型的<code>逻辑表示</code>和<code>物理表示</code>分开。</p>
+<p>CLR操作程序集：</p>
+<ol>
+<li>首先加载包含“清单”元数据表的文件</li>
+<li>根据”清单“获取程序集中其他文件的名称</li>
+</ol>
+<p>使用多文件程序集的优点：</p>
+<ul>
+<li>不同的类型用不同的文件，使文件能以”增量“模式下载，对应用程序进行部分或分批打包/部署。</li>
+<li>可以在程序集中添加资源或数据文件，使其成为程序集的一部分。</li>
+<li>程序集包含的各个类型可以用不同的编程语言来实现。</li>
+</ul>
+<p>清单元数据表：</p>
+<table>
+<thead>
+<tr>
+<th>清单元数据表名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AssemblyDef</td>
+<td>模块标识的程序集的单一记录项。程序集名称(不含路径和扩展名)+版本（major,minor,build,revision）+语言文化（culture）+标志（flag）+hash算法+发布者公钥（可为null）。</td>
+</tr>
+<tr>
+<td>FileDef</td>
+<td>程序集PE文件和资源文件的记录项（清单本身所在文件除外，该文件记录在AssemblyDef的单一记录项中）。文件名+扩展名（不含路径）+hash值+标志（flags）。</td>
+</tr>
+<tr>
+<td>ManifestResourceDef</td>
+<td>程序集资源记录项。资源名称+标志+FileDef的索引（指出资源/流包含在哪个文件中）。PE文件的流：不是独立的资源文件（.jpg/.gif&hellip;）。嵌入资源，额外包含偏移量：指出资源流在PE文件中的起始位置。</td>
+</tr>
+<tr>
+<td>ExportedTypeDef</td>
+<td>程序集的PE模块中导出的public类型的记录项。类型名称+FileDef的索引（指出类型由那个文件实现）+TypeDef的引用</td>
+</tr>
+</tbody>
+</table>
+<p>CLR并非一上来就加载所有可能用到的程序集，只有在调用的方法确实引用了未加载的程序集中的类型时，才会加载程序集。</p>
+<p>附属程序集（satellite assembly）：只包含资源的程序集，通常用于本地化。</p>
+<p>程序集连接器：AL.exe</p>
+<p>C#编译器：CSC.exe</p>
+<h4 id="5-">5. 程序集版本资源信息</h4>
+<p>程序集中会嵌入标准的Win32版本资源。使用定制特性（Attribute）设置版本资源字段，特性应用于assembly级别（AssemblyInfo.cs）。</p>
+<p>版本号格式：</p>
+<ul>
+<li>主版本号（major）</li>
+<li>次版本号（minor）</li>
+<li>内部版本号（build）</li>
+<li>修订号（revision）</li>
+</ul>
+<p>程序集包含的三个版本号：</p>
+<ul>
+<li>AssemblyFileVersion：存储在Win32版本资源中。仅供参考，CLR既不检查，也不关心。</li>
+<li>AssemblyInformationalVersion: 存储在Win32版本资源中。仅供参考，CLR既不检查，也不关心。</li>
+<li>AssemblyVersion：存储在AssemblyDef清单元数据表中。CLR在绑定到强命名程序集时会用到。唯一的标识了程序集。</li>
+</ul>
+<h4 id="6-">6. 语言文化</h4>
+<p>语言文化（culture）：作为程序集身份标识的一部分，用包含主副标记（en-US&hellip;）的字符串进行标识。</p>
+<p>语言文化中性（culture neutral）：未指定具体语言文化的程序集。</p>
+<p>附属程序集（satellite assembly）：标记了语言文化的程序集。</p>
+<h4 id="7-">7. 简单应用程序部署（私有部署的程序集）</h4>
+<p>私有部署的程序集（privately deployed assembly）：在应用程序基目录或子目录部署的程序集。程序集文件不和其他任何应用程序共享，因为每个程序集用元数据注明了自己引用的程序集，不需要注册表设置。</p>
+<h4 id="8--1">8. 简单管理控制（配置）</h4>
+<p>为了实现对应用程序的管理控制，可在应用程序目录放入一个配置文件，CLR会解析文件内容来更改程序集文件的定位和加载策略。</p>
+<p>XML配置文件名称：</p>
+<ul>
+<li>可执行应用程序（EXE）：配置文件必须在应用程序的基目录。EXE文件全名+.config。</li>
+<li>ASP.NET Web窗体应用程序：文件必须在Web应用程序的虚拟根目录中，Web.config。子目录可以有自己的Web.config，配置设置会得到继承。</li>
+</ul>
+<p>Machine.config：机器上运行 的所有应用程序的默认设置。</p>
+<hr>
+<h3 id="heading-1">共享程序集和强命名程序集</h3>
+<h4 id="1--1">1. 两种程序集，两种部署</h4>
+<table>
+<thead>
+<tr>
+<th>程序集种类</th>
+<th>可以私有部署</th>
+<th>可以全局部署</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>弱命名程序集（weakly named assembly）</td>
+<td>True</td>
+<td>False</td>
+</tr>
+<tr>
+<td>强命名程序集（strongly named assembly）</td>
+<td>True</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>弱命名和强命名程序集结构完全相同，生成工具也相同。</p>
+</li>
+<li>
+<p>强命名程序集使用发布者的公钥/私钥进行了签名。这一对密钥允许对程序集进行唯一性的标识、保护和版本控制。</p>
+</li>
+<li>
+<p>私有部署的程序集：部署到应用程序基目录或者某个子目录的程序集。</p>
+</li>
+<li>
+<p>全局部署的程序集：部署到一些公认位置的程序集。</p>
+</li>
+</ul>
+<h4 id="2--2">2. 为程序集分配强名称</h4>
+<p><code>DLL hell</code>：两个相同文件名的程序集复制到相同的公认目录，造成正在使用就程序集的所有应用程序都无法正常工作（Windows共享DLL全部复制到System32目录）。</p>
+<p>强命名程序集特性：</p>
+<ul>
+<li>文件名（不计扩展名）</li>
+<li>版本号（Version）</li>
+<li>语言文化（Culture）</li>
+<li>公钥（PublicKey）
+<ul>
+<li>公钥标记（PublicKeyToken）：对公钥进行hash处理，获取hash值的最后8个字节。</li>
+</ul>
+</li>
+</ul>
+<p>加密技术：不仅能检查应用程序的二进制完整性，还允许每个发布者授予不同的权限。</p>
+<ul>
+<li>标准的公钥/私钥加密</li>
+<li>GUID（Globally Unique Identifier，全局唯一标识符）</li>
+<li>URL（Uniform Resource Locator，统一资源定位符）</li>
+<li>URN（Uniform Resource Name，统一资源名称）</li>
+<li>&hellip;</li>
+</ul>
+<p>只能对含清单的程序集文件进行签名，使用私钥对程序集进行签名，并将公钥嵌入清单。</p>
+<p><code>对文件进行签名</code>：生成强命名程序集时，程序集的FileDef清单元数据表列出构成程序集的所有文件。每将一个文件添加到清单，都对文件内容进行hash处理。hash值和文件名一道存储到FileDef表中。</p>
+<p>对程序集进行签名：</p>
+<ul>
+<li>生成包含清单的PE文件后，会对PE文件完整内容进行hash处理</li>
+<li>hash值用发布者的私钥进行签名，得到RSA数字签名</li>
+<li>将RSA存储到PE文件的一个保留区域</li>
+<li>PE文件的CLR头进行更新，反应数字签名在文件中的嵌入位置</li>
+<li>发布者的公钥也嵌入PE文件的AssemblyDef清单元数据表中，AssemblyDef的记录项总是存储完整公钥，而不是公钥标记，以防文件被篡改</li>
+</ul>
+<p>CLR在做出安全或信任决策时，永远不会使用公钥标记，因为几个公钥在hash处理后可能得到相同的公钥标记。</p>
+<h4 id="3--1">3. 全集程序集缓存</h4>
+<p>全局程序集缓存（Global Assembly Cache, GAC）: 由多个应用程序访问的程序集必须放到公认的目录，而且CLR在检测到对该程序集的引用时，必须知道检查该目录，这个公认位置就是GAC。</p>
+<p>GAC目录时结构化的：其中包含许多子目录，子目录的名称用算法生成。</p>
+<p>不能将弱命名程序集放到GAC。</p>
+<p>在GAC中进行全局部署是对程序集进行注册的一种形式。</p>
+<h4 id="4--2">4. 在生成的程序集中引用强命名程序集</h4>
+<p>只指定文件名（不含路径），CSC.exe查找程序集顺序：</p>
+<ol>
+<li>工作目录</li>
+<li>CSC.exe所在目录，目录中包含CLR的各种DLL文件</li>
+<li>使用/lib编译器开关指定的任何目录</li>
+<li>使用LIB环境变量指定的任何目录</li>
+</ol>
+<p>安装.NET Framework时，安装的Microsoft的程序集的两套拷贝：</p>
+<ul>
+<li>一套安装在编译器/CLR目录（这些程序集只包含元数据，没IL代码，编译时不需要IL代码） - 为了方便在<code>编译时</code>生成程序集</li>
+<li>一套安装在GAC的子目录（程序集同时包含元数据和IL代码） - 为了方便在<code>运行时</code>加载</li>
+</ul>
+<h4 id="5--1">5. 强命名程序集能防篡改</h4>
+<p>用私钥对程序集 进行签名，并将公钥和签名嵌入程序集，CLR就可验证程序集未被修改或破坏。</p>
+<ul>
+<li>强命名程序集安装到GAC时：
+<ul>
+<li>系统对<code>包含清单的文件</code>的内容进行hash处理，将hash值与PE文件中嵌入的RSA数字签名（用公钥解除签名）进行比较。</li>
+<li>系统还对<code>其他文件</code>的内容进行hash处理，并将hash值与清单文件的FileDef表中存储的hash值进行比较。</li>
+<li>这个检查只在安装时执行一次。</li>
+</ul>
+</li>
+<li>从非GAC目录加载强命名程序集（应用程序基目录或配置文件codeBase元素指定的目录）：
+<ul>
+<li>CLR会在程序集加载后比较hash值。</li>
+<li>每次应用程序执行并加载程序集时，都会对文件进行hash处理。</li>
+</ul>
+</li>
+</ul>
+<h4 id="6--1">6. 延迟签名</h4>
+<p>延迟签名（delayed signing）/部分签名（partial  signing）：允许只使用公钥生成程序集，暂时不用私钥。</p>
+<h4 id="7--1">7. 私有部署强命名程序集</h4>
+<p>GAC中安装程序集的优势：</p>
+<ul>
+<li>GAC使多个应用程序共享，减少总体的物理内存消耗。</li>
+<li>将新版本部署到GAC，让所有应用程序都通过发布者策略使用新版本。</li>
+<li>GAC实现对程序集多个版本的并行管理。</li>
+</ul>
+<p>GAC中安装程序集的缺点：</p>
+<ul>
+<li>GAC通常受到严密保护，只有管理员才能在其中安装程序集。</li>
+<li>违反“简单复制部署”的基本目标。</li>
+</ul>
+<p>只有由多个应用程序共享的程序集才应该部署到GAC，不用共享的应私有部署。私有部署达成了“简单复制部署”目标，能更好的隔离应用程序和程序集。</p>
+<h4 id="8-clr">8. CLR如何解析类型引用</h4>
+<p>解析引用类型时，CLR可能找到引用类型的地方：</p>
+<ul>
+<li>相同文件中：
+<ul>
+<li>编译时就能发现对相同文件中的类型的访问，类型直接从文件加载</li>
+<li>执行继续
+<ul>
+<li>早期绑定（early binding）：编译时就能发现对相同文件中的类型的访问。</li>
+<li>晚期绑定（late binding）：在运行时通过反射机制绑定到类型并调用方法</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>不同文件，相同程序集：
+<ul>
+<li>CLR确保被引用的文件在当前程序集元数据的FileDef表中</li>
+<li>检查加载程序集清单的目录</li>
+<li>加载被引用的文件</li>
+<li>检查hash值以确保文件完整性</li>
+<li>发现类型成员，执行继续</li>
+</ul>
+</li>
+<li>不同文件，不同程序集：
+<ul>
+<li>CLR加载被引用程序集的清单文件</li>
+<li>类型不再该青清单文件中，继续加载包含了类型的文件</li>
+<li>发现类型成员，执行继续</li>
+</ul>
+</li>
+</ul>
+<p>CLR程序集标识：名称+版本+语言文化+公钥</p>
+<p>GAC程序集标识：名称+版本+语言文化+公钥+CPU架构</p>
+<h4 id="9--1">9. 高级管理控制（配置）</h4>
+<p>系统允许使用和元数据所记录的不完全匹配的程序集版本。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34;?&gt;</span>
+<span style="color:#f92672">&lt;configuration</span><span style="color:#f92672">&gt;</span>
+	<span style="color:#f92672">&lt;runtime</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;assemblyBinding</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;urn:schemas-microsoft-com:asm.v1&#34;</span><span style="color:#f92672">&gt;</span>
+        	<span style="color:#f92672">&lt;probing</span> <span style="color:#a6e22e">privatePath=</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;dependentAssembly</span><span style="color:#f92672">&gt;</span>
+            	<span style="color:#f92672">&lt;assemblyIdentity</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#a6e22e">publicKeyToken=</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#a6e22e">culture=</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">/&gt;</span>
+                <span style="color:#f92672">&lt;bindingRedirect</span> <span style="color:#a6e22e">oldVersion=</span><span style="color:#e6db74">&#34;oldVersion&#34;</span> <span style="color:#a6e22e">newVersion=</span><span style="color:#e6db74">&#34;newVersion&#34;</span> <span style="color:#f92672">/&gt;</span>
+                <span style="color:#f92672">&lt;codeBase</span> <span style="color:#a6e22e">version=</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#a6e22e">href=</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;/dependentAssembly&gt;</span>
+            <span style="color:#f92672">&lt;dependentAssembly</span><span style="color:#f92672">&gt;</span>
+            	<span style="color:#f92672">&lt;assemblyIdentity</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#a6e22e">publicKeyToken=</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#a6e22e">culture=</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">/&gt;</span>
+                <span style="color:#f92672">&lt;bindingRedirect</span> <span style="color:#a6e22e">oldVersion=</span><span style="color:#e6db74">&#34;version1-version2&#34;</span> <span style="color:#a6e22e">newVersion=</span><span style="color:#e6db74">&#34;newVersion&#34;</span> <span style="color:#f92672">/&gt;</span>
+                <span style="color:#f92672">&lt;publisherPolicy</span> <span style="color:#a6e22e">apply=</span><span style="color:#e6db74">&#34;no/yes&#34;</span> <span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;/dependentAssembly&gt;</span>
+        <span style="color:#f92672">&lt;/assemblyBinding&gt;</span>
+	<span style="color:#f92672">&lt;/runtime&gt;</span>
+<span style="color:#f92672">&lt;/configuration&gt;</span>
+</code></pre></div><ul>
+<li>probing：CLR定位弱命名程序集时，先从基目录下中查找，如果没有找到，从privatePath（为相对于应用程序的基目录的子目录）目录查找</li>
+<li>assemblyIdentity：程序集公钥标记、名称、语言文化信息</li>
+<li>bindingRedirect：定位到oldVersion版本的程序集时，改为定位同一程序集的newVersion版本</li>
+<li>codeBase：查找程序集时，尝试从href的URL处发现它</li>
+<li>publisherPolicy：应用或者忽略发布者策略文件
+<ul>
+<li>发布者策略：发布者创建策略信息，新程序安装到用户机器上时，安装此策略信息。</li>
+</ul>
+</li>
+</ul>
+<p>发布者策略控制</p>
+<ul>
+<li>发布者可以创建包含发布者策略配置文件的程序集，发布者策略程序集必须安装到GAC。</li>
+<li>只有部署程序集更新或Service Pack时才应创建发布者策略程序集。执行应用程序的全新安装不应安装发布者策略程序集。</li>
+</ul>
 
 
                 
@@ -561,6 +951,11 @@
                     </li>
                     
                     
+                    <li class="next">
+                        <a href="/2020/04/28/clr-via-csharp-2part/" data-toggle="tooltip" data-placement="top" title="CLR via C# - 设计类型">Next
+                            Post &rarr;</a>
+                    </li>
+                    
                 </ul>
 
                 
@@ -585,6 +980,10 @@
                         
                         
                         
+                        
+                        <a href="/tags/clr-via-c" title="clr-via-c#">
+                            clr-via-c#
+                        </a>
                         
                         
                         

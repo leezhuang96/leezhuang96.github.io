@@ -6,10 +6,19 @@
     <description>Recent content in CSharp on Jordon&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leezhuang96.github.io/categories/csharp/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>CLR via C# - 设计类型</title>
+      <link>https://leezhuang96.github.io/2020/04/28/clr-via-csharp-2part/</link>
+      <pubDate>Tue, 28 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://leezhuang96.github.io/2020/04/28/clr-via-csharp-2part/</guid>
+      <description>CLR via C# - 设计类型 类型基础 1. 所有类型都从System.Object派生</description>
+    </item>
     
     <item>
       <title>CLR via C# - CLR基础</title>
