@@ -243,6 +243,8 @@
     <li><a href="#clr-via-c---">CLR via C# - 设计类型</a>
       <ul>
         <li><a href="#heading">类型基础</a></li>
+        <li><a href="#heading-1">基元类型、引用类型和值类型</a></li>
+        <li><a href="#heading-2">类型和成员基础</a></li>
       </ul>
     </li>
   </ul>
@@ -251,6 +253,444 @@
                 <h2 id="clr-via-c---">CLR via C# - 设计类型</h2>
 <h3 id="heading">类型基础</h3>
 <h4 id="1-systemobject">1. 所有类型都从System.Object派生</h4>
+<p>CLR要求每个类型最终都从<code>System.Object</code>类型派生。</p>
+<p><code>System.Object</code>的公共（<code>public</code>）方法：</p>
+<table>
+<thead>
+<tr>
+<th>public方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Equals</td>
+<td>1. 对象具有相同的值，返回<code>true</code>。</td>
+</tr>
+<tr>
+<td>GetHashCode</td>
+<td>1. 返回对象的值的hash码。 2. 类型的对象在hash表集合中作为键使用，需要重写此方法，方法应该为不同对象提供良好分布。3. 将该方法设计到Object并不恰当，本应在接口中定义。</td>
+</tr>
+<tr>
+<td>ToString</td>
+<td>1. 默认返回类型的完整名称（<code>this.GetType().FullName</code>）。</td>
+</tr>
+<tr>
+<td>GetType</td>
+<td>1. 返回从<code>Type</code>派生的一个类型的实例，指出调用此方法的对象是什么类型。2. GetType是非虚方法，以防类重写该方法，隐瞒其类型，进而破坏类型安全性。</td>
+</tr>
+</tbody>
+</table>
+<p><code>System.Object</code>的受保护（<code>protected</code>）方法：</p>
+<table>
+<thead>
+<tr>
+<th>protected方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MemberwiseClone</td>
+<td>1. 非虚方法。 2. 创建类型实例，并将新对象的实例字段和this对象的实例对象设置为完全一样。3. 返回新实力的引用。</td>
+</tr>
+<tr>
+<td>Finalize</td>
+<td>1. 虚方法。2. 在对象内存被实际回收之前调用。</td>
+</tr>
+</tbody>
+</table>
+<p>实例：</p>
+<ul>
+<li>类的<code>实例</code>：对象。</li>
+<li>类中定义的<code>实例字段/实例成员</code>：类的非静态字段。静态字段属于类，实例成员属于类的对象。</li>
+</ul>
+<p><code>new</code>操作符运行过程：</p>
+<ol>
+<li>计算所需要的字节数：
+<ul>
+<li>类型及其所有基类的实例字段所需要的字节数</li>
+<li>成员管理对象：<code>类型对象指针（type object pointer）</code>和<code>同步块索引（sync block index）</code>所需要的字节数</li>
+</ul>
+</li>
+<li>从托管堆中分配内存空间，分配的所有字节都设为0。</li>
+<li>初始化对象的<code>类型对象指针</code>和<code>同步块索引</code>成员。</li>
+<li>调用类型的构造器，传递指定的实参。自动调用基类构造器，构造器负责初始化类型的实例字段。</li>
+<li>返回指向新建对象的一个引用（指针）。</li>
+</ol>
+<h4 id="2-">2. 类型转换</h4>
+<p>CLR最重要的特性之一是<code>类型安全</code>。</p>
+<ul>
+<li>隐式转换</li>
+<li>显式转换</li>
+</ul>
+<p>C#<code>is</code>操作符：检查对象是否兼容于指定类型，返回<code>true</code>或<code>false</code>。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">if</span>(o <span style="color:#66d9ef">is</span> Employee)	<span style="color:#75715e">//第一次检查，核实o是否兼容于Employee
+</span><span style="color:#75715e"></span>{
+	Employee e = (Employee)o;	<span style="color:#75715e">//第二次检查，再次核实o是否引用一个Employee
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>C#<code>as</code>操作符：检查对象是否兼容于指定类型，返回对象的<code>非null引用</code>或<code>null</code>。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#">Employee e = o <span style="color:#66d9ef">as</span> Employee;
+<span style="color:#66d9ef">if</span>(e != <span style="color:#66d9ef">null</span>)
+{
+    <span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><h4 id="3-">3. 命名空间和程序集</h4>
+<p><code>命名空间（namespace）</code>：对相关的类型进行逻辑分组，开发人员可通过命名空间方便定位类型。</p>
+<p>C#<code>using</code>指令：</p>
+<ul>
+<li>引入命名空间</li>
+<li>为类型或命名空间创建别名</li>
+</ul>
+<h4 id="4-">4. 运行时的相互关系</h4>
+<ul>
+<li>类型、对象、线程栈、托管堆在运行时的相互关系？</li>
+<li>调用静态方法、实例方法、虚方法的区别？</li>
+</ul>
+<p>线程栈：一个进程可能有多个线程，创建线程时会分配到1MB的栈。栈空间用于向方法传递实参，方法内部定义的局部变量也在栈上。栈从高位内存地址向低位内存地址构建。</p>
+<p>方法：包含<code>序幕代码</code>和<code>尾声代码</code></p>
+<ul>
+<li>序幕（prologue）代码：在方法开始工作前对其进行初始化。</li>
+<li>尾声（epilogue）代码：在方法完成工作和对其进行清理，以便返回至调用者。</li>
+</ul>
+<p>方法调用：</p>
+<ol>
+<li>将实参地址压入栈。</li>
+<li>将方法返回地址压入栈。</li>
+<li>序幕代码为局部分配内存空间。</li>
+<li>执行代码。</li>
+<li>return 将CPU的指令指针设置成栈中的返回地址。</li>
+<li>方法的栈帧展开（unwind）。栈帧：当前线程的调用栈中的一个方法调用。</li>
+</ol>
+<p>围绕CLR方法调用：</p>
+<ol>
+<li>JIT将IL代码转换为CPU指令时，CLR会确认引用的所有类型的程序集已经加载，利用程序集的元数据，提取与类型有关的信息，在托管堆中创建<code>类数据结构（类型对象）</code>来表示类型本身。</li>
+</ol>
+<ul>
+<li><code>类型对象</code>：类型对象指针(type object pointer)+同步块索引(sync block index)+静态字段+方法表&hellip;</li>
+<li>静态数据字段分配在类型对象自身中。</li>
+</ul>
+<ol start="2">
+<li>
+<p>CLR确认方法所需的所有类型对象都已创建，代码已经编译完成后，执行本机代码。</p>
+</li>
+<li>
+<p>序幕代码在线程栈中为局部变量分配内存，CLR自动为局部变量初始化。</p>
+</li>
+<li>
+<p>在托管堆中创建类型的实例对象：类型对象指针+同步块索引+（本身和基类的）实例数据字段。</p>
+<ul>
+<li>
+<p>CLR自动初始化类型对象指针指向对象对应的<code>类数据结构（类型对象）</code>。</p>
+</li>
+<li>
+<p>在调用类型构造器之前，CLR初始化同步块索引，并初始化对象的实例字段。</p>
+</li>
+<li>
+<p>new操作符返回对象的内存地址，保存到线程栈上的变量中。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>调用静态方法：</p>
+<ul>
+<li>CLR定位与定义静态方法的类型对应的<code>类型对象</code>。</li>
+<li>JIT编译器在<code>类型对象</code>的方法表中查找与被调用方法对应的记录项，对方法进行JIT编译，调用编译后的代码。</li>
+</ul>
+</li>
+<li>
+<p>调用非虚实例方法：</p>
+<ul>
+<li>JIT编译器找到调用的变量的类型对应的<code>类型对象</code>，查找或回溯查找被调用方法的记录项</li>
+<li>JIT编译器在<code>类型对象</code>的方法表中查找与被调用方法对应的记录项，对方法进行JIT编译，调用编译后的代码。</li>
+</ul>
+</li>
+<li>
+<p>调用实例方法：</p>
+<ul>
+<li>JIT编译器在方法中生成一些额外代码，每次调用都会执行这些代码。</li>
+<li>首先检查调用的变量，并根据地址找到调用的对象。</li>
+<li>检查对象内部的<code>类型对象指针</code>，该成员指向对象的实际类型。</li>
+<li>JIT编译器在<code>类型对象</code>的方法表中查找与被调用方法对应的记录项，对方法进行JIT编译，调用编译后的代码。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="heading-1">基元类型、引用类型和值类型</h3>
+<h4 id="1-">1. 编程语言的基元类型</h4>
+<p><code>基元类型（primitive type）</code>：编译器直接支持的数据类型。基元类型直接映射到Framework类库（FCL）中存在的类型。</p>
+<p>C#基元类型与对应的FCL类型：</p>
+<table>
+<thead>
+<tr>
+<th>C#基元类型</th>
+<th>FCL类型</th>
+<th>符合CLS（Y/N）</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sbyte</td>
+<td>System.SByte</td>
+<td>N</td>
+<td>有符号的8位值</td>
+</tr>
+<tr>
+<td>byte</td>
+<td>System.Byte</td>
+<td>Y</td>
+<td>无符号的8位值</td>
+</tr>
+<tr>
+<td>short</td>
+<td>System.Int16</td>
+<td>Y</td>
+<td>有符号的16位值</td>
+</tr>
+<tr>
+<td>ushort</td>
+<td>System.UInt16</td>
+<td>N</td>
+<td>无符号的16位值</td>
+</tr>
+<tr>
+<td>int</td>
+<td>System.Int32</td>
+<td>Y</td>
+<td>有符号的32位值</td>
+</tr>
+<tr>
+<td>uint</td>
+<td>System.UInt32</td>
+<td>N</td>
+<td>无符号的32位值</td>
+</tr>
+<tr>
+<td>long</td>
+<td>System.Int64</td>
+<td>Y</td>
+<td>有符号的64位值</td>
+</tr>
+<tr>
+<td>ulong</td>
+<td>System.UInt64</td>
+<td>N</td>
+<td>无符号的64位值</td>
+</tr>
+<tr>
+<td>char</td>
+<td>System.Char</td>
+<td>Y</td>
+<td>16位Unicode字符</td>
+</tr>
+<tr>
+<td>float</td>
+<td>System.Single</td>
+<td>Y</td>
+<td>IEEE32为浮点值</td>
+</tr>
+<tr>
+<td>double</td>
+<td>SystemDouble</td>
+<td>Y</td>
+<td>IEEE64为浮点值</td>
+</tr>
+<tr>
+<td>bool</td>
+<td>System.Boolean</td>
+<td>Y</td>
+<td>true/false值</td>
+</tr>
+<tr>
+<td>decimal</td>
+<td>System.Decimal</td>
+<td>Y</td>
+<td>128位高精度浮点值，1位是符号，96位是值本身（N），8位是比例因子（k），其余位未使用。（+/-）N*(10的k次方)，-28 &lt;= k &lt;= 0</td>
+</tr>
+<tr>
+<td>string</td>
+<td>System.String</td>
+<td>Y</td>
+<td>字符数组</td>
+</tr>
+<tr>
+<td>object</td>
+<td>System.Object</td>
+<td>Y</td>
+<td>所有类型的基类型</td>
+</tr>
+<tr>
+<td>dynamic</td>
+<td>System.Object</td>
+<td>Y</td>
+<td>对于CLR，dynamic和object完全一致。C#编译器允许使用简单语法让dynamic变量参与动态调度。</td>
+</tr>
+</tbody>
+</table>
+<p>基本类型可被写成字面值（literal），字面值可被看成类型本身的实例，调用实例方法。</p>
+<p><code>checked</code>和<code>unchecked</code>基元类型操作：</p>
+<ul>
+<li>对基元类型执行算术运算时可能造成溢出。</li>
+<li>CLR提供一些特殊IL指令，允许编译器选择对溢出的处理行为。
+<ul>
+<li>​	<code>add/add.ovf, sub/sub.ovf, mul/mul.ovf, conv/conv.ovf</code></li>
+</ul>
+</li>
+<li>C#编译器溢出检查默认是关闭的。
+<ul>
+<li>全局打开：<code>/checked+</code>编译器开关</li>
+<li>特定区域检查：<code>checked</code>和<code>unchecked</code>操作符</li>
+</ul>
+</li>
+</ul>
+<h4 id="2--1">2. 引用类型和值类型</h4>
+<p>CLR支持两种类型：<code>引用类型</code>和<code>值类型</code>。</p>
+<p>引用类型：类（class）</p>
+<ul>
+<li>内存必须从堆上分配。</li>
+<li>堆上分配的每个对象都有一些额外的成员（类型对象指针和同步块索引），这些成员必须初始化。</li>
+<li>对象中的其他字节总是设为零。</li>
+<li>从托管堆上分配对象时，可能强制执行一次垃圾回收。</li>
+</ul>
+<p>值类型：结构（struct）/枚举（enum）</p>
+<ul>
+<li>轻量级类型。</li>
+<li>一般在线程栈上分配。</li>
+<li>变量包含本身实例字段，变量中不包含指向实例的指针。</li>
+<li>不受垃圾回收机制的控制。</li>
+</ul>
+<p><code>结构（struct）</code>：派生自抽象类<code>System.ValueType</code>, <code>System.ValueType</code>派生自<code>System.Object</code>。</p>
+<p><code>枚举（enum）</code>：派生自抽象类<code>System.Enum</code>, <code>System.Enum</code>派生自<code>System.ValueType</code>。</p>
+<p>将类型声明成值类型的条件：</p>
+<ul>
+<li>必须：
+<ul>
+<li>类型具有基元类型的行为。没有成员会修改类型的任何实例字段。<code>不可变（Immutable）类型</code>：没有提供会更改其字段的成员的类型。</li>
+<li>类型不需要从其他任何类型继承。</li>
+<li>类型也不派生出其他任何类型。</li>
+</ul>
+</li>
+<li>满足任意条件：
+<ul>
+<li>类型实例较小（&lt;=16字节）。</li>
+<li>类型实例较大，但是不作为方法的实参传递，也不从方法返回。
+<ul>
+<li>实参默认以传值方式传递，会对值类型中的字段进行复制，损害性能。</li>
+<li>方法返回一个值类型时，实例中的字段会复制到调用者分配的内存中，损害性能。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>值类型和引用类型的区别：</p>
+<ul>
+<li>对象表示形式：
+<ul>
+<li>值类型：未装箱和已装箱。</li>
+<li>引用类型：已装箱。</li>
+</ul>
+</li>
+<li>值类型派生自<code>System.ValueType</code>。该类型提供了与<code>System.Object</code>相同的方法，但是重写了<code>Equals</code>和<code>GetHashCode</code>方法，由于默认实现存在性能问题，自己定义的值类型应重写<code>Equals</code>和<code>GetHashCode</code>方法。</li>
+<li>值类型不能派生出其他类型。不应再值类型中引入新的虚方法。方法应是隐式密封的，不能时抽象的。</li>
+<li>变量：
+<ul>
+<li>值类型：值类型变量包含其基础类型的一个值，值类型的所有成员初始化为0。</li>
+<li>引用类型：引用类型变量包含堆中对象的地址。引用类型的变量默认初始化为null。</li>
+</ul>
+</li>
+<li>赋值：
+<ul>
+<li>值类型：将值类型赋值变量给另外一个值类型变量，会逐字段复制。值类型变量自成一体，对值类型变量执行操作不会影响到另一个值类型变量。</li>
+<li>引用类型：将引用类型变量赋值给另一个引用类型变量，只复制内存地址。多个引用类型变量能引用堆中同一个对象，对一个变量执行操作，会影响另一个变量引用的对象。</li>
+</ul>
+</li>
+<li>未装箱的值类型不分配到堆上，定义了该类型的一个实例的方法不再活动，为它们分配的存储就会被释放，不是等着进行垃圾回收。</li>
+</ul>
+<p>CLR控制类型中的字段布局：CLR能按照它所选择的任何方式排列类型的字段。</p>
+<p>C#编译器：</p>
+<ul>
+<li>引用类型：默认<code>LayoutKind.Auto</code>，让CLR自动排列字段。</li>
+<li>值类型：默认<code>LayoutKind.Sequential</code>，让CLR保持字段布局。</li>
+</ul>
+<p>非托管<code>union</code>：</p>
+<ul>
+<li><code>union</code>中的数据成员在内存中的存储相互重叠。</li>
+<li>每个数据成员都从相同的内存地址开始。</li>
+<li>存储的存储区数量是最大数据成员所需的内存数。</li>
+<li>同一时刻只有一个数据成员可以被赋值。</li>
+</ul>
+<p>模拟非托管<code>union</code>：<code>LayoutKind.Explicit</code>，利用偏移量在内存中显式排列字段。</p>
+<ul>
+<li>引用类型和值类型的相互重叠时不合法的。</li>
+<li>值类型的相互重叠时合法的。</li>
+</ul>
+<h4 id="3--1">3. 值类型的装箱和拆箱</h4>
+<p>值类型比引用数据类型<code>轻</code>的原因：</p>
+<ul>
+<li>不作为对象在托管堆中分配。</li>
+<li>不被垃圾回收。</li>
+<li>不通过指针进行引用，不需要提领指针。</li>
+</ul>
+<p><code>装箱（boxing）</code>：将值类型转换成引用类型。</p>
+<p>装箱过程：</p>
+<ol>
+<li>
+<p>在托管堆中分配内存。分配内存量 = 各字段所需内存量 + 类型对象指针和同步块索引所需内存量。</p>
+<ol start="2">
+<li>值类型的字段复制到新分配的堆内存。</li>
+<li>返回对象地址。</li>
+</ol>
+</li>
+</ol>
+<p><code>泛型集合类</code>：允许在操作值类型的集合时，不需要对集合中的项进行装/拆箱。</p>
+<p><code>拆箱（unboxing）</code>：获取已装箱实例中未装箱字段的地址称为拆箱。拆箱不要求在内存中复制任何字段，往往在拆箱后会将字段从堆复制到基于栈的变量中。</p>
+<p>对象<code>相等性（identity）</code>和<code>同一性(equality)</code>：</p>
+<ul>
+<li>同一性（检查两个引用是否指向同一个对象）：<code>System.Object &gt; static ReferenceEquals</code></li>
+<li>相等性（检查两个对象是否包含相同的值）：重写<code>Equals</code>方法</li>
+</ul>
+<p>重写<code>Equals</code>方法特征：</p>
+<ul>
+<li>自反性：<code>x.Equals(x) -&gt; true</code></li>
+<li>对称性：<code>x..Equals(y) -&gt; true, y.Equals(x) -&gt; true</code></li>
+<li>可传递性：<code>x.Equlas(y) -&gt; true y.Equals(z) -&gt; true, x.Equlas(z) -&gt; true</code></li>
+<li>一致性：比较的两个值不变，返回结果不变。</li>
+</ul>
+<h4 id="4-hash">4. 对象hash码</h4>
+<p>重写<code>Equals</code>方法必须也重写<code>GetHashCode</code>方法，以确保<code>相等性算法</code>和对象<code>hash码算法</code>一致。因为<code>hash表集合</code>（<code>HashTable</code>、<code>Dictionary</code>&hellip;）中，要求两个对象必须具有相同的hash码才被视为相等。</p>
+<p>自定义计算实例的<code>hash码的算法</code>应具有的特征：</p>
+<ul>
+<li>提供良好随机分配，使<code>hash表</code>获得最佳性能。</li>
+<li>可调用基类的<code>GetHashCode方法</code>，并包含它的返回值。一般不调用<code>System.Object</code>或<code>System.ValueType</code>的<code>GetHashCode</code>方法，不符合高性能hash算法。</li>
+<li>算法至少使用一个实例字段。</li>
+<li>理想情况，算法使用的字段应该不可变（immutable）。</li>
+<li>算法执行速度尽量快。</li>
+<li>包含相同值的不同对象应返回相同的hash码。</li>
+</ul>
+<p>不要对hash码进行持久化，因为hash算法和hash码很容易被改变。</p>
+<h4 id="5-dynamic">5. dynamic基元类型</h4>
+<p>类型安全的编程语言：所有表达式都解析成类型的实例，编译器生成的代码只执行对该类型有效的操作。</p>
+<p>与非类型安全的语言相比，类型安全的语言优势：</p>
+<ul>
+<li>能在编译时检测代码的正确性。</li>
+<li>编译出更小、更快的代码：能在编译时进行更多预设，并在生成的IL和元数据中落实预设。</li>
+</ul>
+<p><code>dynamic</code>：</p>
+<ul>
+<li>
+<p>为了方便使用反射或者和其他组件进行通信，C#编译器允许将表达式的类型定义为<code>dynamic</code>。也可将表达式的结果放入变量，并将变量标记为<code>dynamic</code>。</p>
+</li>
+<li>
+<p>代码使用<code>dynamic</code>表达式/变量调用成员时，编译器生成特殊的IL代码（<code>payload，有效载荷</code>）来描述所需的操作。</p>
+</li>
+<li>
+<p>在运行时，<code>payload</code>代码使用<code>运行时绑定器（runtime binder）</code>根据<code>dynamic</code>表达式/变量引用的对象的实际类型来决定具体执行操作。</p>
+</li>
+</ul>
+<p>所有表达式都能隐式转化为<code>dynamic</code>，<code>dynamic</code>也可隐式转化为其他类型。</p>
+<hr>
+<h3 id="heading-2">类型和成员基础</h3>
 
 
                 

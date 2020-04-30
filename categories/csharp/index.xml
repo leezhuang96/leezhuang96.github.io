@@ -17,7 +17,7 @@
       <pubDate>Tue, 28 Apr 2020 00:00:00 +0000</pubDate>
       
       <guid>https://leezhuang96.github.io/2020/04/28/clr-via-csharp-2part/</guid>
-      <description>CLR via C# - 设计类型 类型基础 1. 所有类型都从System.Object派生</description>
+      <description>CLR via C# - 设计类型 类型基础 1. 所有类型都从System.Object派生 CLR要求每个类型最终都从System.Object类型派生。 Syste</description>
     </item>
     
     <item>

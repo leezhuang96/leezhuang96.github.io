@@ -253,16 +253,16 @@
                 <h2 id="clr-via-c---clr">CLR via C# - CLR基础</h2>
 <h3 id="clr">CLR的执行模型</h3>
 <h4 id="1-">1. 将源代码编译成托管模块</h4>
-<p>托管代码（Managed Code） 非托管代码（Native Code）</p>
+<p>托管代码（<code>Managed Code</code>）  非托管代码（<code>Native Code</code>）</p>
 <ul>
 <li>
-<p>CLR（Common Language Runtime）:公共语言运行时，可由多种编程语言使用的<code>运行时</code>。可用任何<code>编程语言</code>开发代码，只要<code>编译器</code>是面向CLR的。</p>
+<p><code>CLR（Common Language Runtime）</code>:公共语言运行时，可由多种编程语言使用的<code>运行时</code>。可用任何<code>编程语言</code>开发代码，只要<code>编译器</code>是面向CLR的。</p>
 </li>
 <li>
-<p>编译器（Code Compilers）作用：检查语法 + 分析源代码 + 生成<code>托管模块</code>。</p>
+<p>编译器（<code>Code Compilers</code>）作用：检查语法 + 分析源代码 + 生成<code>托管模块</code>。</p>
 </li>
 <li>
-<p>托管模块（Managed Module）：<code>PE32(+)可移植执行体</code>（Protable Executable）。</p>
+<p>托管模块（<code>Managed Module</code>）：<code>PE32(+)可移植执行体</code>（Protable Executable）。</p>
 <ul>
 <li>
 <p>系统安全性：数据执行保护 + 地址空间布局随机化。</p>
@@ -333,10 +333,10 @@
 <li>CLR为托管模块（元数据+IL）引用的所有类型，生成内部数据结构
 <ul>
 <li>内部数据结构中包含当前引用类的每个方法的entry，entry的地址指向方法的实现</li>
-<li>对内部数据结构初始化，将entry指向包含在CLR中的未编档函数（JITCompiler）</li>
+<li>对内部数据结构初始化，将entry指向包含在CLR中的未编档函数（<code>JITCompiler</code>）</li>
 </ul>
 </li>
-<li>JITCompiler从元数据中查找被调用方法的IL</li>
+<li><code>JITCompiler</code>从元数据中查找被调用方法的IL</li>
 <li>验证IL，动态分配内存块，编译成本机cpu指令，保存到内存块中</li>
 <li>修改entry指向保存本机cpu指令的内存地址</li>
 <li>执行本机cpu指令，返回到Main方法</li>
@@ -360,7 +360,7 @@
 </ul>
 </li>
 <li>验证：将IL编译成本机CPU指令时，CLR会执行verification过程，确定IL代码所做的一切都是安全的。</li>
-<li>AppDomain：CLR提供了在一个操作系统的<code>进程</code>中执行多个<code>托管应用程序</code>的能力。每个托管应用程序都在一个AppDomain中执行。</li>
+<li><code>AppDomain</code>：CLR提供了在一个操作系统的<code>进程</code>中执行多个<code>托管应用程序</code>的能力。每个托管应用程序都在一个<code>AppDomain</code>中执行。</li>
 </ul>
 </li>
 <li>
@@ -473,12 +473,12 @@
 </ul>
 <p>CTS类型可见性/成员访问规则：</p>
 <ul>
-<li>private：成员只能由同一个类（class）类型（type）中的其他成员访问</li>
-<li>family：成员可由派生类（子类）访问（C# protected）</li>
-<li>family and assembly: 成员可由同一个程序集中的派生类访问</li>
-<li>assembly: 成员可由同一程序集中的任何类型访问 （C# internal）</li>
-<li>family or assembly：成员可由任何程序集中的派生类和同一程序集中的任何类型访问（C# protected intenal）</li>
-<li>public: 成员可由任何程序集中的任何类型访问</li>
+<li><code>private</code>：成员只能由同一个类（class）类型（type）中的其他成员访问</li>
+<li><code>family</code>：成员可由派生类（子类）访问（C# <code>protected</code>）</li>
+<li><code>family and assembly</code>: 成员可由同一个程序集中的派生类访问</li>
+<li><code>assembly</code>: 成员可由同一程序集中的任何类型访问 （C# <code>internal</code>）</li>
+<li><code>family or assembly</code>：成员可由任何程序集中的派生类和同一程序集中的任何类型访问（C# <code>protected intenal</code>）</li>
+<li><code>public</code>: 成员可由任何程序集中的任何类型访问</li>
 </ul>
 <p>CTS规则：</p>
 <ul>
@@ -488,7 +488,7 @@
 <p>代码的语言和代码的行为：使用不同编程语言写出行为完全一致的类型。</p>
 <h4 id="8-">8. 公共语言规范</h4>
 <p>语言集成：CLR使用标准类型集、元数据（自描述的类型信息）、公共执行环境。</p>
-<p>Common Language Specification（CLS）：定义了所有语言都必须支持的最小功能集。任何编译器只有支持这个功能集，生成的类型才能兼容由其他<code>符合CLS</code>、<code>面向CLR</code>的语言生成组件。</p>
+<p><code>Common Language Specification（CLS）</code>：定义了所有语言都必须支持的最小功能集。任何编译器只有支持这个功能集，生成的类型才能兼容由其他<code>符合CLS</code>、<code>面向CLR</code>的语言生成组件。</p>
 <p>CLR中类型的每个成员要么是字段（数据），要么是方法（行为）。</p>
 <h4 id="9-">9. 与非托管代码的互操作</h4>
 <p>CLR允许在应用程序中同时包含托管和非托管代码。</p>
@@ -505,7 +505,7 @@
 <p>Windows 不稳定和过于复杂的问题：</p>
 <ul>
 <li>
-<p>所有应用程序都使用来自Microsoft或其他厂商的动态链接库（Dynamic-Link Library， DLL），DLL hell问题</p>
+<p>所有应用程序都使用来自Microsoft或其他厂商的<code>动态链接库（Dynamic-Link Library， DLL）</code>，DLL hell问题</p>
 </li>
 <li>
 <p>安装的复杂性</p>
@@ -680,9 +680,9 @@
 </ul>
 <p>程序集包含的三个版本号：</p>
 <ul>
-<li>AssemblyFileVersion：存储在Win32版本资源中。仅供参考，CLR既不检查，也不关心。</li>
-<li>AssemblyInformationalVersion: 存储在Win32版本资源中。仅供参考，CLR既不检查，也不关心。</li>
-<li>AssemblyVersion：存储在AssemblyDef清单元数据表中。CLR在绑定到强命名程序集时会用到。唯一的标识了程序集。</li>
+<li><code>AssemblyFileVersion</code>：存储在Win32版本资源中。仅供参考，CLR既不检查，也不关心。</li>
+<li><code>AssemblyInformationalVersion</code>: 存储在Win32版本资源中。仅供参考，CLR既不检查，也不关心。</li>
+<li><code>AssemblyVersion</code>：存储在AssemblyDef清单元数据表中。CLR在绑定到强命名程序集时会用到。唯一的标识了程序集。</li>
 </ul>
 <h4 id="6-">6. 语言文化</h4>
 <p>语言文化（culture）：作为程序集身份标识的一部分，用包含主副标记（en-US&hellip;）的字符串进行标识。</p>
@@ -769,7 +769,7 @@
 </ul>
 <p>CLR在做出安全或信任决策时，永远不会使用公钥标记，因为几个公钥在hash处理后可能得到相同的公钥标记。</p>
 <h4 id="3--1">3. 全集程序集缓存</h4>
-<p>全局程序集缓存（Global Assembly Cache, GAC）: 由多个应用程序访问的程序集必须放到公认的目录，而且CLR在检测到对该程序集的引用时，必须知道检查该目录，这个公认位置就是GAC。</p>
+<p><code>全局程序集缓存（Global Assembly Cache, GAC）</code>: 由多个应用程序访问的程序集必须放到公认的目录，而且CLR在检测到对该程序集的引用时，必须知道检查该目录，这个公认位置就是GAC。</p>
 <p>GAC目录时结构化的：其中包含许多子目录，子目录的名称用算法生成。</p>
 <p>不能将弱命名程序集放到GAC。</p>
 <p>在GAC中进行全局部署是对程序集进行注册的一种形式。</p>
@@ -804,7 +804,7 @@
 </li>
 </ul>
 <h4 id="6--1">6. 延迟签名</h4>
-<p>延迟签名（delayed signing）/部分签名（partial  signing）：允许只使用公钥生成程序集，暂时不用私钥。</p>
+<p><code>延迟签名（delayed signing）/部分签名（partial  signing）</code>：允许只使用公钥生成程序集，暂时不用私钥。</p>
 <h4 id="7--1">7. 私有部署强命名程序集</h4>
 <p>GAC中安装程序集的优势：</p>
 <ul>
@@ -872,11 +872,11 @@
 	<span style="color:#f92672">&lt;/runtime&gt;</span>
 <span style="color:#f92672">&lt;/configuration&gt;</span>
 </code></pre></div><ul>
-<li>probing：CLR定位弱命名程序集时，先从基目录下中查找，如果没有找到，从privatePath（为相对于应用程序的基目录的子目录）目录查找</li>
-<li>assemblyIdentity：程序集公钥标记、名称、语言文化信息</li>
-<li>bindingRedirect：定位到oldVersion版本的程序集时，改为定位同一程序集的newVersion版本</li>
-<li>codeBase：查找程序集时，尝试从href的URL处发现它</li>
-<li>publisherPolicy：应用或者忽略发布者策略文件
+<li><code>probing</code>：CLR定位弱命名程序集时，先从基目录下中查找，如果没有找到，从privatePath（为相对于应用程序的基目录的子目录）目录查找</li>
+<li><code>assemblyIdentity</code>：程序集公钥标记、名称、语言文化信息</li>
+<li><code>bindingRedirect</code>：定位到oldVersion版本的程序集时，改为定位同一程序集的newVersion版本</li>
+<li><code>codeBase</code>：查找程序集时，尝试从href的URL处发现它</li>
+<li><code>publisherPolicy</code>：应用或者忽略发布者策略文件
 <ul>
 <li>发布者策略：发布者创建策略信息，新程序安装到用户机器上时，安装此策略信息。</li>
 </ul>
