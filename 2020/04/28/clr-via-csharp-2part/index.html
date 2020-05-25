@@ -245,6 +245,9 @@
         <li><a href="#heading">类型基础</a></li>
         <li><a href="#heading-1">基元类型、引用类型和值类型</a></li>
         <li><a href="#heading-2">类型和成员基础</a></li>
+        <li><a href="#heading-3">常量和字段</a></li>
+        <li><a href="#heading-4">方法</a></li>
+        <li><a href="#heading-5">参数</a></li>
       </ul>
     </li>
   </ul>
@@ -691,6 +694,672 @@
 <p>所有表达式都能隐式转化为<code>dynamic</code>，<code>dynamic</code>也可隐式转化为其他类型。</p>
 <hr>
 <h3 id="heading-2">类型和成员基础</h3>
+<h4 id="1--1">1. 类型的各种成员</h4>
+<table>
+<thead>
+<tr>
+<th>成员名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>常量（<code>const</code>）</td>
+<td>1. 指出数据值恒定不变的符号。2. 使代码易于阅读和维护。3. 常量逻辑上总是静态成员，与类型关联，不与类型的实例关联。</td>
+</tr>
+<tr>
+<td>字段（<code>field</code>）</td>
+<td>1. 表示只读或可读/写的数据值。2. 建议将字段声明为私有（<code>private</code>），防止类型/对象的状态被外部代码改变。3. 静态字段使类型状态的一部分；实例（非静态）字段是对象状态的一部分。</td>
+</tr>
+<tr>
+<td>实例构造器（<code>constructor</code>）</td>
+<td>1. 将新对象的实例字段初始化为良好初始状态的特殊方法。</td>
+</tr>
+<tr>
+<td>类型构造器（<code>static constructor</code>）</td>
+<td>1. 将类型的静态字段初始化为良好初始状态的特殊方法。</td>
+</tr>
+<tr>
+<td>方法（<code>method</code>）</td>
+<td>1. 更改或查询类型/对象状态的函数。2.静态方法作用于类型；实例方法作用于对象。</td>
+</tr>
+<tr>
+<td>操作符重载</td>
+<td>1. 定义<code>操作符</code>作用于对象时，应该如何操作对象的方法</td>
+</tr>
+<tr>
+<td>转换操作符</td>
+<td>1. 定义如何隐式/显式将对象从一种类型转型为另一种类型的方法。</td>
+</tr>
+<tr>
+<td>属性（<code>property</code>）</td>
+<td>1. 允许使用简单的、字段风格的语法设置或查询类型/对象的逻辑状态，同时保证状态不被破坏。2. 静态属性作用于类型；实例属性作用于对象。</td>
+</tr>
+<tr>
+<td>事件（<code>event</code>）</td>
+<td>1. 静态事件：允许<code>类型</code>向一个或多个<code>静态/实例方法</code>发送通知。2. 实例事件：允许<code>对象</code>向一个或多个<code>静态/实例方法</code>发送通知。3. 事件包含两个方法：允许静态/实例方法<code>登记</code>或<code>注销</code>对该事件的关注。4. 包含一个<code>委托字段</code>来维护已登记的方法集。</td>
+</tr>
+<tr>
+<td>类型（<code>class</code>）</td>
+<td>1. 类型可定义其他嵌套类型。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2--2">2. 类型的可见性</h4>
+<p>C#编译器默认将<code>类型</code>的可见性标识为<code>internal</code>。</p>
+<p><code>友元程序集（firend assembly）</code>：</p>
+<ul>
+<li>使用<code>[assembly:InternalsVisibleTo(&quot;xxx&quot;)]</code>特性将其他程序集标识为自己的友元程序集。</li>
+<li>该特性获取标识友元程序集的名称和公钥字符串（不包含版本、语言文化、处理器架构信息）。</li>
+<li>友元程序集能访问该该程序集中的所有<code>internal</code>类型，以及这些类型的<code>internal</code>成员。</li>
+</ul>
+<h4 id="3--2">3. 成员的可访问性</h4>
+<p>C#编译器默认将<code>成员</code>的可见性标识为<code>private</code>。</p>
+<p>CLR要求<code>接口（interface）</code>类型的所有成员都具有<code>public</code>的可访问性，C#编译器禁止显示的指定接口成员的可访问性，自动将其设为<code>public</code>。</p>
+<p>派生类型重写基类型定义的成员时：</p>
+<ul>
+<li>C#编译器：要求重写成员和原始成员有相同的可访问性。</li>
+<li>CLR：允许重写成员放宽但不允许收紧原始成员的可访问性：因为CLR承诺派生类总能转型为基类，并获得对基类方法的访问权。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>CLR术语</th>
+<th>C#术语</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Private</code></td>
+<td><code>private</code></td>
+<td>成员只能由<code>定义类型/任何嵌套类型</code>中的方法访问。</td>
+</tr>
+<tr>
+<td><code>Family</code></td>
+<td><code>protected</code></td>
+<td>成员只能由<code>定义类型/任何嵌套类型/同一程序集或其他程序集中的派生类型</code>中的方法访问。</td>
+</tr>
+<tr>
+<td><code>Family and  Assembly</code></td>
+<td>(不支持)</td>
+<td>成员只能由<code>定义类型/任何嵌套类型/同一程序集中的派生类型</code>中的方法访问。</td>
+</tr>
+<tr>
+<td><code>Assembly</code></td>
+<td><code>internal</code></td>
+<td>成员只能由<code>定义程序集</code>中的方法访问。</td>
+</tr>
+<tr>
+<td><code>Family or Assembly</code></td>
+<td><code>protected     internal</code></td>
+<td>成员只能由<code>定义程序集/任何嵌套类型/同一程序集或其他程序集中的派生类型</code>中的方法访问。</td>
+</tr>
+<tr>
+<td><code>Public</code></td>
+<td><code>public</code></td>
+<td>成员可由<code>任何程序集</code>的任何方法访问。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="4--1">4. 静态类</h4>
+<p>静态类：</p>
+<ul>
+<li>
+<p>永远不需要实例化的类。</p>
+</li>
+<li>
+<p>作用：组合一组相关成员。</p>
+</li>
+<li>
+<p>C#使用<code>static</code>关键字定义不可实例化的类。</p>
+</li>
+<li>
+<p><code>static</code>关键字只能应用于类，不能应用于结构（值类型）：因为CLR总是允许值类型初始化。</p>
+</li>
+</ul>
+<p>C#编译器对静态类的限制：</p>
+<ul>
+<li>静态类必须直接从<code>System.Object</code>类派生：继承只适用于对象，而静态类不能创建实例。</li>
+<li>静态类不能实现接口：因为只有使用类的实例时，才可调用类 的接口方法。</li>
+<li>静态类只能定义静态成员（字段、属性、方法、事件）。</li>
+<li>静态类不能作为字段、方法的参数、局部变量使用：因为它们都代表引用实例的变量。</li>
+</ul>
+<h4 id="5-">5. 分部类/结构/接口</h4>
+<p><code>partial</code>关键字告诉C#编译器：类、结构或接口的定义源代码可能要分散到一个或多个源代码文件中。</p>
+<p>分散的原因：</p>
+<ul>
+<li>源代码控制。每个文件可单独check-out，同时编辑。</li>
+<li>在同一个文件中将类或结构分解成不同的逻辑单元。</li>
+<li>代码拆分。自己的代码和设计器生成的代码。</li>
+</ul>
+<h4 id="6-">6. 组件、多态和版本控制</h4>
+<p>组件软件编程（Component Software Programming，CSP）特点：</p>
+<ul>
+<li>组件（.NET Framework成为程序集）有<code>已经发布</code>的意思。</li>
+<li>组件有自己的标识（名称、版本、语言文化、公钥）。</li>
+<li>组件永远维持自己的标识（程序集中的代码永远不会静态链接到另一个程序集中；.NET总是使用动态链接）。</li>
+<li>组件清楚指明它所依赖的组件（引用元数据表）。</li>
+<li>组件应编档它的类和成员。</li>
+<li>组件必须指定它所需要的安全权限（CLR的<code>代码访问安全性（Code Access Security, CAS）</code>）。</li>
+<li>组件要发布在任何<code>维护版本</code>中都不会改变的接口/对象模型。</li>
+</ul>
+<p>C#关键字及其对组件版本控制的影响：</p>
+<table>
+<thead>
+<tr>
+<th>C#关键字</th>
+<th>作用于类型</th>
+<th>作用于方法/属性/事件</th>
+<th>作用于常量/字段</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>abstract</code></td>
+<td>表示不能构造该类型的实例</td>
+<td>表示为了构造派生类型的实例，派生类型必须重写并实现该成员</td>
+<td>（不允许）</td>
+</tr>
+<tr>
+<td><code>virtual</code></td>
+<td>（不允许）</td>
+<td>表示该成员可由派生类型重写</td>
+<td>（不允许）</td>
+</tr>
+<tr>
+<td><code>override</code></td>
+<td>（不允许）</td>
+<td>表示派生类型正在重写基类的成员</td>
+<td>（不允许）</td>
+</tr>
+<tr>
+<td><code>sealed</code></td>
+<td>表示类型不能用作基类型</td>
+<td>表示该成员不能被派生类型重写，只能将<code>sealed</code>应用于重写虚方法的方法</td>
+<td>（不允许）</td>
+</tr>
+<tr>
+<td><code>new</code></td>
+<td>应用于嵌套类型：表示该成员与基类中相似的成员没任何关系</td>
+<td>表示该成员与基类中相似的成员没任何关系</td>
+<td>表示该成员与基类中相似的成员没任何关系</td>
+</tr>
+</tbody>
+</table>
+<p>CLR如何调用虚方法、属性和事件：</p>
+<ul>
+<li>属性和事件实际作为方法实现。</li>
+<li>方法：代表在类型或类型的实例上执行某些操作的代码。所有方法都有名称、签名和返回类型（可为void）。
+<ul>
+<li>静态方法：在类型上执行的操作。</li>
+<li>实例方法（非静态方法）：在类型的实例上执行的操作。
+<ul>
+<li>虚方法</li>
+<li>非虚实例方法</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>CLR允许类型定义多个同名方法，只要每个方法都有一组不同的参数或者一个不同的返回类型。C#不允许有只是返回类型不同的同名方法。</li>
+</ul>
+<p>CLR方法调用指令：</p>
+<ul>
+<li><code>call</code>：该IL指令可调用静态方法、实例方法和虚方法。
+<ul>
+<li>调用静态方法：必须指定方法的定义所在类的类型。</li>
+<li>调用实例方法/虚方法：必须指定引用了对象的变量，变量本身的类型指明了方法定义的类型。call指令假定该变量不为null。</li>
+</ul>
+</li>
+<li><code>callvirt</code>：该IL指令可调用实例方法和虚方法，不能调用静态方法。
+<ul>
+<li>调用实例方法：必须指定引用了对象的变量，变量的类型指明了方法定义的类型。
+<ul>
+<li>调用实例方法：变量的类型指明了方法定义的类型。</li>
+</ul>
+</li>
+<li>调用虚方法：必须指定引用了对象的变量。CLR调查发出调用的对象的实际类型，以多态的方式调用方法，为确定类型，会验证发出调用的变量不能为null。</li>
+</ul>
+</li>
+</ul>
+<p>设计类型时应尽量减少虚方法数量：</p>
+<ul>
+<li>调用虚方法的速度比调用非虚方法慢。</li>
+<li>JIT编译器不能内嵌虚方法。</li>
+<li>虚方法使组件版本控制变得更脆弱。</li>
+<li>定义基类时，经常要提供一组重载的简便方法。</li>
+</ul>
+<hr>
+<h3 id="heading-3">常量和字段</h3>
+<h4 id="1">1.常量</h4>
+<p><code>常量</code>是值从不变化的符号。</p>
+<p>值必须能在编译时确定，编译器将常量值保存到程序集的元数据中。定义常量将导致创建元数据。所以只能定义<code>编译器</code>识别的<code>基元类型</code>的常量。</p>
+<p>C#基元类型：<code>Boolean, Char, Byte, SByte, Int16, UInt16, Int32, UInt32, Int64, UInt64, Single, Double, Decimal, String.</code></p>
+<p>C#也允许定义值为<code>null</code>的<code>非基元类型</code>的<code>常量变量</code>。</p>
+<p>代码引用常量：</p>
+<ol>
+<li>编译器在定义常量的程序集的元数据中查找该符号。</li>
+<li>提取常量值嵌入生成的IL代码中。
+<ul>
+<li>由于值直接嵌入代码，运行时不需要为常量分配内存。</li>
+<li>不能获取常量的地址，也不能以传引用的方式传递常量。</li>
+</ul>
+</li>
+</ol>
+<h4 id="2--3">2. 字段</h4>
+<p><code>字段</code>是一种数据成员，其中容纳了一个<code>值类型的实例</code>或对一个<code>引用类型的引用</code>。字段储存在动态内存中，值在运行时才能获取。</p>
+<p>字段修饰符：</p>
+<table>
+<thead>
+<tr>
+<th>CLR术语</th>
+<th>C#术语</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Static</td>
+<td>static</td>
+<td>字段属于类型状态的一部分。</td>
+</tr>
+<tr>
+<td>Instance</td>
+<td>（默认）</td>
+<td>字段属于类型实例状态的一部分。</td>
+</tr>
+<tr>
+<td>InitOnly</td>
+<td>readonly</td>
+<td>1. 字段只能由构造器方法中的代码写入。2. 编译器和验证机制确保readonly字段不会被构造器之外的任何方法写入（可利用反射修改readonly字段）。3. readonly标记的引用类型字段，不可变的是引用，不是引用对象。</td>
+</tr>
+<tr>
+<td>Volatile</td>
+<td>volatile</td>
+<td>编译器、CLR、硬件不会对访问该字段的代码执行“线程不安全”的优化措施。</td>
+</tr>
+</tbody>
+</table>
+<p>CLR支持：</p>
+<ul>
+<li>类型（静态）字段：
+<ul>
+<li>引用类型的方法进入JIT编译时，将类型加载到AppDomain中，创建类型对象，在内存对象中为静态字段分配动态内存。</li>
+</ul>
+</li>
+<li>实例（非静态）字段</li>
+</ul>
+<p><code>内联初始化</code>：在代码中直接赋值来初始化。C#实际是在构造器中对字段进行的初始化，内联初始化是语法上的简化。</p>
+<hr>
+<h3 id="heading-4">方法</h3>
+<h4 id="1--2">1. 实例构造器和类（引用类型）</h4>
+<p><code>构造器</code>：将类型实例初始化为良好状态的特殊方法。构造器在<code>方法定义元数据表</code>中<code>.ctor</code>。</p>
+<p>创建引用类型实例时：</p>
+<ol>
+<li>为实例数据字段分配内存</li>
+<li>初始化对象的附加字段（<code>overhead fields</code>, 类型对象指针和同步块索引）</li>
+<li>调用类型的实例构造器设置对象的初始状态</li>
+</ol>
+<p>不调用实例构造器，创建类型的实例：</p>
+<ul>
+<li><code>Object &gt; MemberwiseClone()</code>：作用是分配内存，初始化对象的附加字段，然后将源对象的字节数据复制到新对象中。</li>
+<li>运行时序列化器（runtime serializer）反序列化对象：使用<code>FormatterServices &gt; GetUninitializedObject()/GetSafeUninitializedObject()</code>为对象分配内存。</li>
+</ul>
+<p>调用构造器：</p>
+<ol>
+<li>初始化内联初始化的字段</li>
+<li>调用基类构造器</li>
+<li>执行构造器自己的代码</li>
+</ol>
+<h4 id="2--4">2. 实例构造器和结构（值类型）</h4>
+<ul>
+<li>CLR总是允许创建值类型的实例，并且无法阻止值类型的实例化。所以值类型不需要定义构造器，C#编译器也不会为值类型生成默认的无参构造器。</li>
+<li>C#编译器不允许值类型定义无参构造器，但CLR允许。</li>
+<li>CLR允许为值类型定义构造器，但必须显示调用才会执行。</li>
+<li>不能在值类型中内联初始化实例字段，可以内联初始化静态字段。</li>
+<li>值类型的构造器必须初始化值类型的全部字段。</li>
+</ul>
+<h4 id="3--3">3. 类型构造器</h4>
+<p><code>类型构造器（type constructor）</code>:又称<code>静态构造器（static constructor）、类构造器（class constructor）、类型初始化器（type initializer）</code>。类型构造器在<code>方法定义元数据表</code>中<code>.cctor（class constructor）</code>。</p>
+<p>类型构造器：</p>
+<ul>
+<li>可用于接口（C#编译器不允许）、引用类型和值类型。</li>
+<li>类型默认没有定义类型构造器。</li>
+<li>只能定义一个类型构造器。</li>
+<li>类型构造器只能使私有的、无参的。</li>
+<li>类型构造器的调用由CLR负责。</li>
+<li>类型构造器只能访问类型的静态字段。</li>
+</ul>
+<p>作用：</p>
+<ul>
+<li>实例构造器：设置类型的实例的初始状态。</li>
+<li>类型构造器：设置类型的初始状态。</li>
+</ul>
+<h4 id="4--2">4. 操作符重载方法</h4>
+<p>对于CLR而言，操作符重载只是方法而已。CLR规范要求<code>操作符重载方法</code>必须是<code>public static</code>方法。</p>
+<p>C#要求<code>操作符重载方法</code>至少有一个<code>参数的类型</code>与<code>当前定义这个方法的类的类型</code>相同。为了使C#编译器能在合理的时间内找到要绑定的操作符方法。</p>
+<ul>
+<li>
+<p>C#使用<code>operator</code>关键字<code>重载操作符方法</code>。</p>
+</li>
+<li>
+<p>元数据使用<code>specialname</code>关键字标识<code>操作符重载方法</code>。</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Complex</span>
+{
+    punlic <span style="color:#66d9ef">static</span> Complex <span style="color:#66d9ef">operator</span>+(Complex c1, Complex c2)
+    { 
+        <span style="color:#75715e">//... 
+</span><span style="color:#75715e"></span>    }
+}
+</code></pre></div><p>C#一元操作符：</p>
+<table>
+<thead>
+<tr>
+<th>C#操作符</th>
+<th>特殊方法名</th>
+<th>推荐相容于CLS的方法名（友好名称）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+</td>
+<td>op_UnaryPlus</td>
+<td>Plus</td>
+</tr>
+<tr>
+<td>-</td>
+<td>op_UnaryNegation</td>
+<td>Negate</td>
+</tr>
+<tr>
+<td>!</td>
+<td>op_LogicalNot</td>
+<td>Not</td>
+</tr>
+<tr>
+<td>~</td>
+<td>op_OnesComplement</td>
+<td>OnesComplement</td>
+</tr>
+<tr>
+<td>++</td>
+<td>op_Increment</td>
+<td>Increment</td>
+</tr>
+<tr>
+<td>&ndash;</td>
+<td>op_Decrement</td>
+<td>Decrement</td>
+</tr>
+<tr>
+<td>(无)</td>
+<td>op_True</td>
+<td>IsTrue{get;}</td>
+</tr>
+<tr>
+<td>(无)</td>
+<td>op_False</td>
+<td>IsFalse{get;}</td>
+</tr>
+</tbody>
+</table>
+<p>C#二元操作符：</p>
+<table>
+<thead>
+<tr>
+<th>C#操作符</th>
+<th>特殊方法名</th>
+<th>推荐相容于CLS的方法名（友好名称）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+</td>
+<td>op_Addition</td>
+<td>Add</td>
+</tr>
+<tr>
+<td>-</td>
+<td>op_Subtraction</td>
+<td>Subtract</td>
+</tr>
+<tr>
+<td>*</td>
+<td>op_Multiply</td>
+<td>Multiply</td>
+</tr>
+<tr>
+<td>/</td>
+<td>op_Division</td>
+<td>Divide</td>
+</tr>
+<tr>
+<td>%</td>
+<td>op_Modulus</td>
+<td>Mod</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>op_BitwiseAnd</td>
+<td>BitwiseAnd</td>
+</tr>
+<tr>
+<td>|</td>
+<td>op_BitwiseOr</td>
+<td>BitwiseOr</td>
+</tr>
+<tr>
+<td>^</td>
+<td>op_ExclusiveOr</td>
+<td>Xor</td>
+</tr>
+<tr>
+<td>&laquo;</td>
+<td>op_LeftShift</td>
+<td>LeftShift</td>
+</tr>
+<tr>
+<td>&raquo;</td>
+<td>op_RightShift</td>
+<td>RightShift</td>
+</tr>
+<tr>
+<td>==</td>
+<td>op_Equality</td>
+<td>Equals</td>
+</tr>
+<tr>
+<td>!=</td>
+<td>op_Inequality</td>
+<td>Equals</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>op_LessThan</td>
+<td>Compare</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>op_GreaterThan</td>
+<td>Compare</td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td>op_LessThanOrEqual</td>
+<td>Compare</td>
+</tr>
+<tr>
+<td>&gt;=</td>
+<td>op_GreaterThanOrEqual</td>
+<td>Compare</td>
+</tr>
+</tbody>
+</table>
+<h4 id="5--1">5. 转换操作符方法（转换构造器和方法）</h4>
+<p><code>转换操作符</code>:是将一个对象从一种类型转换为另一种类型的<code>方法</code>。CLR规范要求转换操作符重载方法必须是<code>public static</code>方法。</p>
+<p>C#要求<code>参数的类型</code>和<code>返回类型</code>二者必有其一与<code>定义转换方法的类的类型</code>相同。为了使C#编译器能在合理的时间内找到要绑定的操作符方法。</p>
+<ul>
+<li>定义只有一个参数的公共构造器，该参数要求是源类型的实例。</li>
+<li>定义无参的公共实例方法<code>ToXXX</code>，将定义类型的实例转换为<code>XXX</code>类型。</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span>  <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Rational</span>
+{
+    <span style="color:#66d9ef">public</span> Rational(<span style="color:#66d9ef">int</span> num)
+    {
+        <span style="color:#75715e">//...由int构造Rational
+</span><span style="color:#75715e"></span>    }
+    
+    punlic <span style="color:#66d9ef">int</span> ToInt()
+    {
+        <span style="color:#75715e">//...将Rational转换为int
+</span><span style="color:#75715e"></span>    }
+    
+    <span style="color:#75715e">//由int隐式构造并返回Rational
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">operator</span> Rational(<span style="color:#66d9ef">int</span> num)
+    {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Rational(num);
+    }
+    
+    <span style="color:#75715e">//由Rational显式返回int
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">explicit</span> <span style="color:#66d9ef">operator</span> <span style="color:#66d9ef">int</span>(Rational r)
+    {
+        <span style="color:#66d9ef">return</span> r.ToInt();
+    }
+}
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Program</span>
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main()
+    {
+        Rational r = <span style="color:#ae81ff">5</span>; <span style="color:#75715e">//int隐式转换为Rational
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">int</span> x = (<span style="color:#66d9ef">int</span>)r; <span style="color:#75715e">//Rational显式转换为int
+</span><span style="color:#75715e"></span>    }
+}
+</code></pre></div><h4 id="6--1">6. 扩展方法</h4>
+<p>C#扩展方法：允许定义静态方法，并使用实例方法的语法来调用。方法的第一个参数前加<code>this</code>关键字。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StringBuilderExtensions</span>
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> IndexOf(<span style="color:#66d9ef">this</span> StringBuilder sb, Char <span style="color:#66d9ef">value</span>)
+    {
+        <span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>    }
+}
+
+<span style="color:#75715e">//call
+</span><span style="color:#75715e"></span>StringBuilder sb =  <span style="color:#66d9ef">new</span> StringBuilder(<span style="color:#e6db74">&#34;Hello. My name is Jordon.&#34;</span>);
+sb.Replace(<span style="color:#e6db74">&#39;.&#39;</span>, <span style="color:#e6db74">&#39;!&#39;</span>).IndexOf(<span style="color:#e6db74">&#39;J&#39;</span>);
+</code></pre></div><p>规则和原则：</p>
+<ul>
+<li>C#只支持扩展方法，不支持扩展属性、事件、操作符等。</li>
+<li>扩展方法（第一个参数前有<code>this</code>的方法）必须在非泛型的静态类中声明（类名没有限制）。方法必须至少有一个参数，只能第一个参数前能用<code>this</code>关键字标识。</li>
+<li>C#编译器在静态类中查找扩展方法时，要求静态类本身必须具有整个文件的作用域（静态类不能嵌套在另一个类中）。</li>
+<li>因为静态类名无限制，C#编译器要花一定时间来寻找扩展方法，为增强性能，所以C#编译器要求使用<code>using</code>关键字导入扩展方法所在类的命名空间。</li>
+<li>多个静态类可以定义相同的扩展方法，编译器检测到多个扩展方法会报错。不能再使用<code>实例方法语法</code>调用，要使用<code>静态方法语法</code>。</li>
+<li>用一个扩展方法扩展一个类型的同时也扩展了它的派生类型。</li>
+<li>扩展方法实质是对一个静态方法的调用，所以CLR不会生成代码对调用方法的表达式的值进行<code>null</code>检查。</li>
+<li>扩展方法可能存在版本控制问题。</li>
+</ul>
+<p><code>ExtensionAttribute</code>：C#中，一旦用<code>this</code>关键字标记了静态方法的第一个参数，编译器就会在内部向该方法应用<code>ExtensionAttribute</code>特性，该特性会在最终生成的文件的元数据中持久性的存储下来。</p>
+<h4 id="7-partial">7. 分部(partial)方法</h4>
+<ul>
+<li>没有实现分部方法，编译器不会生成任何代表分部方法的元数据。编译器不会生成对本该传给分部方法的实参进行求值的IL指令。</li>
+</ul>
+<p>规则和原则：</p>
+<ul>
+<li>分部方法只能再分部类或结构中声明。</li>
+<li>分部方法的返回类型始终是<code>void</code>，任何参数都不能用<code>out</code>修饰符来标记。因为分部方法运行时可能不存在。</li>
+<li>分部方法的声明和实现必须具有完全一致的签名。</li>
+<li>如果没有对应的实现部分，便不能在代码中创建委托来引用分部方法。</li>
+<li>分部方法总是被视为<code>private</code>方法。但C#编译器禁止在分部方法声明添加<code>private</code>关键字。</li>
+</ul>
+<hr>
+<h3 id="heading-5">参数</h3>
+<h4 id="1--3">1. 可选参数和命名参数</h4>
+<p><code>可选参数</code>：在设计方法时，可以为部分或全部参数分配默认值。</p>
+<p>可选参数规则和原则：</p>
+<ul>
+<li>可以为方法、构造器方法和有参属性（C#索引器）的参数指定默认值。还可为委托定义一部分的参数指定默认值。</li>
+<li>有没默认值的参数必须放在没有默认值的所有参数之后。</li>
+<li>默认值必须是编译时能确定的常量值。</li>
+<li>不要重命名参数变量。</li>
+<li>如果方法从模块外部调用，更改参数的默认值具有潜在危险。</li>
+<li>参数使用了<code>out/ref</code>关键字进行标记，就不能设置默认值。因为无法为其传递有意义的默认值。</li>
+</ul>
+<p>使用可选或命名参数调用方法时，规则和原则：</p>
+<ul>
+<li>实参可按任意顺序传递，但命名实参只能出现在实参列表尾部。</li>
+<li>可按名称将实参传给没有默认值的参数，但所有必须的实参都必须传递。</li>
+<li>C#不允许省略逗号之间的实参。</li>
+</ul>
+<p><code>DefaultParameterValueAttribute</code>和<code>OptionalAttribute</code>：</p>
+<ul>
+<li>在C#中，一旦为参数分配了默认值，编译器就会在内部向该参数应用<code>OptionalAttribute</code>特性，该特性会在最终生成的文件的元数据中持久性的存储下来。</li>
+<li>此外，编译器向参数应用<code>DefaultParameterValueAttribute</code>特性，并将该特性持久性的存储到最终生成的文件的元数据中。</li>
+<li>然后，会向<code>DefaultParameterValueAttribute</code>的构造器传递指定的默认值。</li>
+</ul>
+<h4 id="2-var">2. 隐式类型的局部变量（var）</h4>
+<p><code>var</code>：C#能根据初始化表达式的类型推断方法中的局部变量的类型。</p>
+<ul>
+<li>
+<p>只能声明方法内部的局部变量，不能声明类型的字段。</p>
+</li>
+<li>
+<p>不能将<code>null</code>赋值给隐式类型的局部变量，因为<code>null</code>能隐式转换为任何引用类型或可空值类型，编译器无法推断出它的确切类型。</p>
+</li>
+<li>
+<p>不能用<code>var</code>声明方法的参数类型。</p>
+</li>
+</ul>
+<h4 id="3-refout">3. 以引用的方式向方法传递参数（ref、out）</h4>
+<p>CLR默认所有方法参数都是传值的。CLR允许以传引用而非传值的方式传递参数。</p>
+<p>C#使用<code>out</code>或<code>ref</code>关键字，编译器将生成代码来传递参数的地址，而非传递参数本身。</p>
+<p>CLR不区分<code>out</code>或<code>ref</code>关键字，都会生成相同的IL代码，都导致传递指向实例的一个指针。</p>
+<ul>
+<li>
+<p><code>out</code>：不要求在调用方法前初始化，被调用的方法不能读取参数的值，在返回前必须向这个参数写入值。</p>
+<ul>
+<li>为大的值类型使用<code>out</code>，可以提高代码的执行效率，因为它避免了在进行方法调用时复制值类型的实例字段。</li>
+</ul>
+</li>
+<li>
+<p><code>ref</code>：需要在调用该方法前初始化参数的值，被调用的方法可以读写该参数的值。</p>
+</li>
+</ul>
+<p><code>栈帧（stack frame）</code>：代表当前线程的调用栈中的一个方法的调用。</p>
+<p>以传引用的方式传给方法的变量，变量的类型必须与方法签名中声明的类型相同，以保障类型的安全。</p>
+<h4 id="4">4.向方法传递可变数量的参数</h4>
+<p><code>params</code>：</p>
+<ul>
+<li>编译器会向参数应用定制特性<code>System.ParamArrayAttribte</code>的一个实例。</li>
+<li>只能应用于方法签名中的最后一个参数。</li>
+<li>这个参数只能标识一维数组（任意类型）。</li>
+</ul>
+<p><code>params</code>影响性能：</p>
+<ul>
+<li>数组对象必须在堆上分配内存。</li>
+<li>数组元素必须初始化。</li>
+<li>数组内存最终需要垃圾回收。</li>
+</ul>
+<p>推荐：</p>
+<ul>
+<li>
+<p>定义几个常规情况下的没有<code>params</code>关键字的重载方法。</p>
+</li>
+<li>
+<p>定义一个不常见情况下含有<code>params</code>关键字重载方法。</p>
+</li>
+</ul>
+<h4 id="5--2">5. 参数和返回类型的设计规范</h4>
+<ul>
+<li>参数：尽量指定最弱的类型。
+<ul>
+<li>接口体系结构</li>
+</ul>
+</li>
+<li>返回类型：</li>
+</ul>
 
 
                 
