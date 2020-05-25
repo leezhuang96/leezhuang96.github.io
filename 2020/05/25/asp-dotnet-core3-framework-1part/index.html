@@ -390,35 +390,35 @@ dotnet new [template type name] -n [project/item name]
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#">    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Program</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Program</span>
+{
+    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main(<span style="color:#66d9ef">string</span>[] args)
     {
-        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main(<span style="color:#66d9ef">string</span>[] args)
-        {
-            <span style="color:#75715e">//1. 创建IHostBuilder对象
-</span><span style="color:#75715e"></span>            Host.CreateDefaultBuilder() 
-                  
-                <span style="color:#75715e">//2. 用ConfigureWebHost构建请求处理管道
-</span><span style="color:#75715e"></span>                .ConfigureWebHost(webHostBuilder =&gt; webHostBuilder
-                    <span style="color:#75715e">//2.1. 将KestrelServer注册为服务器
-</span><span style="color:#75715e"></span>                    .UseKestrel()   
-                    <span style="color:#75715e">//显式指定URL
-</span><span style="color:#75715e"></span>                    <span style="color:#75715e">//.UseUrls(&#34;http://0.0.0.0:3721;https://0.0.0.0:9527&#34;)
-</span><span style="color:#75715e"></span>                    <span style="color:#75715e">//2.2. 注册中间件
-</span><span style="color:#75715e"></span>                    .Configure(app =&gt; app.Run(
-                        context =&gt; context.Response.WriteAsync(<span style="color:#e6db74">&#34;Hello World&#34;</span>))))
-                  
-                <span style="color:#75715e">//2. 用ConfigureWebHostDefaults构建请求处理管道
-</span><span style="color:#75715e"></span>                .ConfigureWebHostDefaults(webHostBuilder =&gt; webHostBuilder
-                    <span style="color:#75715e">//2.1. 注册中间件
-</span><span style="color:#75715e"></span>                    .Configure(app =&gt; app.Run(
-                        context =&gt; context.Response.WriteAsync(<span style="color:#e6db74">&#34;Hello World&#34;</span>))))
-                  
-                <span style="color:#75715e">//3. 构建宿主IHost对象   
-</span><span style="color:#75715e"></span>                .Build()
-                <span style="color:#75715e">//4. 启动程序
-</span><span style="color:#75715e"></span>                .Run();     
-        }
+        <span style="color:#75715e">//1. 创建IHostBuilder对象
+</span><span style="color:#75715e"></span>        Host.CreateDefaultBuilder() 
+              
+            <span style="color:#75715e">//2. 用ConfigureWebHost构建请求处理管道
+</span><span style="color:#75715e"></span>            .ConfigureWebHost(webHostBuilder =&gt; webHostBuilder
+                <span style="color:#75715e">//2.1. 将KestrelServer注册为服务器
+</span><span style="color:#75715e"></span>                .UseKestrel()   
+                <span style="color:#75715e">//显式指定URL
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">//.UseUrls(&#34;http://0.0.0.0:3721;https://0.0.0.0:9527&#34;)
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">//2.2. 注册中间件
+</span><span style="color:#75715e"></span>                .Configure(app =&gt; app.Run(
+                    context =&gt; context.Response.WriteAsync(<span style="color:#e6db74">&#34;Hello World&#34;</span>))))
+              
+            <span style="color:#75715e">//2. 用ConfigureWebHostDefaults构建请求处理管道
+</span><span style="color:#75715e"></span>            .ConfigureWebHostDefaults(webHostBuilder =&gt; webHostBuilder
+                <span style="color:#75715e">//2.1. 注册中间件
+</span><span style="color:#75715e"></span>                .Configure(app =&gt; app.Run(
+                    context =&gt; context.Response.WriteAsync(<span style="color:#e6db74">&#34;Hello World&#34;</span>))))
+              
+            <span style="color:#75715e">//3. 构建宿主IHost对象   
+</span><span style="color:#75715e"></span>            .Build()
+            <span style="color:#75715e">//4. 启动程序
+</span><span style="color:#75715e"></span>            .Run();     
     }
+}
 </code></pre></div></li>
 <li>
 <p>运行项目</p>
@@ -434,49 +434,49 @@ dotnet new [template type name] -n [project/item name]
 <li>
 <p>注册服务与中间件</p>
 <p>ASP.NET Core框架内置了一个原生的<code>依赖注入框架</code>，该框架利用<code>依赖注入容器</code>提供管道在构建以及请求处理过程中所需的服务，这些服务需要在应用启动时被预先注册。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#">    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Program</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Program</span>
+{
+    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main(<span style="color:#66d9ef">string</span>[] args)
     {
-        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main(<span style="color:#66d9ef">string</span>[] args)
-        {
-            <span style="color:#75715e">//1. 创建IHostBuilder对象
-</span><span style="color:#75715e"></span>            Host.CreateDefaultBuilder() 
-                <span style="color:#75715e">//2. 构建请求处理管道
-</span><span style="color:#75715e"></span>                .ConfigureWebHostDefaults(webHostBuilder =&gt; webHostBuilder
-                    <span style="color:#75715e">//2.1. 依赖服务注册
-</span><span style="color:#75715e"></span>                    .ConfigureServices(services =&gt; services
-                        .AddRouting()
-                        .AddControllersWithViews())
-                    <span style="color:#75715e">//2.2. 注册中间件
-</span><span style="color:#75715e"></span>                    .Configure(app =&gt; app
-                        <span style="color:#75715e">//注册EndpointRoutingMiddleware中间件
-</span><span style="color:#75715e"></span>                        .UseRouting()
-                        <span style="color:#75715e">//注册EndpointMiddleware中间件
-</span><span style="color:#75715e"></span>                        .UseEndpoints(endpoints =&gt; endpoints
-                            <span style="color:#75715e">//完成定义在Controller类型中所有Action方法的映射
-</span><span style="color:#75715e"></span>                            .MapControllers())))
-                <span style="color:#75715e">//3. 构建宿主IHost对象   
-</span><span style="color:#75715e"></span>                .Build()
-                <span style="color:#75715e">//4. 启动程序
-</span><span style="color:#75715e"></span>                .Run();     
-        }
+        <span style="color:#75715e">//1. 创建IHostBuilder对象
+</span><span style="color:#75715e"></span>        Host.CreateDefaultBuilder() 
+            <span style="color:#75715e">//2. 构建请求处理管道
+</span><span style="color:#75715e"></span>            .ConfigureWebHostDefaults(webHostBuilder =&gt; webHostBuilder
+                <span style="color:#75715e">//2.1. 依赖服务注册
+</span><span style="color:#75715e"></span>                .ConfigureServices(services =&gt; services
+                    .AddRouting()
+                    .AddControllersWithViews())
+                <span style="color:#75715e">//2.2. 注册中间件
+</span><span style="color:#75715e"></span>                .Configure(app =&gt; app
+                    <span style="color:#75715e">//注册EndpointRoutingMiddleware中间件
+</span><span style="color:#75715e"></span>                    .UseRouting()
+                    <span style="color:#75715e">//注册EndpointMiddleware中间件
+</span><span style="color:#75715e"></span>                    .UseEndpoints(endpoints =&gt; endpoints
+                        <span style="color:#75715e">//完成定义在Controller类型中所有Action方法的映射
+</span><span style="color:#75715e"></span>                        .MapControllers())))
+            <span style="color:#75715e">//3. 构建宿主IHost对象   
+</span><span style="color:#75715e"></span>            .Build()
+            <span style="color:#75715e">//4. 启动程序
+</span><span style="color:#75715e"></span>            .Run();     
     }
+}
 </code></pre></div></li>
 <li>
 <p>引入视图（View）</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#">    <span style="color:#75715e">//继承Controller类型，使HelloController具有视图呈现能力
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HelloController</span> : Controller   
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#75715e">//继承Controller类型，使HelloController具有视图呈现能力
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HelloController</span> : Controller   
+{
+<span style="color:#a6e22e">    [HttpGet(&#34;/hello/{name}&#34;)]</span>
+    <span style="color:#75715e">//IActionResult:Action方法执行的结果
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> IActionResult SayHello(<span style="color:#66d9ef">string</span> name)
     {
-<span style="color:#a6e22e">        [HttpGet(&#34;/hello/{name}&#34;)]</span>
-        <span style="color:#75715e">//IActionResult:Action方法执行的结果
-</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">public</span> IActionResult SayHello(<span style="color:#66d9ef">string</span> name)
-        {
-            <span style="color:#75715e">//将值传递给呈现的视图
-</span><span style="color:#75715e"></span>            ViewBag.Name = name;
-            <span style="color:#75715e">//返回当前Action方法对用的ViewResult对象
-</span><span style="color:#75715e"></span>            <span style="color:#75715e">//未显式指定视图名，视图引擎会将当前Action的名称作为视图名
-</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">return</span> View();
-        }
+        <span style="color:#75715e">//将值传递给呈现的视图
+</span><span style="color:#75715e"></span>        ViewBag.Name = name;
+        <span style="color:#75715e">//返回当前Action方法对用的ViewResult对象
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">//未显式指定视图名，视图引擎会将当前Action的名称作为视图名
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> View();
     }
+}
 </code></pre></div><p>视图引擎定位视图文件（读取对应.cshtml）的规则：<code>{ContentRoot}\Views\{ControllerName}\{ViewName}.cshtml</code>。</p>
 <p>{ContentRoot}\Views\Hello\SayHello.cshtml</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">html</span>&gt;
@@ -491,32 +491,32 @@ dotnet new [template type name] -n [project/item name]
 <li>
 <p>注册Startup类型</p>
 <p>开发中，一般将中间件以及依赖的服务注册定义到一个单独的类中。按照<code>约定</code>，通常命名为<code>Startup</code>。约定优于配置。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#">    <span style="color:#75715e">//不需要实现/继承某个预定义接口/类型，采用基于约定的定义方式
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Startup</span>
-    {
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services) =&gt; services
-            .AddRouting()
-            .AddControllersWithViews();
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#75715e">//不需要实现/继承某个预定义接口/类型，采用基于约定的定义方式
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Startup</span>
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services) =&gt; services
+        .AddRouting()
+        .AddControllersWithViews();
   
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Configure(IApplicationBuilder app) =&gt; app
-            .UseRouting()
-            .UseEndpoints(endpoints =&gt; endpoints.MapControllers());
-    }
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#">    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Program</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Configure(IApplicationBuilder app) =&gt; app
+        .UseRouting()
+        .UseEndpoints(endpoints =&gt; endpoints.MapControllers());
+}
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Program</span>
+{
+    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main(<span style="color:#66d9ef">string</span>[] args)
     {
-        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main(<span style="color:#66d9ef">string</span>[] args)
-        {
-            <span style="color:#75715e">//1. 创建IHostBuilder对象
-</span><span style="color:#75715e"></span>            Host.CreateDefaultBuilder() 
-                <span style="color:#75715e">//2. 构建请求处理管道
-</span><span style="color:#75715e"></span>                .ConfigureWebHostDefaults(
-                    webHostBuilder =&gt; webHostBuilder.UseStartup&lt;Startup&gt;())
-                <span style="color:#75715e">//3. 构建宿主IHost对象   
-</span><span style="color:#75715e"></span>                .Build()
-                <span style="color:#75715e">//4. 启动程序
-</span><span style="color:#75715e"></span>                .Run();     
-        }
+        <span style="color:#75715e">//1. 创建IHostBuilder对象
+</span><span style="color:#75715e"></span>        Host.CreateDefaultBuilder() 
+            <span style="color:#75715e">//2. 构建请求处理管道
+</span><span style="color:#75715e"></span>            .ConfigureWebHostDefaults(
+                webHostBuilder =&gt; webHostBuilder.UseStartup&lt;Startup&gt;())
+            <span style="color:#75715e">//3. 构建宿主IHost对象   
+</span><span style="color:#75715e"></span>            .Build()
+            <span style="color:#75715e">//4. 启动程序
+</span><span style="color:#75715e"></span>            .Run();     
     }
+}
 </code></pre></div></li>
 </ul>
 <h3 id="macos">macOS</h3>
