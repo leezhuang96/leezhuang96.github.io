@@ -6,10 +6,19 @@
     <description>Recent content in CSharp on Jordon&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leezhuang96.github.io/categories/csharp/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ASP .NET Core 3 框架揭秘</title>
+      <link>https://leezhuang96.github.io/2020/05/25/asp-dotnet-core3-framework-1part/</link>
+      <pubDate>Mon, 25 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://leezhuang96.github.io/2020/05/25/asp-dotnet-core3-framework-1part/</guid>
+      <description>ASP .NET Core 3 框架揭秘 - 全新的开发体验 Windows平台 1. 构建开发环境 安装SDK和IDE, .NET Core SDK 提供一个重要的命令行工具dotnet.exe 查看当</description>
+    </item>
     
     <item>
       <title>CLR via C# - 设计类型</title>
