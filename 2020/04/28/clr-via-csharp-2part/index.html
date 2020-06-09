@@ -248,6 +248,10 @@
         <li><a href="#heading-3">常量和字段</a></li>
         <li><a href="#heading-4">方法</a></li>
         <li><a href="#heading-5">参数</a></li>
+        <li><a href="#heading-6">属性</a></li>
+        <li><a href="#heading-11">事件</a></li>
+        <li><a href="#heading-12">泛型</a></li>
+        <li><a href="#heading-17">接口</a></li>
       </ul>
     </li>
   </ul>
@@ -1353,13 +1357,468 @@ sb.Replace(<span style="color:#e6db74">&#39;.&#39;</span>, <span style="color:#e
 </ul>
 <h4 id="5--2">5. 参数和返回类型的设计规范</h4>
 <ul>
-<li>参数：尽量指定最弱的类型。
+<li>方法的参数类型：尽量指定最弱的类型。
 <ul>
 <li>接口体系结构</li>
+<li>基类体系结构</li>
 </ul>
 </li>
-<li>返回类型：</li>
+<li>方法的返回类型：声明为最强的类型。</li>
 </ul>
+<h4 id="6--2">6. 常量性</h4>
+<p>CLR不支持常量的对象/实参。</p>
+<hr>
+<h3 id="heading-6">属性</h3>
+<p>属性：允许源代码用简化语法来调用方法。</p>
+<p>CLR支持两种属性：</p>
+<ul>
+<li>无参属性：通常称的属性。get访问器方法不接受参数。</li>
+<li>有参属性：索引器。get访问器方法接受一个或多个参数，set访问器方法接受两个或多个参数。</li>
+</ul>
+<h4 id="1--4">1. 无参属性</h4>
+<p>面向对象设计和编程的重要原则之一：<code>数据封装</code>。</p>
+<p><code>副作用（side effect）</code>：如果一个函数或表达式除了生成一个值，还会造成状态的改变，就说它会造成副作用，或者说会执行一个副操作。</p>
+<p><code>访问器（accessor）方法</code>：封装了字段访问的方法。访问器方法可选择对数据的合理性进行检查，确保对象的状态永远不被破坏。set访问器包含一个隐藏参数<code>value</code>。</p>
+<p><code>智能字段</code>：可以把<code>属性（property）</code>想成智能字段，即背后有额外逻辑的字段。</p>
+<p>属性的唯一好处：提供了简化语法。</p>
+<p><code>支持字段</code>：即私有字段。</p>
+<p>定义属性时，编译器在托管程序集中生成：</p>
+<ul>
+<li>代表属性<code>get访问器</code>的方法。仅在定义了get访问器方法时生成。</li>
+<li>代表属性<code>set访问器</code>的方法。仅在定义了set访问器方法时生成。</li>
+<li>托管程序集元数据中的属性定义。这一项必然生成。
+<ul>
+<li>包含一些标志（flags）和属性类型，还引用了get和set访问器方法。</li>
+<li>作用：在<code>属性</code>这种抽象概念与它的访问器方法之间建立起一个联系。</li>
+<li>编译器利用这种元数据信息。CLR不使用这种元数据信息，在运行时只需要访问器方法。</li>
+</ul>
+</li>
+</ul>
+<h5 id="heading-7">自动实现的属性</h5>
+<p><code>自动实现的属性（Automatically Implemented Property, AIP）</code>：声明属性而不提供get/set方法的实现，C#会自动声明一个私有字段，并自动实现get/set方法，分别返回和设置到字段中的值。</p>
+<h5 id="heading-8">合理定义属性</h5>
+<p>属性看起来和字段相似，但本质是方法。</p>
+<ul>
+<li>属性可以只读/只写，而字段访问总是可读/可写（readonly字段只在构造器中可写）。定义属性，最好同时提供get和set方法。</li>
+<li>属性方法可能抛出异常，字段访问永远不会。</li>
+<li>属性不能作为<code>out</code>/<code>ref</code>参数传给方法，字段可以。</li>
+<li>属性方法可能花费较长时间执行，字段访问总是立即完成。</li>
+<li>连续多次调用，属性方法每次都可能返回不同的值<code>（DateTime.Now, Environment.TickCount）</code>，字段则每次都返回相同的值。</li>
+<li>属性方法可能造成明显的副作用(<code>side effect</code>)，字段访问永远不会。</li>
+<li>属性方法可能需要额外的内存，或者返回的引用并非指向对象状态的一部分，造成对返回对象的修改作用不到原始对象身上。查询字段返回的引用总是指向原始对象状态的一部分。</li>
+</ul>
+<h5 id="heading-9">对象和集合初始化器</h5>
+<p>对象的初始化：替换（<code>replacement</code>）操作。</p>
+<p>集合的初始化：相加（<code>additive</code>）操作</p>
+<p><code>对象初始化器</code>语法的好处：允许在<code>表达式</code>的上下文（相对于<code>语句</code>的上下文）中编码，允许组合多个函数，进而增强了代码的可读性。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#">Employee e = <span style="color:#66d9ef">new</span> Employee { Name = <span style="color:#e6db74">&#34;Jordon&#34;</span>, Age =<span style="color:#ae81ff">2</span><span style="color:#ae81ff">4</span> }.ToString().ToUpper();
+</code></pre></div><p>如果属性的类型实现了<code>IEnumerable/IEnumerable&lt;T&gt;</code>接口，属性就被认为是集合。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">var</span> table = <span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">int</span>&gt; {
+    {<span style="color:#e6db74">&#34;Jordon&#34;</span>, <span style="color:#ae81ff">2</span><span style="color:#ae81ff">4</span>}, {<span style="color:#e6db74">&#34;Vicky&#34;</span>, <span style="color:#ae81ff">2</span><span style="color:#ae81ff">8</span>}  
+};
+</code></pre></div><h5 id="heading-10">匿名类型</h5>
+<p><code>匿名类型</code>：可以用很简洁的语法来自动声明<code>不可变（immutable）</code>的元组类型。</p>
+<p><code>元组类型</code>：含有一组属性的类型，这些属性以某种方式相互关联。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">var</span> o = <span style="color:#66d9ef">new</span> { prop1 = expression1, ... };
+</code></pre></div><p>编译器过程：</p>
+<ul>
+<li>推断每个表达式类型，创建推断类型的私有字段</li>
+<li>为每个字段创建<code>公共只读</code>属性（防止对象的hash码发生改变），并创建构造器接受所有表达式。</li>
+<li>在构造器中，使用传给它的表达式的求值结果来初始化私有只读字段。</li>
+<li>重写Object的<code>Equals, GetHashCode, ToString</code>方法，并生成方法中的代码。</li>
+</ul>
+<h5 id="systemtuple">System.Tuple类型</h5>
+<p><code>元数（arity）</code>：一个函数或者运算（操作）的元数是指函数获取的实参或者操作数的个数。</p>
+<p><code>System.Tuple</code>：从Object派生，泛型参数的个数不同（元数不同）。Tuple创建好后就是不可变的。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Tupel</span>&lt;T1, ...&gt;
+{
+	<span style="color:#66d9ef">private</span> T1 m_Item1;
+    <span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> Tupe(T1 item1) { m_Item1 = item1; }
+    <span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> T1 Item1 { <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> m_Item1; } }
+    <span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>匿名类型：属性的实际名称是根据定义匿名类型的源代码来确定。</p>
+<p>Tuple类型：属性一律被Microsoft定义为<code>Item#</code>，无法更改。</p>
+<h4 id="2--5">2. 有参属性</h4>
+<p>C#使用数组风格的语法公开有参属性（索引器），对<code>[]</code>操作符的重载。</p>
+<p>索引器：</p>
+<ul>
+<li>至少有一个参数，可以有多个。</li>
+<li>参数和返回值类型可以是除了<code>void</code>外的任意类型。</li>
+<li>C#将<code>this[...]</code>作为表达索引器的语法。不允许指定索引器名称。可使用<code>IndexerNameAttribute</code>重命名这些方法。</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SomeType</span>
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> num;
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#66d9ef">this</span>[<span style="color:#66d9ef">bool</span> b]
+    {
+        <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>; }
+        <span style="color:#66d9ef">set</span> { <span style="color:#66d9ef">if</span>(b) { num = <span style="color:#66d9ef">value</span>; } }
+    }
+}
+</code></pre></div><p><code>关联数组（associative array）</code>：使用字符串索引（键）来访问存储在数组中的值（值）。</p>
+<p>CLR本身不区分无参属性和有参属性（索引）。对于CLR，每个属性都是类型中定义的一堆方法和一些元数据。</p>
+<h4 id="3--4">3. 调用属性访问器方法时的性能</h4>
+<p>对于简单的get/set访问器方法，JIT编译器会把代码内联/嵌入（inline）。这样，使用属性就没有性能上的损失。</p>
+<p><code>内联（inline）</code>：是指将方法的代码直接编译到调用它的方法中。</p>
+<h4 id="4--3">4. 属性访问器的可访问性</h4>
+<p>如果两个访问器方法需要不同的可访问性，C#要求必须为属性本身指定限制最小的可访问性。两个访问器智能选择一个使用限制较大的。</p>
+<h4 id="5--3">5. 泛型属性访问器</h4>
+<p>C#不允许属性引入自己的泛型参数，因为属性时用来表示可供查询或设置的某个对象特征，一旦引入泛型参数，就有可能改变查询/设置行为。但属性不是行为。</p>
+<hr>
+<h3 id="heading-11">事件</h3>
+<p>定义了事件成员的类型允许类型（或类型的实例）通知其他对象发生了特定的事情。</p>
+<p>CLR事件模型以<code>委托</code>为基础。<code>委托</code>是调用（invoke）回调方法的一种类型安全的方式，对象凭回调方法接收它们订阅的通知。</p>
+<p>定义了事件成员的类型提供功能：</p>
+<ul>
+<li>方法能登记对事件的关注。</li>
+<li>方法能注销对事件的关注。</li>
+<li>事件发生时，登记了的方法将收到通知。（类型维护了一个已登记方法列表，事件发生后，类型将通知列表中所有已登记方法。）</li>
+</ul>
+<h4 id="1--5">1. 设计要公开事件的类型</h4>
+<ul>
+<li>
+<p>step 1：定义类型来容纳所有需要发送给事件通知接收者的附加信息（<code>EventArgs</code>）。</p>
+</li>
+<li>
+<p>step 2：定义事件成员（<code>event</code>）。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">event</span> EventHandler&lt;xxxEventArgs&gt; EventName;
+<span style="color:#75715e">//public 可访问性标识符
+</span><span style="color:#75715e"></span><span style="color:#75715e">//event C#事件关键字
+</span><span style="color:#75715e"></span><span style="color:#75715e">//EventHandler&lt;xxxEventArgs&gt; 委托类型，指出要调用方法的原型。
+</span><span style="color:#75715e"></span><span style="color:#75715e">//public delegate void EventHandler&lt;TEventArgs&gt;(Object sender, TEventArgs e);
+</span><span style="color:#75715e"></span><span style="color:#75715e">//所有接收者都必须提供一个原型和委托类型匹配的回调方法。
+</span><span style="color:#75715e"></span><span style="color:#75715e">//EventName 事件名称
+</span></code></pre></div><ul>
+<li>将<code>sender</code>参数定义为<code>Object</code>原因：1.继承 2. 灵活性。</li>
+<li>事件模型要求委托定义和回调方法将派生自<code>EventArgs</code>的参数命名为<code>e</code>，加强事件模型的一致性。</li>
+<li>事件模型要求所有事件处理程序<code>event handler</code>的放回类型都是<code>void</code>，因为引发事件后可能要调用好几个回调方法，但没办法获得所有方法的返回值。</li>
+</ul>
+</li>
+<li>
+<p>step 3：定义负责引发事件的方法（<code>protected virtual void Onxxx(){}</code>）来通知事件的登记对象。</p>
+</li>
+<li>
+<p>step 4：定义方法将输入转化为期望事件。</p>
+</li>
+</ul>
+<h4 id="2--6">2. 编译器如何实现事件</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">event</span> EventHandler&lt;xxxEventArgs&gt; EventName;
+<span style="color:#75715e">//-------C#编译器------------
+</span><span style="color:#75715e"></span><span style="color:#75715e">//1. 一个被初始化为null的私有委托字段，是对一个委托列表的头部的引用。
+</span><span style="color:#75715e"></span><span style="color:#75715e">//private是防止类外部的代码不正确地操作它。
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> EventHandler&lt;xxxEventArgs&gt; EventName = <span style="color:#66d9ef">null</span>;
+<span style="color:#75715e">//2. 一个公共的add方法，允许方法登记对事件的关注
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> add_EventName(EventHandler&lt;xxxEventArgs&gt; <span style="color:#66d9ef">value</span>)
+{
+    <span style="color:#75715e">//调用System.Delegate的静态Combine方法，将委托实例添加到委托列表，
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//返回新的列表头，并将这个地址存回字段。
+</span><span style="color:#75715e"></span>}
+<span style="color:#75715e">//3. 一个公共的remove方法，允许方法注销对事件的关注
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> remove_EventName(EventHandler&lt;xxxEventArgs&gt; <span style="color:#66d9ef">value</span>)
+{
+    <span style="color:#75715e">//调用System.Delegate的静态Remove方法，将委托实例从委托列表中删除，
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//返回新的列表头，并将这个地址存回字段。
+</span><span style="color:#75715e"></span>}
+<span style="color:#75715e">//4. 托管程序集的元数据中生成事件定义的记录项（flag、基础委托类型、引用add和remove访问器方法）
+</span></code></pre></div><h4 id="3--5">3. 设计侦听事件的类型</h4>
+<ul>
+<li>C#要求使用<code>+=</code>操作符实现对事件的关注的登记（在列表中增加委托），使用<code>-=</code>操作符实现对事件关注的注销（在列表中删除委托）。</li>
+</ul>
+<h4 id="4--4">4. 显式实现事件</h4>
+<p>C#编译器允许开发人员显式的实现一个事件，使开发人员能够控制<code>add/remove</code>方法处理回调委托的方式。</p>
+<hr>
+<h3 id="heading-12">泛型</h3>
+<p>代码重用：1. 类型重用 2. 算法重用</p>
+<p><code>泛型（generic）</code>：是CLR和编程语言提供的一种特殊的机制，支持算法重用。</p>
+<p>CLR允许创建<code>泛型引用类型</code>和<code>泛型值类型</code>，但不允许创建<code>泛型枚举类型</code>。</p>
+<p>CLR还允许创建<code>泛型接口</code>和<code>泛型委托</code>。CLR允许在引用类型、值类型和接口中定义泛型方法。</p>
+<p><code>&lt;T&gt;</code>：表示操作的是一个未指定的数据类型。</p>
+<ul>
+<li><code>类型参数（type parameter）</code>：在定义泛型类型或方法时，为类型指定的任何变量都称为类型参数。</li>
+<li><code>类型实参（type argument）</code>：使用泛型类型或方法时指定的具体数据类型称为类型实参。</li>
+</ul>
+<p>Microsoft的设计原则：泛型参数变量要么称为<code>T</code>，要么至少以大写<code>T</code>开头。</p>
+<p>泛型优势：</p>
+<ul>
+<li>源代码保护：使用泛型算法的开发人员不需要访问算法源码。</li>
+<li>类型安全：保证只有与指定数据类型兼容的对象才能用于算法。</li>
+<li>更清晰的代码：由于编译器强制类型安全性，减少了强制类型转换。</li>
+<li>更佳的性能：1. 使用值类型的泛型算法，CLR不需要执行 任何装箱操作。2. 由于不需要强制类型转换，CLR无需验证类型转换是否类型安全。</li>
+</ul>
+<h4 id="1-fcl">1. FCL中的泛型</h4>
+<p>Microsoft建议使用<code>泛型集合类</code>，不建议使用<code>非泛型集合类</code>：</p>
+<ul>
+<li>泛型集合类有类型安全、代码清晰以及更佳的性能的优点。</li>
+<li>泛型类具有更好的对象模型（虚方法数量显著变少，性能更好）。</li>
+<li>泛型集合类增加了一些新成员。</li>
+</ul>
+<h4 id="2--7">2. 泛型基础结构</h4>
+<p>CLR内部如何处理泛型？</p>
+<h5 id="1--6">1. 开放类型和封闭类型</h5>
+<p><code>开放类型</code>：具有泛型类型参数的类型称为开放类型，CLR禁止构造开放类型的任何实例。</p>
+<p><code>封闭类型</code>：为所有类型参数都传递了实际的数据类型，类型就成为了封闭类型。CLR允许构造封闭类型的实例。</p>
+<h5 id="2--8">2. 泛型类型和继承</h5>
+<p>使用泛型类型并指定类型实参时，实际是在CLR中定义一个新的类型对象，新的类型对象从泛型类型派生自的那个类型派生。</p>
+<p>指定类型实参不影响继承层次结构。</p>
+<h5 id="3--6">3. 泛型类型同一性</h5>
+<p>类型的<code>同一性（identity）</code>和<code>相等性（equivalence）</code>。</p>
+<p>C#允许使用简化语法(using)引用泛型封闭类型，同时不影响类型的相等性：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#66d9ef">using</span> DateTimeList  = System.Collections.Generic.List&lt;System.DateTime&gt;;
+</code></pre></div><h5 id="4--5">4. 代码爆炸</h5>
+<p><code>代码爆炸</code>：使用泛型类型参数的方法在进行JIT编译时，CLR要为每种不同的 方法/类型组合生成本机代码。可能造成应用程序的工作集显著增大，损害性能。</p>
+<p>CLR内建优化措施：</p>
+<ul>
+<li>为特定的类型实参调用了一个方法，之后再用相同类型实参调用这个方法，CLR只会为这个方法/类型组合编译一次。</li>
+<li>CLR认为所有引用类型实参都完全相同，实现代码共享。因为所有引用类型的实参或变量实际只是指向堆上对象的指针，所有对象指针都以相同的方式操作。</li>
+</ul>
+<h4 id="3--7">3. 泛型接口</h4>
+<p>CLR提供对泛型接口的支持：</p>
+<ul>
+<li>引用类型和值类型可以指定类型实参来实现接口。</li>
+<li>也可保持类型实参的未指定状态来实现泛型接口。</li>
+</ul>
+<h4 id="4--6">4. 泛型委托</h4>
+<p>CLR支持泛型委托：</p>
+<ul>
+<li>保证任何类型的对象都能以类型安全的方式传给回调方法。</li>
+<li>泛型委托允许值类型实例再传给回调方法时不进行任何装箱操作。</li>
+</ul>
+<p>委托本质是提供了4个方法的一个类的定义：</p>
+<ul>
+<li>构造器</li>
+<li>Invoke</li>
+<li>BeginInvoke</li>
+<li>EndInvoke</li>
+</ul>
+<p>建议尽量使用FCL预定义的泛型：<code>Action</code>和<code>Func</code>委托。</p>
+<h4 id="5--4">5. 委托和接口的逆变和协变泛型类型实参</h4>
+<p>委托的每个泛型类型参数都可以标记为<code>协变量</code>或<code>逆变量</code>。</p>
+<p>泛型类型参数形式：</p>
+<ul>
+<li>
+<p><code>不变量（invariant）</code>：意味着泛型类型参数不能更改。</p>
+</li>
+<li>
+<p><code>逆变量（contracariant）</code>：意味着泛型类型参数可以从<code>一个类</code>更改为它的某个<code>派生类</code>，指定参数的兼容性。</p>
+<ul>
+<li>C#使用<code>in</code>关键字标记逆变量形式的泛型类型参数。</li>
+<li>逆变量泛型类型参数只能出现在输入位置（方法参数&hellip;）。</li>
+</ul>
+</li>
+<li>
+<p><code>协变量（covariant）</code>：意味着泛型类型参数可以从<code>一个类</code>更改为它的某个<code>基类</code>，指定返回类型的兼容性。</p>
+<ul>
+<li>C#使用<code>out</code>关键字标记协变量形式的泛型类型参数。</li>
+<li>协变量泛型类型参数只能出现在输出位置（方法返回值&hellip;）。</li>
+</ul>
+</li>
+</ul>
+<p>对于泛型类型参数，如果将该实例的实参传给使用<code>out/ref</code>关键字的方法，便不允许可变性（<code>in/out</code>）。</p>
+<p>使用要获取泛型参数和返回值的委托时，应尽量为逆变性和协变性指定<code>in/out</code>发、关键字。</p>
+<h4 id="6--3">6. 泛型方法</h4>
+<p>CLR允许方法指定自己的类型参数。</p>
+<p><code>类型推断</code>：为了改进代码创建，增强可读性和可维护性，C#编译器支持在调用泛型方法时进行类型推断。编译器会在调用泛型方法时自动判断要使用的类型。</p>
+<p>推断类型时，C#使用变量的数据类型，而不是变量引用的对象的实际类型。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Swap&lt;T&gt;(<span style="color:#66d9ef">ref</span> T o1, <span style="color:#66d9ef">ref</span> T o2)
+{
+    <span style="color:#75715e">//....
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#66d9ef">int</span> n1 = <span style="color:#ae81ff">1</span>, n2 = <span style="color:#ae81ff">2</span>;
+<span style="color:#66d9ef">string</span> s1 = <span style="color:#e6db74">&#34;Jordon&#34;</span>;
+Object s2 = <span style="color:#e6db74">&#34;Vicky&#34;</span>;
+Swap&lt;<span style="color:#66d9ef">int</span>&gt;(<span style="color:#66d9ef">ref</span> n1, <span style="color:#66d9ef">ref</span> n2);
+Swap(<span style="color:#66d9ef">ref</span> n1, <span style="color:#66d9ef">ref</span> n2); <span style="color:#75715e">//类型推断
+</span><span style="color:#75715e"></span>Swap(<span style="color:#66d9ef">ref</span> s1, <span style="color:#66d9ef">ref</span> s2); <span style="color:#75715e">//error，不能有推断类型。
+</span></code></pre></div><p>C#编译器策略：优先考虑较明确的匹配，再考虑泛型匹配。</p>
+<h4 id="7-">7. 泛型和其他成员</h4>
+<p>C#中，属性、索引器、事件、操作符方法、构造器和终结器<code>本身</code>不能有类型参数。但是它们能在泛型类型中定义，而且这些成员中的代码能使用<code>类型的</code>类型参数。</p>
+<p>C#之所以不允许这些成员指定自己的泛型类型参数：</p>
+<ul>
+<li>开发人员很少需要将这些成员作为泛型使用。</li>
+<li>为这些成员添加泛型支持代价太高。</li>
+</ul>
+<h4 id="8-where">8. 可验证性和约束（where）</h4>
+<p>编译泛型代码时，C#编译器会进行分析，确保代码适用于当前已有或将来可能定义的任何类型。编译器和CLR支持称为<code>约束</code>的机制。</p>
+<p><code>约束</code>的作用：限制能指定成泛型实参的类型数量。编译器负责保证类型实参符合指定的约束。</p>
+<p>约束可用于：</p>
+<ul>
+<li>泛型类型的类型参数。</li>
+<li>泛型方法的类型参数。</li>
+</ul>
+<p>CLR不允许基于类型参数<code>名称或约束</code>的重载；只能基于<code>元数（类型参数个数）</code>对类型或方法进行重载。</p>
+<ul>
+<li>重写虚泛型方法时，重写方法必须指定相同数量的类型参数，而且类型参数会继承基类方法上的约束。</li>
+<li>重写方法的类型参数不允许指定任何约束，但类型参数名称可变。</li>
+</ul>
+<p>编译器/CLR允许向类型参数应用的约束：</p>
+<ul>
+<li>主要约束</li>
+<li>次要约束</li>
+<li>构造器约束</li>
+</ul>
+<h5 id="heading-13">主要约束</h5>
+<p>类型参数都可以指定<code>零个或一个</code>主要约束。</p>
+<p>主要约束：</p>
+<ul>
+<li>
+<p>代表非密封类的一个引用类型：指定引用类型约束时，向编译器承诺：指定的类型实参的类型要么与约束类型相同，要么派生自约束类型。</p>
+<ul>
+<li>不能指定特殊的引用类型：<code>Object, Array, Delegate, MulticastDelegate, ValueType, Enum, Void</code>。</li>
+<li>如果类型参数没有指定主要约束，默认使<code>Object</code>，但不能显式指定<code>Obejct</code>，否则报错。</li>
+</ul>
+</li>
+<li>
+<p>class：向编译器承诺：类型实参是引用类型。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#">xxx&lt;T&gt; <span style="color:#66d9ef">where</span> T : <span style="color:#66d9ef">class</span> {}
+</code></pre></div></li>
+<li>
+<p>struct：向编译器承诺：类型实参是值类型。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#">xxx&lt;T&gt; <span style="color:#66d9ef">where</span> T : <span style="color:#66d9ef">struct</span> {}
+</code></pre></div><ul>
+<li>编译器和CLR将<code>Nullable&lt;T&gt;</code>值类型视为特殊类型，不满足struct约束。因为<code>Nullable&lt;T&gt;</code>类型将自身的类型参数约束为struct，而CLR希望禁止像<code>Nullable&lt;Nullable&lt;T&gt;&gt;</code>这样的递归类型。</li>
+</ul>
+</li>
+</ul>
+<h5 id="heading-14">次要约束</h5>
+<p>类型参数可以指定<code>零个或多个</code>次要约束。</p>
+<p>次要约束：</p>
+<ul>
+<li>代表接口类型：向编译器承诺：类型参数实现了接口。
+<ul>
+<li>由于能指定多个接口，所以类型参数必须实现了所有接口约束（以及主要约束）。</li>
+</ul>
+</li>
+<li>类型参数约束（裸类型约束）：允许一个类型或方法规定：指定的类型实参要么是约束类型，要么是约束类型的派生类。</li>
+</ul>
+<h5 id="heading-15">构造器约束</h5>
+<p>类型参数可以指定<code>零个或一个</code>构造器约束。</p>
+<p>构造器约束：</p>
+<ul>
+<li>
+<p>向编译器承诺：实参是实现了公共无参构造器的非抽象类。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#">xxx&lt;T&gt; <span style="color:#66d9ef">where</span> T : <span style="color:#66d9ef">new</span>() {}
+</code></pre></div><ul>
+<li>不能和struct约束一起用，因为所有值类型都隐式提供了公共无参构造器，造成多余。</li>
+</ul>
+</li>
+</ul>
+<h5 id="heading-16">其他可验证性问题</h5>
+<ul>
+<li>
+<p>泛型类型变量的转型</p>
+<p>将泛型类型的变量转型为其他类型是非法的，除非为与约束兼容的类型。</p>
+</li>
+<li>
+<p>为泛型类型变量设默认值</p>
+<p>使用<code>default</code>关键字，如果泛型类型变量为引用类型，默认值为<code>null</code>，值类型为<code>0</code>。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> MethodName&lt;T&gt;() 
+{
+    T temp = <span style="color:#66d9ef">default</span>(T);
+}
+</code></pre></div></li>
+<li>
+<p>将泛型类型变量与null比较</p>
+<p>无论反泛型类型是否被约束，使用<code>==/!=</code>操作符将泛型类型变量与null比较都是合法的。</p>
+</li>
+<li>
+<p>两个泛型类型变量比较</p>
+<p>如果泛型类型参数不能肯定是引用类型，对同一个泛型类型的两个变量进行比较是非法的。</p>
+</li>
+<li>
+<p>泛型类型变量作为操作数使用</p>
+<p>C#不能将操作符用于泛型类型的变量。</p>
+</li>
+</ul>
+<hr>
+<h3 id="heading-17">接口</h3>
+<h4 id="1--7">1. 类和接口继承</h4>
+<p>基类：提供了一组方法签名和这些方法的实现。</p>
+<p>接口：只是对一组方法签名的统一命名，不提供任何实现。</p>
+<p>类继承特点：凡是能使用基类型实例的地方，都能使用派生类型的实例。</p>
+<p>接口继承特点：凡是能使用具名接口类型的实例的地方，都能使用实现了接口的一个类型的实例。</p>
+<h4 id="2-interface">2. 定义接口（interface）</h4>
+<p>接口不能定义：构造器方法、实例字段、静态成员。</p>
+<p>在CLR看来，接口定义就是类型定义。</p>
+<h4 id="3--8">3. 继承接口</h4>
+<p>C#编译器要求：将实现接口的方法（接口方法）标记为<code>public</code>。</p>
+<p>CLR要求：将接口方法标记为<code>virtual</code>。</p>
+<ul>
+<li>
+<p>不显示标记为<code>virtual</code>，编译器默认标记为<code>virtual sealed</code>，这会阻止派生类重写接口方法。</p>
+</li>
+<li>
+<p>显式标记为<code>virtual</code>，编译器就会将方法标记为<code>virtual</code>并保持其非密封状态，使派生类能重写它。</p>
+</li>
+</ul>
+<h4 id="4--7">4. 关于调用接口方法的更多探讨</h4>
+<p>CLR允许定义接口类型的 字段、参数或局部变量。使用接口类型的变量可以调用该接口中定义的方法。</p>
+<p>值类型可以实现零个或多个接口。但值类型在转化为接口类型时必须装箱。</p>
+<h4 id="5--5">5. 隐式和显式接口方法实现（幕后的事）</h4>
+<p>类型加载到CLR时，会为该类型创建并初始化一个方法表：</p>
+<ul>
+<li>类型引入的每个新方法的记录项。</li>
+<li>继承的所有虚方法的记录项。
+<ul>
+<li>基类定义的方法。</li>
+<li>接口类型定义的方法。</li>
+</ul>
+</li>
+</ul>
+<p><code>显式接口方法实现（EIMI）</code>：</p>
+<ul>
+<li>C#中，将定义方法的那个接口的名称作为方法名前缀，就会创建EIMI。</li>
+<li>C#不允许在定义显式接口方法时指定可访问性（编译器自动生成<code>private</code>），也不能标记为<code>virtual</code>，所以不能被重写。</li>
+<li>EIMI并非是类型的对象模型的一部分，只是将接口和类型连接起来。</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SimpleType</span> : IDisposable 
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Dispose() {}
+    <span style="color:#75715e">//EIMI
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">void</span> IDisposable.Dispose() {}
+}
+</code></pre></div><h4 id="6--4">6. 泛型接口</h4>
+<p>泛型接口优点：</p>
+<ul>
+<li>
+<p>提供出色的编译时类型安全。</p>
+</li>
+<li>
+<p>处理值类型时装箱次数会少很多。</p>
+</li>
+<li>
+<p>一个类型可以实现同一个接口若干次，只要每次使用不同的类型参数。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClassName</span> : IComparable&lt;<span style="color:#66d9ef">int</span>&gt;, IComparable&lt;<span style="color:#66d9ef">string</span>&gt; {}
+</code></pre></div></li>
+</ul>
+<h4 id="7--1">7. 泛型和接口约束</h4>
+<p>将泛型类型参数约束为接口的好处：</p>
+<ul>
+<li>可将泛型参数约束为多个接口。</li>
+<li>传递值类型的实例时减少装箱。C#编译器为接口约束生成特殊IL指令，导致直接在值类型上调用接口方法而不装箱。</li>
+</ul>
+<h4 id="8-">8. 实现多个具有相同方法名和签名的接口</h4>
+<p>使用显式接口方法实现来实现，加以区分。</p>
+<h4 id="9-">9. 用显式接口方法实现来增强编译时类型安全性</h4>
+<h4 id="10-">10. 谨慎使用显式接口方法实现</h4>
+<p>EIMI问题：</p>
+<ul>
+<li>没有文档解释类型具体如何实现一个EIMI方法，对类型的转换要求不明确。</li>
+<li>值类型的实例在转换为接口时装箱。</li>
+<li>EIMI不能由派生类型调用。</li>
+</ul>
+<h4 id="11-">11. 设计：基类还是接口？</h4>
+<p>设计规范：</p>
+<ul>
+<li>IS-A对比CAN-DO关系：IS-A：基类，属于。CAN-DO：接口，能做某事。</li>
+<li>易用性</li>
+<li>一致性实现</li>
+<li>版本控制</li>
+</ul>
+<hr>
 
 
                 
